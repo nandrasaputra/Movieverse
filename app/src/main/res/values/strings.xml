@@ -1,3 +1,51 @@
 <resources>
     <string name="app_name">Submission 1 Nandra</string>
+
+    <string-array name="string_movie_drawable">
+        <item>@drawable/img_1_poster_a_star</item>
+        <item>@drawable/img_2_poster_aquaman</item>
+        <item>@drawable/img_3_poster_avengerinfinity</item>
+        <item>@drawable/img_4_poster_birdbox</item>
+        <item>@drawable/img_5_poster_bohemian</item>
+        <item>@drawable/img_6_poster_bumblebee</item>
+        <item>@drawable/img_7_poster_creed</item>
+        <item>@drawable/img_8_poster_deadpool</item>
+        <item>@drawable/img_9_poster_dragon</item>
+        <item>@drawable/img_10_poster_dragonball</item>
+        <item>@drawable/img_11_poster_glass</item>
+        <item>@drawable/img_12_poster_hunterkiller</item>
+        <item>@drawable/img_13_poster_marrypopins</item>
+        <item>@drawable/img_14_poster_mortalengine</item>
+        <item>@drawable/img_15_poster_preman</item>
+        <item>@drawable/img_16_poster_robinhood</item>
+        <item>@drawable/img_17_poster_spiderman</item>
+        <item>@drawable/img_18_poster_thegirl</item>
+        <item>@drawable/img_19_poster_themule</item>
+        <item>@drawable/img_20_poster_venom</item>
+    </string-array>
+
+    <string-array name="string_movie_name">
+        <item>"A Star Is Born"</item>
+        <item>"Aquaman"</item>
+        <item>"Avengers: Infinity War"</item>
+        <item>"Bird Box"</item>
+        <item>"Bohemian Rhapsody"</item>
+        <item>"Bumblebee"</item>
+        <item>"Creed II"</item>
+        <item>"Once Upon a Deadpool"</item>
+        <item>"How to Train Your Dragon: The Hidden World"</item>
+        <item>"Dragon Ball Super: Broly"</item>
+        <item>"Glass"</item>
+        <item>"Hunter Killer"</item>
+        <item>"Mary Poppins Returns"</item>
+        <item>"Mortal Engines"</item>
+        <item>"Retired Thug (Preman Pensiun)"</item>
+        <item>"Robin Hood"</item>
+        <item>"Spider-Man: Into the Spider-Verse"</item>
+        <item>"The Girl in the Spider's Web"</item>
+        <item>"The Mule"</item>
+        <item>"Venom"</item>
+
+    </string-array>
+
 </resources>
