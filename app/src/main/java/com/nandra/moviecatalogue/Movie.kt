@@ -1,4 +1,4 @@
-package com.example.submission1nandra
+package com.nandra.moviecatalogue
 
 import android.os.Parcel
 import android.os.Parcelable

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Submission 1 Nandra</string>
+    <string name="app_name">Movie Catalogue Nandra</string>
 
     <array name="string_movie_poster">
         <item>@drawable/img_1_poster_a_star</item>
