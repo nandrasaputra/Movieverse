@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.makeramen.roundedimageview.RoundedImageView
 
 class MainMovieListAdapter(val context: Context, val movies : ArrayList<Movie>) : BaseAdapter() {
 
@@ -43,13 +44,15 @@ class MainMovieListAdapter(val context: Context, val movies : ArrayList<Movie>) 
         private val title : TextView = view.findViewById(R.id.item_title_placeholder)
         private val rating : TextView = view.findViewById(R.id.item_rating_placeholder)
         private val genre : TextView = view.findViewById(R.id.item_genre_placeholder)
-        private val img : ImageView = view.findViewById(R.id.item_poster_placeholder)
+        private val img : RoundedImageView = view.findViewById(R.id.item_poster_placeholder)
+        private val overview : TextView = view.findViewById(R.id.item_overview)
 
         fun bind(movie: Movie){
             title.text = movie.title
             rating.text = movie.rating
             genre.text = movie.genre
             img.setImageResource(movie.img)
+            overview.text = movie.overview
         }
     }
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_box_start_margin">170dp</dimen>
+    <dimen name="main_box_end_margin">16dp</dimen>
+    <dimen name="main_box_top_margin">8dp</dimen>
+    <dimen name="main_box_seconday_top_margin">2dp</dimen>
+    <dimen name="main_box_bottom_margin">8dp</dimen>
+
+    <dimen name="main_box_secondary_text_size">14sp</dimen>
+    <dimen name="main_box_genre_text_size">14sp</dimen>
+    <dimen name="main_box_main_text_size">18sp</dimen>
+    <dimen name="main_rating_text_size">12sp</dimen>
+    <dimen name="main_box_description_text_sie">13sp</dimen>
+</resources>
