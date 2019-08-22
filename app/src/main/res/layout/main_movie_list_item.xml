@@ -18,12 +18,14 @@
 
     <TextView
         android:id="@+id/item_title_placeholder"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Movie Title"
-        android:textSize="24sp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="sans-serif-medium"
+        android:text="Movie Title"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/item_poster_placeholder"
         app:layout_constraintTop_toTopOf="@id/item_poster_placeholder" />
 
@@ -32,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00%"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
         android:fontFamily="sans-serif"
@@ -45,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Genre, Genre, Genre"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:layout_marginStart="16dp"
         android:fontFamily="sans-serif"
         app:layout_constraintStart_toEndOf="@id/item_poster_placeholder"
