@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Submission 1 Nandra</string>
 
-    <string-array name="string_movie_drawable">
+    <array name="string_movie_poster">
         <item>@drawable/img_1_poster_a_star</item>
         <item>@drawable/img_2_poster_aquaman</item>
         <item>@drawable/img_3_poster_avengerinfinity</item>
@@ -22,9 +22,9 @@
         <item>@drawable/img_18_poster_thegirl</item>
         <item>@drawable/img_19_poster_themule</item>
         <item>@drawable/img_20_poster_venom</item>
-    </string-array>
+    </array>
 
-    <string-array name="string_movie_name">
+    <string-array name="string_movie_title">
         <item>"A Star Is Born"</item>
         <item>"Aquaman"</item>
         <item>"Avengers: Infinity War"</item>
@@ -92,7 +92,29 @@
         <item>"In Stockholm, Sweden, hacker Lisbeth Salander is hired by Frans Balder, a computer engineer, to retrieve a program that he believes it is too dangerous to exist."</item>
         <item>"Earl Stone, a man in his 80s, is broke, alone, and facing foreclosure of his business when he is offered a job that simply requires him to drive. Easy enough, but, unbeknownst to Earl, he’s just signed on as a drug courier for a Mexican cartel. He does so well that his cargo increases exponentially, and Earl hit the radar of hard-charging DEA agent Colin Bates."</item>
         <item>"Investigative journalist Eddie Brock attempts a comeback following a scandal, but accidentally becomes the host of Venom, a violent, super powerful alien symbiote. Soon, he must rely on his newfound powers to protect the world from a shadowy organization looking for a symbiote of their own."</item>
+    </string-array>
 
+    <string-array name="string_movie_genre">
+        <item>"Romance, Drama, Musical"</item>
+        <item>"Action, Superhero, Adventure"</item>
+        <item>"SciFi, Adventure, Superhero"</item>
+        <item>"Horror, SciFi, Drama"</item>
+        <item>"Music, Biography"</item>
+        <item>"Action, Adventure"</item>
+        <item>"Drama, Action"</item>
+        <item>"Comedy, Adventure, Action"</item>
+        <item>"Animation, Comdey, Action"</item>
+        <item>"Anime, Animation, Action"</item>
+        <item>"Thriller, SciFi, Superhero"</item>
+        <item>"Action, Thriller"</item>
+        <item>"Family, Fantasy, Musical"</item>
+        <item>"Action, SciFi, Adventure"</item>
+        <item>"Comedy, Drama"</item>
+        <item>"Historical, Fiction"</item>
+        <item>"Animation, Comedy, Superhero"</item>
+        <item>"Crime, Thriller, Action"</item>
+        <item>"Crime, Thriller, Drama"</item>
+        <item>"Horror, Action, Thriller"</item>
     </string-array>
 
 </resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="160dp">
+
+    <ImageView
+        android:id="@+id/item_poster_placeholder"
+        android:layout_margin="8dp"
+        android:layout_width="0dp"
+        android:src="@drawable/img_1_poster_a_star"
+        android:layout_height="match_parent"
+        app:layout_constraintDimensionRatio="W,2:3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/item_title_placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Movie Title"
+        android:textSize="24sp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintStart_toEndOf="@id/item_poster_placeholder"
+        app:layout_constraintTop_toTopOf="@id/item_poster_placeholder" />
+
+    <TextView
+        android:id="@+id/item_rating_placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00%"
+        android:textSize="20sp"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif"
+        app:layout_constraintStart_toEndOf="@id/item_poster_placeholder"
+        app:layout_constraintTop_toBottomOf="@id/item_title_placeholder" />
+
+    <TextView
+        android:id="@+id/item_genre_placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Genre, Genre, Genre"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif"
+        app:layout_constraintStart_toEndOf="@id/item_poster_placeholder"
+        app:layout_constraintTop_toBottomOf="@id/item_rating_placeholder" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
