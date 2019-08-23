@@ -2,9 +2,8 @@ package com.nandra.moviecatalogue
 
 import android.content.res.TypedArray
 import android.os.Bundle
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,19 +14,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dataMoviesPoster: TypedArray
     private lateinit var moviesAdapter: MainMovieListAdapter
     private var moviesList: ArrayList<Movie> = arrayListOf()
-    private lateinit var listView: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         prepareMovieListView()
-
-        listView = findViewById(R.id.main_listview)
-        listView.adapter = moviesAdapter
+        main_listview.adapter = moviesAdapter
     }
 
-    fun prepareMovieListView() {
+    private fun prepareMovieListView() {
         dataMoviesTitle = resources.getStringArray(R.array.all_movie_title_array)
         dataMoviesRating = resources.getStringArray(R.array.all_movie_rating_array)
         dataMoviesGenre = resources.getStringArray(R.array.all_movie_genre_array)
@@ -43,10 +39,13 @@ class MainActivity : AppCompatActivity() {
             val mPoster = dataMoviesPoster.getResourceId(i, -1)
 
             val movie = Movie(mTitle, mRating, mGenre, mOverview, mPoster)
-
             moviesList.add(movie)
         }
 
         moviesAdapter = MainMovieListAdapter(this, moviesList)
+    }
+
+    companion object {
+        @JvmStatic val EXTRA_MOVIE = "extra_movie"
     }
 }

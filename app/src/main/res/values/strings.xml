@@ -120,5 +120,6 @@
         <item>"Crime, Thriller, Drama"</item>
         <item>"Horror, Action, Thriller"</item>
     </string-array>
+    <string name="title_activity_detail">DetailActivity</string>
 
 </resources>

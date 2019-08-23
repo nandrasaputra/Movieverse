@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="item_main_box_start_margin">170dp</dimen>
-    <dimen name="item_main_box_end_margin">16dp</dimen>
-    <dimen name="item_main_box_top_margin">8dp</dimen>
-    <dimen name="item_main_box_bottom_margin">8dp</dimen>
-    <dimen name="item_main_box_secondary_top_margin">2dp</dimen>
+    <dimen name="item_main_box_text_start_margin">170dp</dimen>
+    <dimen name="item_main_box_text_end_margin">16dp</dimen>
+    <dimen name="item_main_box_text_top_margin">8dp</dimen>
+    <dimen name="item_main_box_text_bottom_margin">8dp</dimen>
+    <dimen name="item_main_box_text_secondary_top_margin">2dp</dimen>
 
-    <dimen name="item_main_box_secondary_text_size">14sp</dimen>
-    <dimen name="item_main_box_genre_text_size">14sp</dimen>
-    <dimen name="item_main_box_main_text_size">18sp</dimen>
+    <dimen name="item_main_box_text_secondary_size">14sp</dimen>
+    <dimen name="item_main_box_text_genre_size">14sp</dimen>
+    <dimen name="item_main_box_text_main_size">18sp</dimen>
     <dimen name="item_main_rating_text_size">12sp</dimen>
-    <dimen name="item_main_box_description_text_sie">13sp</dimen>
+    <dimen name="item_main_box_text_description_size">13sp</dimen>
+
+    <dimen name="detail_text_start_margin">24dp</dimen>
+    <dimen name="detail_text_end_margin">24dp</dimen>
+    <dimen name="detail_text_bottom_margin">24dp</dimen>
+
+    <dimen name="detail_text_title_size">20sp</dimen>
+    <dimen name="detail_text_genre_size">16sp</dimen>
+    <dimen name="detail_text_overview_size">14sp</dimen>
 </resources>

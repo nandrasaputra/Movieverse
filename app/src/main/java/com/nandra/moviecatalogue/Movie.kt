@@ -3,7 +3,7 @@ package com.nandra.moviecatalogue
 import android.os.Parcel
 import android.os.Parcelable
 
-class Movie(val title: String?, val rating: String?, val genre: String?, val overview: String?, val img: Int) :
+class Movie(val title: String?, val rating: String?, val genre: String?, val overview: String?, val poster: Int) :
 
     Parcelable {
     constructor(source: Parcel) : this(
@@ -21,7 +21,7 @@ class Movie(val title: String?, val rating: String?, val genre: String?, val ove
         writeString(rating)
         writeString(genre)
         writeString(overview)
-        writeInt(img)
+        writeInt(poster)
     }
 
     companion object {
