@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/detail_image_movie_poster"
         android:layout_marginTop="300dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="@dimen/detail_start_margin"
+        android:layout_marginEnd="@dimen/detail_end_margin"
+        android:layout_marginBottom="@dimen/detail_bottom_margin"
         android:padding="24dp"
         android:background="@color/colorPureWhite"
         android:elevation="2dp">
@@ -60,8 +60,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/detail_image_movie_poster"
         android:layout_width="250dp"
@@ -101,6 +99,6 @@
         android:fontFamily="@font/lato_bold"
         android:text="@string/main_rating_mock"
         android:textColor="@color/colorPureWhite"
-        android:textSize="12sp" />
+        android:textSize="@dimen/detail_text_genre_size" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

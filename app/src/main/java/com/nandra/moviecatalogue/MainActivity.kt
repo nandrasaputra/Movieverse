@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         dataMoviesOverview = resources.getStringArray(R.array.all_movie_overview_array)
         dataMoviesPoster = resources.obtainTypedArray(R.array.all_movie_poster_array)
 
-        for (i in 0 until dataMoviesTitle.size) {
+        for (i in dataMoviesTitle.indices) {
 
             val mTitle = dataMoviesTitle[i]
             val mRating = dataMoviesRating[i]
