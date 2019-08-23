@@ -69,7 +69,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintDimensionRatio="W,3:2"
         android:layout_marginTop="24dp"
-        android:src="@drawable/img_poster_dragon"
+        android:src="@drawable/img_movie_poster_dragon"
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription"
         app:riv_corner_radius="12dp"

@@ -7,26 +7,49 @@
     <string name="main_rating_mock">00%</string>
 
     <array name="all_movie_poster_array">
-        <item>@drawable/img_poster_a_star</item>
-        <item>@drawable/img_poster_aquaman</item>
-        <item>@drawable/img_poster_avengerinfinity</item>
-        <item>@drawable/img_poster_birdbox</item>
-        <item>@drawable/img_poster_bohemian</item>
-        <item>@drawable/img_poster_bumblebee</item>
-        <item>@drawable/img_poster_creed</item>
-        <item>@drawable/img_poster_deadpool</item>
-        <item>@drawable/img_poster_dragon</item>
-        <item>@drawable/img_poster_dragonball</item>
-        <item>@drawable/img_poster_glass</item>
-        <item>@drawable/img_poster_hunterkiller</item>
-        <item>@drawable/img_poster_marrypopins</item>
-        <item>@drawable/img_poster_mortalengine</item>
-        <item>@drawable/img_poster_preman</item>
-        <item>@drawable/img_poster_robinhood</item>
-        <item>@drawable/img_poster_spiderman</item>
-        <item>@drawable/img_poster_thegirl</item>
-        <item>@drawable/img_poster_themule</item>
-        <item>@drawable/img_poster_venom</item>
+        <item>@drawable/img_movie_poster_a_star</item>
+        <item>@drawable/img_movie_poster_aquaman</item>
+        <item>@drawable/img_movie_poster_avengerinfinity</item>
+        <item>@drawable/img_movie_poster_birdbox</item>
+        <item>@drawable/img_movie_poster_bohemian</item>
+        <item>@drawable/img_movie_poster_bumblebee</item>
+        <item>@drawable/img_movie_poster_creed</item>
+        <item>@drawable/img_movie_poster_deadpool</item>
+        <item>@drawable/img_movie_poster_dragon</item>
+        <item>@drawable/img_movie_poster_dragonball</item>
+        <item>@drawable/img_movie_poster_glass</item>
+        <item>@drawable/img_movie_poster_hunterkiller</item>
+        <item>@drawable/img_movie_poster_marrypopins</item>
+        <item>@drawable/img_movie_poster_mortalengine</item>
+        <item>@drawable/img_movie_poster_preman</item>
+        <item>@drawable/img_movie_poster_robinhood</item>
+        <item>@drawable/img_movie_poster_spiderman</item>
+        <item>@drawable/img_movie_poster_thegirl</item>
+        <item>@drawable/img_movie_poster_themule</item>
+        <item>@drawable/img_movie_poster_venom</item>
+    </array>
+
+    <array name="all_tvshow_poster_array">
+        <item>@drawable/img_tvshow_poster_arrow</item>
+        <item>@drawable/img_tvshow_poster_doom_patrol</item>
+        <item>@drawable/img_tvshow_poster_dragon_ball</item>
+        <item>@drawable/img_tvshow_poster_fairytail</item>
+        <item>@drawable/img_tvshow_poster_family_guy</item>
+        <item>@drawable/img_tvshow_poster_flash</item>
+        <item>@drawable/img_tvshow_poster_got</item>
+        <item>@drawable/img_tvshow_poster_gotham</item>
+        <item>@drawable/img_tvshow_poster_grey_anatomy</item>
+        <item>@drawable/img_tvshow_poster_hanna</item>
+        <item>@drawable/img_tvshow_poster_iron_fist</item>
+        <item>@drawable/img_tvshow_poster_naruto_shipudden</item>
+        <item>@drawable/img_tvshow_poster_ncis</item>
+        <item>@drawable/img_tvshow_poster_riverdale</item>
+        <item>@drawable/img_tvshow_poster_shameless</item>
+        <item>@drawable/img_tvshow_poster_supergirl</item>
+        <item>@drawable/img_tvshow_poster_supernatural</item>
+        <item>@drawable/img_tvshow_poster_the_simpson</item>
+        <item>@drawable/img_tvshow_poster_the_umbrella</item>
+        <item>@drawable/img_tvshow_poster_the_walking_dead</item>
     </array>
 
     <string-array name="all_movie_title_array">
@@ -52,6 +75,29 @@
         <item>"Venom"</item>
     </string-array>
 
+    <string-array name="all_tvshow_title_array">
+        <item>"Arrow"</item>
+        <item>"Doom Patrol"</item>
+        <item>"Dragon Ball"</item>
+        <item>"Fairy Tail"</item>
+        <item>"Family Guy"</item>
+        <item>"The Flash"</item>
+        <item>"Game of Thrones"</item>
+        <item>"Gotham"</item>
+        <item>"Grey's Anatomy"</item>
+        <item>"Hanna"</item>
+        <item>"Marvel's Iron Fist"</item>
+        <item>"Naruto Shippuden"</item>
+        <item>"NCIS"</item>
+        <item>"Riverdale"</item>
+        <item>"Shameless"</item>
+        <item>"Supergirl"</item>
+        <item>"Supernatural"</item>
+        <item>"The Simpsons"</item>
+        <item>"The Umbrella Academy"</item>
+        <item>"The Walking Dead"</item>
+    </string-array>
+
     <string-array name="all_movie_rating_array">
         <item>"75%"</item>
         <item>"68%"</item>
@@ -73,6 +119,29 @@
         <item>"60%"</item>
         <item>"66%"</item>
         <item>"66%"</item>
+    </string-array>
+
+    <string-array name="all_tvshow_rating_array">
+        <item>"58%"</item>
+        <item>"63%"</item>
+        <item>"70%"</item>
+        <item>"65%"</item>
+        <item>"65%"</item>
+        <item>"66%"</item>
+        <item>"81%"</item>
+        <item>"69%"</item>
+        <item>"63%"</item>
+        <item>"67%%"</item>
+        <item>"61%"</item>
+        <item>"76%"</item>
+        <item>"67%"</item>
+        <item>"70%"</item>
+        <item>"78%"</item>
+        <item>"58%"</item>
+        <item>"73%"</item>
+        <item>"71%"</item>
+        <item>"76%"</item>
+        <item>"73%"</item>
     </string-array>
 
     <string-array name="all_movie_overview_array">
@@ -98,6 +167,30 @@
         <item>"Investigative journalist Eddie Brock attempts a comeback following a scandal, but accidentally becomes the host of Venom, a violent, super powerful alien symbiote. Soon, he must rely on his newfound powers to protect the world from a shadowy organization looking for a symbiote of their own."</item>
     </string-array>
 
+    <string-array name="all_tvshow_overview_array">
+        <item>"Spoiled billionaire playboy Oliver Queen is missing and presumed dead when his yacht is lost at sea. He returns five years later a changed man, determined to clean up the city as a hooded vigilante armed with a bow."</item>
+        <item>"The Doom Patrol’s members each suffered horrible accidents that gave them superhuman abilities — but also left them scarred and disfigured. Traumatized and downtrodden, the team found purpose through The Chief, who brought them together to investigate the weirdest phenomena in existence — and to protect Earth from what they find."</item>
+        <item>"Long ago in the mountains, a fighting master known as Gohan discovered a strange boy whom he named Goku. Gohan raised him and trained Goku in martial arts until he died. The young and very strong boy was on his own, but easily managed. Then one day, Goku met a teenage girl named Bulma, whose search for the dragon balls brought her to Goku's home. Together, they set off to find all seven dragon balls in an adventure."</item>
+        <item>"Lucy is a 17-year-old girl, who wants to be a full-fledged mage. One day when visiting Harujion Town, she meets Natsu, a young man who gets sick easily by any type of transportation. But Natsu isn't just any ordinary kid, he's a member of one of the world's most infamous mage guilds: Fairy Tail."</item>
+        <item>"Sick, twisted, politically incorrect and Freakin' Sweet animated series featuring the adventures of the dysfunctional Griffin family. Bumbling Peter and long-suffering Lois have three kids. Stewie (a brilliant but sadistic baby bent on killing his mother and taking over the world), Meg (the oldest, and is the most unpopular girl in town) and Chris (the middle kid, he's not very bright but has a passion for movies). The final member of the family is Brian - a talking dog and much more than a pet, he keeps Stewie in check whilst sipping Martinis and sorting through his own life issues."</item>
+        <item>"After a particle accelerator causes a freak storm, CSI Investigator Barry Allen is struck by lightning and falls into a coma. Months later he awakens with the power of super speed, granting him the ability to move through Central City like an unseen guardian angel. Though initially excited by his newfound powers, Barry is shocked to discover he is not the only "meta-human" who was created in the wake of the accelerator explosion and not everyone is using their new powers for good. Barry partners with S.T.A.R. Labs and dedicates his life to protect the innocent. For now, only a few close friends and associates know that Barry is literally the fastest man alive, but it won't be long before the world learns what Barry Allen has become The Flash."</item>
+        <item>"Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and icy horrors beyond."</item>
+        <item>"Everyone knows the name Commissioner Gordon. He is one of the crime world's greatest foes, a man whose reputation is synonymous with law and order. But what is known of Gordon's story and his rise from rookie detective to Police Commissioner? What did it take to navigate the multiple layers of corruption that secretly ruled Gotham City, the spawning ground of the world's most iconic villains? And what circumstances created them – the larger-than-life personas who would become Catwoman, The Penguin, The Riddler, Two-Face and The Joker?"</item>
+        <item>"Follows the personal and professional lives of a group of doctors at Seattle’s Grey Sloan Memorial Hospital."</item>
+        <item>"This thriller and coming-of-age drama follows the journey of an extraordinary young girl as she evades the relentless pursuit of an off-book CIA agent and tries to unearth the truth behind who she is. Based on the 2011 Joe Wright film."</item>
+        <item>"Danny Rand resurfaces 15 years after being presumed dead. Now, with the power of the Iron Fist, he seeks to reclaim his past and fulfill his destiny."</item>
+        <item>"Naruto Shippuuden is the continuation of the original animated TV series Naruto.The story revolves around an older and slightly more matured Uzumaki Naruto and his quest to save his friend Uchiha Sasuke from the grips of the snake-like Shinobi, Orochimaru. After 2 and a half years Naruto finally returns to his village of Konoha, and sets about putting his ambitions to work, though it will not be easy, as He has amassed a few (more dangerous) enemies, in the likes of the shinobi organization; Akatsuki."</item>
+        <item>"From murder and espionage to terrorism and stolen submarines, a team of special agents investigates any crime that has a shred of evidence connected to Navy and Marine Corps personnel, regardless of rank or position."</item>
+        <item>"Set in the present, the series offers a bold, subversive take on Archie, Betty, Veronica and their friends, exploring the surreality of small-town life, the darkness and weirdness bubbling beneath Riverdale’s wholesome facade."</item>
+        <item>"Chicagoan Frank Gallagher is the proud single dad of six smart, industrious, independent kids, who without him would be perhaps better off. When Frank's not at the bar spending what little money they have, he's passed out on the floor. But the kids have found ways to grow up in spite of him. They may not be like any family you know, but they make no apologies for being exactly who they are."</item>
+        <item>"Twenty-four-year-old Kara Zor-El, who was taken in by the Danvers family when she was 13 after being sent away from Krypton, must learn to embrace her powers after previously hiding them. The Danvers teach her to be careful with her powers, until she has to reveal them during an unexpected disaster, setting her on her journey of heroism."</item>
+        <item>"When they were boys, Sam and Dean Winchester lost their mother to a mysterious and demonic supernatural force. Subsequently, their father raised them to be soldiers. He taught them about the paranormal evil that lives in the dark corners and on the back roads of America and he taught them how to kill it. Now, the Winchester brothers crisscross the country in their '67 Chevy Impala, battling every kind of supernatural threat they encounter along the way."</item>
+        <item>"Set in Springfield, the average American town, the show focuses on the antics and everyday adventures of the Simpson family; Homer, Marge, Bart, Lisa and Maggie, as well as a virtual cast of thousands. Since the beginning, the series has been a pop culture icon, attracting hundreds of celebrities to guest star. The show has also made name for itself in its fearless satirical take on politics, media and American life in general."</item>
+        <item>"A dysfunctional family of superheroes comes together to solve the mystery of their father's death, the threat of the apocalypse and more."</item>
+        <item>"Sheriff's deputy Rick Grimes awakens from a coma to find a post-apocalyptic world dominated by flesh-eating zombies. He sets out to find his family and encounters many other survivors along the way."</item>
+
+    </string-array>
+
     <string-array name="all_movie_genre_array">
         <item>"Romance, Drama, Musical"</item>
         <item>"Action, Superhero, Adventure"</item>
@@ -107,8 +200,8 @@
         <item>"Action, Adventure"</item>
         <item>"Drama, Action"</item>
         <item>"Comedy, Adventure, Action"</item>
-        <item>"Animation, Comdey, Action"</item>
-        <item>"Anime, Animation, Action"</item>
+        <item>"Animation, Comedy, Action"</item>
+        <item>"Animation, Animation, Action"</item>
         <item>"Thriller, SciFi, Superhero"</item>
         <item>"Action, Thriller"</item>
         <item>"Family, Fantasy, Musical"</item>
@@ -120,6 +213,28 @@
         <item>"Crime, Thriller, Drama"</item>
         <item>"Horror, Action, Thriller"</item>
     </string-array>
-    <string name="title_activity_detail">DetailActivity</string>
+
+    <string-array name="all_tvshow_genre_array">
+        <item>"Drama, Crime, Action"</item>
+        <item>"Action, Adventure, Comedy"</item>
+        <item>"Comedy, Adventure, Anime"</item>
+        <item>"Animation, Fantasy"</item>
+        <item>"Animation, Comedy"</item>
+        <item>"Superhero, Action"</item>
+        <item>"Fantasy, Drama"</item>
+        <item>"Action, Crime"</item>
+        <item>"Drama, Romance"</item>
+        <item>"Action, Drama"</item>
+        <item>"Superhero, Action"</item>
+        <item>"Animation, Action"</item>
+        <item>"Action, Drama, Thriller"</item>
+        <item>"Drama, Mystery"</item>
+        <item>"Comedy, Drama"</item>
+        <item>"Superhero, Adventure"</item>
+        <item>"Drama, Fantasy"</item>
+        <item>"Animation, Comedy"</item>
+        <item>"Drama, SciFi, Fantasy"</item>
+        <item>"Horror, Drama"</item>
+    </string-array>
 
 </resources>
