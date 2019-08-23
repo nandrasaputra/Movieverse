@@ -1,34 +1,35 @@
 <resources>
     <string name="app_name">Movie Catalogue Nandra</string>
+
     <string name="main_title_mock">Movie Title</string>
     <string name="main_genre_mock">Genre, Genre, Genre</string>
     <string name="main_overview_mock">It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</string>
     <string name="main_rating_mock">00%</string>
 
-    <array name="string_movie_poster">
-        <item>@drawable/img_1_poster_a_star</item>
-        <item>@drawable/img_2_poster_aquaman</item>
-        <item>@drawable/img_3_poster_avengerinfinity</item>
-        <item>@drawable/img_4_poster_birdbox</item>
-        <item>@drawable/img_5_poster_bohemian</item>
-        <item>@drawable/img_6_poster_bumblebee</item>
-        <item>@drawable/img_7_poster_creed</item>
-        <item>@drawable/img_8_poster_deadpool</item>
-        <item>@drawable/img_9_poster_dragon</item>
-        <item>@drawable/img_10_poster_dragonball</item>
-        <item>@drawable/img_11_poster_glass</item>
-        <item>@drawable/img_12_poster_hunterkiller</item>
-        <item>@drawable/img_13_poster_marrypopins</item>
-        <item>@drawable/img_14_poster_mortalengine</item>
-        <item>@drawable/img_15_poster_preman</item>
-        <item>@drawable/img_16_poster_robinhood</item>
-        <item>@drawable/img_17_poster_spiderman</item>
-        <item>@drawable/img_18_poster_thegirl</item>
-        <item>@drawable/img_19_poster_themule</item>
-        <item>@drawable/img_20_poster_venom</item>
+    <array name="all_movie_poster_array">
+        <item>@drawable/img_poster_a_star</item>
+        <item>@drawable/img_poster_aquaman</item>
+        <item>@drawable/img_poster_avengerinfinity</item>
+        <item>@drawable/img_poster_birdbox</item>
+        <item>@drawable/img_poster_bohemian</item>
+        <item>@drawable/img_poster_bumblebee</item>
+        <item>@drawable/img_poster_creed</item>
+        <item>@drawable/img_poster_deadpool</item>
+        <item>@drawable/img_poster_dragon</item>
+        <item>@drawable/img_poster_dragonball</item>
+        <item>@drawable/img_poster_glass</item>
+        <item>@drawable/img_poster_hunterkiller</item>
+        <item>@drawable/img_poster_marrypopins</item>
+        <item>@drawable/img_poster_mortalengine</item>
+        <item>@drawable/img_poster_preman</item>
+        <item>@drawable/img_poster_robinhood</item>
+        <item>@drawable/img_poster_spiderman</item>
+        <item>@drawable/img_poster_thegirl</item>
+        <item>@drawable/img_poster_themule</item>
+        <item>@drawable/img_poster_venom</item>
     </array>
 
-    <string-array name="string_movie_title">
+    <string-array name="all_movie_title_array">
         <item>"A Star Is Born"</item>
         <item>"Aquaman"</item>
         <item>"Avengers: Infinity War"</item>
@@ -51,7 +52,7 @@
         <item>"Venom"</item>
     </string-array>
 
-    <string-array name="string_movie_rating">
+    <string-array name="all_movie_rating_array">
         <item>"75%"</item>
         <item>"68%"</item>
         <item>"83%"</item>
@@ -72,10 +73,9 @@
         <item>"60%"</item>
         <item>"66%"</item>
         <item>"66%"</item>
-
     </string-array>
 
-    <string-array name="string_movie_overview">
+    <string-array name="all_movie_overview_array">
         <item>"Seasoned musician Jackson Maine discovers — and falls in love with — struggling artist Ally. She has just about given up on her dream to make it big as a singer — until Jack coaxes her into the spotlight. But even as Ally's career takes off, the personal side of their relationship is breaking down, as Jack fights an ongoing battle with his own internal demons."</item>
         <item>"Once home to the most advanced civilization on Earth, Atlantis is now an underwater kingdom ruled by the power-hungry King Orm. With a vast army at his disposal, Orm plans to conquer the remaining oceanic people and then the surface world. Standing in his way is Arthur Curry, Orm's half-human, half-Atlantean brother and true heir to the throne."</item>
         <item>"As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led up to this moment - the fate of Earth and existence itself has never been more uncertain."</item>
@@ -98,7 +98,7 @@
         <item>"Investigative journalist Eddie Brock attempts a comeback following a scandal, but accidentally becomes the host of Venom, a violent, super powerful alien symbiote. Soon, he must rely on his newfound powers to protect the world from a shadowy organization looking for a symbiote of their own."</item>
     </string-array>
 
-    <string-array name="string_movie_genre">
+    <string-array name="all_movie_genre_array">
         <item>"Romance, Drama, Musical"</item>
         <item>"Action, Superhero, Adventure"</item>
         <item>"SciFi, Adventure, Superhero"</item>

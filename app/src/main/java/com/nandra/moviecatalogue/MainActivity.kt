@@ -1,9 +1,9 @@
 package com.nandra.moviecatalogue
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.content.res.TypedArray
+import android.os.Bundle
 import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,11 +28,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun prepareMovieListView() {
-        dataMoviesTitle = resources.getStringArray(R.array.string_movie_title)
-        dataMoviesRating = resources.getStringArray(R.array.string_movie_rating)
-        dataMoviesGenre = resources.getStringArray(R.array.string_movie_genre)
-        dataMoviesOverview = resources.getStringArray(R.array.string_movie_overview)
-        dataMoviesPoster = resources.obtainTypedArray(R.array.string_movie_poster)
+        dataMoviesTitle = resources.getStringArray(R.array.all_movie_title_array)
+        dataMoviesRating = resources.getStringArray(R.array.all_movie_rating_array)
+        dataMoviesGenre = resources.getStringArray(R.array.all_movie_genre_array)
+        dataMoviesOverview = resources.getStringArray(R.array.all_movie_overview_array)
+        dataMoviesPoster = resources.obtainTypedArray(R.array.all_movie_poster_array)
 
         for (i in 0 until dataMoviesTitle.size) {
 
