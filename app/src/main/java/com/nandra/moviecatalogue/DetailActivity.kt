@@ -5,6 +5,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.MainActivity.Companion.EXTRA_MOVIE
+import com.nandra.moviecatalogue.model.Film
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {

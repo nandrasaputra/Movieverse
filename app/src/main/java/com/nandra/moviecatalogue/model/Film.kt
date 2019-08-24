@@ -1,4 +1,4 @@
-package com.nandra.moviecatalogue
+package com.nandra.moviecatalogue.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

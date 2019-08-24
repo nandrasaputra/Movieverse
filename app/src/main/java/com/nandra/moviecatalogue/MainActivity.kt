@@ -3,7 +3,8 @@ package com.nandra.moviecatalogue
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.e_activity_main.*
+import com.nandra.moviecatalogue.adapter.ViewPagerPageAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,10 +13,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.e_activity_main)
+        setContentView(R.layout.activity_main)
 
         tabLayout = findViewById(R.id.main_tab_layout)
-        viewPagerPageAdapter = ViewPagerPageAdapter(supportFragmentManager, tabLayout.tabCount)
+        viewPagerPageAdapter = ViewPagerPageAdapter(
+            supportFragmentManager,
+            tabLayout.tabCount
+        )
         main_viewpager.adapter = viewPagerPageAdapter
 
         tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{

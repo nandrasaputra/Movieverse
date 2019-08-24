@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.nandra.moviecatalogue.adapter.RecyclerViewAdapter
+import com.nandra.moviecatalogue.model.Film
 
 class TvShowFragment : Fragment() {
 
@@ -31,7 +33,7 @@ class TvShowFragment : Fragment() {
         tvShowRecyclerView.apply {
             hasFixedSize()
             layoutManager = LinearLayoutManager(context)
-            adapter = ERecyclerViewAdapter(tvShowList)
+            adapter = RecyclerViewAdapter(tvShowList)
         }
     }
 
@@ -50,7 +52,8 @@ class TvShowFragment : Fragment() {
             val mOverview = dataTVShowOverview[i]
             val mPoster = dataTVShowPoster.getResourceId(i, -1)
 
-            val movie = Film(mTitle, mRating, mGenre, mOverview, mPoster)
+            val movie =
+                Film(mTitle, mRating, mGenre, mOverview, mPoster)
             tvShowList.add(movie)
         }
     }

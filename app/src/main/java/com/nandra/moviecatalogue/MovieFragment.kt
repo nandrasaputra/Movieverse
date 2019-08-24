@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.nandra.moviecatalogue.adapter.RecyclerViewAdapter
+import com.nandra.moviecatalogue.model.Film
 
 class MovieFragment : Fragment() {
 
@@ -31,7 +33,7 @@ class MovieFragment : Fragment() {
         movieRecyclerView.apply {
             hasFixedSize()
             layoutManager = LinearLayoutManager(context)
-            adapter = ERecyclerViewAdapter(moviesList)
+            adapter = RecyclerViewAdapter(moviesList)
         }
     }
 
@@ -50,7 +52,8 @@ class MovieFragment : Fragment() {
             val mOverview = dataMoviesOverview[i]
             val mPoster = dataMoviesPoster.getResourceId(i, -1)
 
-            val movie = Film(mTitle, mRating, mGenre, mOverview, mPoster)
+            val movie =
+                Film(mTitle, mRating, mGenre, mOverview, mPoster)
             moviesList.add(movie)
         }
     }

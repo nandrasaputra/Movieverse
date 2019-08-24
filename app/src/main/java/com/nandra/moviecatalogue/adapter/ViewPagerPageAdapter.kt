@@ -1,8 +1,10 @@
-package com.nandra.moviecatalogue
+package com.nandra.moviecatalogue.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.nandra.moviecatalogue.MovieFragment
+import com.nandra.moviecatalogue.TvShowFragment
 
 class ViewPagerPageAdapter(
     fragmentManager: FragmentManager,

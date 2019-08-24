@@ -1,5 +1,6 @@
-package com.nandra.moviecatalogue
+package com.nandra.moviecatalogue.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.makeramen.roundedimageview.RoundedImageView
+import com.nandra.moviecatalogue.DetailActivity
+import com.nandra.moviecatalogue.MainActivity
+import com.nandra.moviecatalogue.R
+import com.nandra.moviecatalogue.model.Film
 
-class ERecyclerViewAdapter(private val filmList : ArrayList<Film>) : RecyclerView.Adapter<ERecyclerViewAdapter.MyViewHolder>() {
+class RecyclerViewAdapter(private val filmList : ArrayList<Film>) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_main_movie_list, parent, false)
@@ -30,6 +35,12 @@ class ERecyclerViewAdapter(private val filmList : ArrayList<Film>) : RecyclerVie
             .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
             .into(holder.img)
         holder.overview.text = currentMovie.overview
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra(MainActivity.EXTRA_MOVIE, currentMovie)
+            context.startActivity(intent)
+        }
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
