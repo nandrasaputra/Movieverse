@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.makeramen.roundedimageview.RoundedImageView
 import com.nandra.moviecatalogue.MainActivity.Companion.EXTRA_MOVIE
 
-class MainMovieListAdapter(private val context: Context, private val movies : ArrayList<Movie>) : BaseAdapter() {
+class MainMovieListAdapter(private val context: Context, private val films : ArrayList<Film>) : BaseAdapter() {
 
     override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
 
@@ -21,7 +21,7 @@ class MainMovieListAdapter(private val context: Context, private val movies : Ar
         return if(view == null) {
             val newView = LayoutInflater.from(context).inflate(R.layout.item_main_movie_list, viewGroup, false)
             val mViewHolder = MovieViewHolder(newView)
-            val movie = getItem(position) as Movie
+            val movie = getItem(position) as Film
             mViewHolder.bind(movie)
             newView.setOnClickListener {
                 intent.putExtra(EXTRA_MOVIE, movie)
@@ -30,7 +30,7 @@ class MainMovieListAdapter(private val context: Context, private val movies : Ar
             newView
         } else {
             val mViewHolder = MovieViewHolder(view)
-            val movie = getItem(position) as Movie
+            val movie = getItem(position) as Film
             mViewHolder.bind(movie)
             view.setOnClickListener {
                 intent.putExtra(EXTRA_MOVIE, movie)
@@ -41,7 +41,7 @@ class MainMovieListAdapter(private val context: Context, private val movies : Ar
     }
 
     override fun getItem(position: Int): Any {
-        return movies[position]
+        return films[position]
     }
 
     override fun getItemId(i: Int): Long {
@@ -49,7 +49,7 @@ class MainMovieListAdapter(private val context: Context, private val movies : Ar
     }
 
     override fun getCount(): Int {
-        return movies.size
+        return films.size
     }
 
     inner class MovieViewHolder(view: View) {
@@ -59,15 +59,15 @@ class MainMovieListAdapter(private val context: Context, private val movies : Ar
         private val img : RoundedImageView = view.findViewById(R.id.item_image_movie_poster)
         private val overview : TextView = view.findViewById(R.id.item_text_movie_overview)
 
-        fun bind(movie: Movie) {
-            title.text = movie.title
-            rating.text = movie.rating
-            genre.text = movie.genre
+        fun bind(film: Film) {
+            title.text = film.title
+            rating.text = film.rating
+            genre.text = film.genre
             Glide.with(context)
-                .load(movie.poster)
+                .load(film.poster)
                 .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
                 .into(img)
-            overview.text = movie.overview
+            overview.text = film.overview
         }
     }
 }

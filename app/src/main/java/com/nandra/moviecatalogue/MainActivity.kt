@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dataMoviesOverview: Array<String>
     private lateinit var dataMoviesPoster: TypedArray
     private lateinit var moviesAdapter: MainMovieListAdapter
-    private var moviesList: ArrayList<Movie> = arrayListOf()
+    private var moviesList: ArrayList<Film> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             val mOverview = dataMoviesOverview[i]
             val mPoster = dataMoviesPoster.getResourceId(i, -1)
 
-            val movie = Movie(mTitle, mRating, mGenre, mOverview, mPoster)
+            val movie = Film(mTitle, mRating, mGenre, mOverview, mPoster)
             moviesList.add(movie)
         }
 

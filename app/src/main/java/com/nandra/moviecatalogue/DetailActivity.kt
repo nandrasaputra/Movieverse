@@ -13,20 +13,20 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val movie: Movie = intent.getParcelableExtra(EXTRA_MOVIE)
-        prepareView(movie)
+        val film: Film? = intent.getParcelableExtra(EXTRA_MOVIE)
+        prepareView(film!!)
 
         //Back Button On ActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun prepareView(movie: Movie) {
-        detail_text_movie_title.text = movie.title
-        detail_text_movie_genre.text = movie.genre
-        detail_text_movie_rating.text = movie.rating
-        detail_text_movie_overview.text = movie.overview
+    private fun prepareView(film: Film) {
+        detail_text_movie_title.text = film.title
+        detail_text_movie_genre.text = film.genre
+        detail_text_movie_rating.text = film.rating
+        detail_text_movie_overview.text = film.overview
         Glide.with(this)
-            .load(movie.poster)
+            .load(film.poster)
             .into(detail_image_movie_poster)
     }
 
