@@ -1,48 +1,36 @@
 package com.nandra.moviecatalogue
 
-import android.content.res.TypedArray
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.e_activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var dataMoviesTitle: Array<String>
-    private lateinit var dataMoviesRating: Array<String>
-    private lateinit var dataMoviesGenre: Array<String>
-    private lateinit var dataMoviesOverview: Array<String>
-    private lateinit var dataMoviesPoster: TypedArray
-    private lateinit var moviesAdapter: MainMovieListAdapter
-    private var moviesList: ArrayList<Film> = arrayListOf()
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPagerPageAdapter: ViewPagerPageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.e_activity_main)
 
-        prepareMovieListView()
-        main_listview.adapter = moviesAdapter
-    }
+        tabLayout = findViewById(R.id.main_tab_layout)
+        viewPagerPageAdapter = ViewPagerPageAdapter(supportFragmentManager, tabLayout.tabCount)
+        main_viewpager.adapter = viewPagerPageAdapter
 
-    private fun prepareMovieListView() {
-        dataMoviesTitle = resources.getStringArray(R.array.all_movie_title_array)
-        dataMoviesRating = resources.getStringArray(R.array.all_movie_rating_array)
-        dataMoviesGenre = resources.getStringArray(R.array.all_movie_genre_array)
-        dataMoviesOverview = resources.getStringArray(R.array.all_movie_overview_array)
-        dataMoviesPoster = resources.obtainTypedArray(R.array.all_movie_poster_array)
+        tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(p0: TabLayout.Tab?) {}
 
-        for (i in dataMoviesTitle.indices) {
+            override fun onTabUnselected(p0: TabLayout.Tab?) {}
 
-            val mTitle = dataMoviesTitle[i]
-            val mRating = dataMoviesRating[i]
-            val mGenre = dataMoviesGenre[i]
-            val mOverview = dataMoviesOverview[i]
-            val mPoster = dataMoviesPoster.getResourceId(i, -1)
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                main_viewpager.currentItem = tab?.position!!
+            }
 
-            val movie = Film(mTitle, mRating, mGenre, mOverview, mPoster)
-            moviesList.add(movie)
-        }
+        })
 
-        moviesAdapter = MainMovieListAdapter(this, moviesList)
+        main_viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+
     }
 
     companion object {
