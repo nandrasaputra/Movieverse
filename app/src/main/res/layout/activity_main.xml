@@ -16,14 +16,14 @@
             android:id="@+id/main_tab_item_movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tab_layout_item_title_movie"
+            android:text="@string/main_tab_1_title_en"
             />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/main_tab_item_tvseries"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/main_tab_item_tvshow"/>
+            android:text="@string/main_tab_2_title_en"/>
 
     </com.google.android.material.tabs.TabLayout>
 

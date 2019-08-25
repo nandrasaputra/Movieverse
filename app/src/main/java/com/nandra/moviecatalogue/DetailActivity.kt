@@ -13,12 +13,9 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-
         val film: Film? = intent.getParcelableExtra(EXTRA_MOVIE)
         prepareView(film!!)
-
-        //Back Button On ActionBar
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setDisplayHomeAsUpEnabled(true)  //Back Button On ActionBar
     }
 
     private fun prepareView(film: Film) {
