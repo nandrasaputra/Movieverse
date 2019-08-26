@@ -5,8 +5,6 @@
     <string name="main_genre_mock">Genre, Genre, Genre</string>
     <string name="main_overview_mock">It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</string>
     <string name="main_rating_mock">00%</string>
-    <string name="tab_layout_item_title_movie">Movie</string>
-    <string name="main_tab_item_tvshow">TV Show</string>
 
     <string name="main_menu_settings_title_en">"Settings"</string>
     <string name="main_menu_settings_title_id">"Pengaturan"</string>
