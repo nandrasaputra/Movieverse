@@ -23,6 +23,8 @@
     <string name="preferences_language_listpreferences_negative_text_en">"Cancel"</string>
     <string name="preferences_language_listpreferences_negative_text_id">"Batal"</string>
 
+    <string name="api_key">"b035113688699fc69bf05ff16f32aa80</string>
+
     <array name="all_movie_poster_array">
         <item>@drawable/img_movie_poster_a_star</item>
         <item>@drawable/img_movie_poster_aquaman</item>
