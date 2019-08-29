@@ -1,4 +1,4 @@
-package com.nandra.moviecatalogue
+package com.nandra.moviecatalogue.ui
 
 import android.content.SharedPreferences
 import android.content.res.TypedArray
@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.nandra.moviecatalogue.adapter.RecyclerViewAdapter
-import com.nandra.moviecatalogue.model.Film
+import com.nandra.moviecatalogue.R
+import com.nandra.moviecatalogue.model.FilmUsedTo
 
 class TvShowFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -20,7 +20,7 @@ class TvShowFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
     private lateinit var dataTVShowGenre: Array<String>
     private lateinit var dataTVShowOverview: Array<String>
     private lateinit var dataTVShowPoster: TypedArray
-    private var tvShowList: ArrayList<Film> = arrayListOf()
+    private var tvShowList: ArrayList<FilmUsedTo> = arrayListOf()
     private lateinit var tvShowRecyclerView : RecyclerView
     private lateinit var sharedPreferences : SharedPreferences
     private var currentLanguage : String? = ""
@@ -41,7 +41,7 @@ class TvShowFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         tvShowRecyclerView.apply {
             hasFixedSize()
             layoutManager = LinearLayoutManager(context)
-            adapter = RecyclerViewAdapter(tvShowList)
+            //adapter = RecyclerViewAdapter(tvShowList)
         }
     }
 
@@ -55,10 +55,10 @@ class TvShowFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         currentLanguage = sharedPreferences?.getString(key, languageEnglishValue)
         if (currentLanguage!! == languageEnglishValue) {
             prepareTVShowListView(currentLanguage!!)
-            tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(tvShowList), true)
+            //tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(tvShowList), true)
         } else {
             prepareTVShowListView(currentLanguage!!)
-            tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(tvShowList), true)
+            //tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(tvShowList), true)
         }
     }
 
@@ -73,14 +73,14 @@ class TvShowFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         dataTVShowTitle = resources.getStringArray(R.array.all_tvshow_title_array)
         dataTVShowRating = resources.getStringArray(R.array.all_tvshow_rating_array)
         dataTVShowPoster = resources.obtainTypedArray(R.array.all_tvshow_poster_array)
-        val mTVShowList : ArrayList<Film> = arrayListOf()
+        val mTVShowList : ArrayList<FilmUsedTo> = arrayListOf()
         for (i in dataTVShowTitle.indices) {
             val mTitle = dataTVShowTitle[i]
             val mRating = dataTVShowRating[i]
             val mGenre = dataTVShowGenre[i]
             val mOverview = dataTVShowOverview[i]
             val mPoster = dataTVShowPoster.getResourceId(i, -1)
-            mTVShowList.add(Film(mTitle, mRating, mGenre, mOverview, mPoster))
+            mTVShowList.add(FilmUsedTo(mTitle, mRating, mGenre, mOverview, mPoster))
         }
         tvShowList = mTVShowList
     }

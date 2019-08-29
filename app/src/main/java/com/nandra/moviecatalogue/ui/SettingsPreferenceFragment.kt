@@ -1,10 +1,11 @@
-package com.nandra.moviecatalogue
+package com.nandra.moviecatalogue.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import com.nandra.moviecatalogue.R
 
 class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 

@@ -1,35 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<fragment android:id="@+id/main_fragment_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/main_tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:outlineProvider="bounds"
-        android:elevation="6dp">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/main_tab_item_movie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/main_tab_1_title_en"
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/main_tab_item_tvseries"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/main_tab_2_title_en"/>
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/main_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</LinearLayout>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:name="androidx.navigation.fragment.NavHostFragment"
+    app:navGraph="@navigation/main_nav"
+    app:defaultNavHost="true">
+</fragment>

@@ -14,7 +14,6 @@
     <string name = "main_tab_2_title_en">"TV Series"</string>
     <string name = "main_tab_2_title_id">"Serial TV"</string>
 
-
     <string name="preferences_language_title_en">"Language"</string>
     <string name="preferences_language_title_id">"Bahasa"</string>
     <string name="preferences_language_key">"language"</string>
@@ -23,7 +22,8 @@
     <string name="preferences_language_listpreferences_negative_text_en">"Cancel"</string>
     <string name="preferences_language_listpreferences_negative_text_id">"Batal"</string>
 
-    <string name="api_key">"b035113688699fc69bf05ff16f32aa80</string>
+    <string name="film_type_movie">"movie"</string>
+    <string name="film_type_tvshow">"tvshow"</string>
 
     <array name="all_movie_poster_array">
         <item>@drawable/img_movie_poster_a_star</item>
@@ -196,7 +196,7 @@
         <item>"Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and icy horrors beyond."</item>
         <item>"Everyone knows the name Commissioner Gordon. He is one of the crime world's greatest foes, a man whose reputation is synonymous with law and order. But what is known of Gordon's story and his rise from rookie detective to Police Commissioner? What did it take to navigate the multiple layers of corruption that secretly ruled Gotham City, the spawning ground of the world's most iconic villains?"</item>
         <item>"Follows the personal and professional lives of a group of doctors at Seattle’s Grey Sloan Memorial Hospital."</item>
-        <item>"This thriller and coming-of-age drama follows the journey of an extraordinary young girl as she evades the relentless pursuit of an off-book CIA agent and tries to unearth the truth behind who she is. Based on the 2011 Joe Wright film."</item>
+        <item>"This thriller and coming-of-age drama follows the journey of an extraordinary young girl as she evades the relentless pursuit of an off-book CIA agent and tries to unearth the truth behind who she is. Based on the 2011 Joe Wright filmUsedTo."</item>
         <item>"Danny Rand resurfaces 15 years after being presumed dead. Now, with the power of the Iron Fist, he seeks to reclaim his past and fulfill his destiny."</item>
         <item>"Naruto Shippuuden is the continuation of the original animated TV series Naruto.The story revolves around an older and slightly more matured Uzumaki Naruto and his quest to save his friend Uchiha Sasuke from the grips of the snake-like Shinobi, Orochimaru."</item>
         <item>"From murder and espionage to terrorism and stolen submarines, a team of special agents investigates any crime that has a shred of evidence connected to Navy and Marine Corps personnel, regardless of rank or position."</item>
@@ -237,7 +237,7 @@
         <item>"Anggota Patroli Doom masing-masing mengalami kecelakaan mengerikan yang memberi mereka kemampuan manusia super - tetapi juga membuat mereka cacat dan cacat. Trauma dan tertindas, tim menemukan tujuan melalui Ketua, yang menyatukan mereka untuk menyelidiki fenomena paling aneh yang ada - dan untuk melindungi Bumi dari apa yang mereka temukan. "</item>
         <item>"Dahulu kala di pegunungan, seorang master pertempuran yang dikenal sebagai Gohan menemukan seorang bocah aneh yang ia beri nama Goku. Gohan membesarkannya dan melatih Goku dalam seni bela diri sampai ia mati. Bocah muda dan sangat kuat itu sendirian, tetapi mudah dikelola. Lalu suatu hari, Goku bertemu dengan seorang gadis remaja bernama Bulma, yang pencariannya untuk bola naga membawanya ke rumah Goku. "</item>
         <item>"Lucy adalah seorang gadis berusia 17 tahun, yang ingin menjadi penyihir penuh. Suatu hari ketika mengunjungi Kota Harujion, dia bertemu Natsu, seorang pemuda yang mudah sakit dengan segala jenis transportasi. Tetapi Natsu bukan sembarang anak biasa, dia adalah anggota dari salah satu serikat penyihir paling terkenal di dunia: Fairy Tail. "</item>
-        <item>"Seri film animasi Freakin 'Sweet yang sakit, terpelintir, keliru secara politis, dan menampilkan petualangan keluarga Griffin yang disfungsional. Bumbling Peter dan Lois yang menderita lama memiliki tiga anak. Stewie (bayi yang cerdas namun sadis cenderung membunuh ibunya dan mengambil atas dunia), Meg (yang tertua, dan adalah gadis yang paling tidak populer di kota) dan Chris (anak tengah, dia tidak terlalu cerdas tetapi memiliki hasrat untuk film). "</item>
+        <item>"Seri filmUsedTo animasi Freakin 'Sweet yang sakit, terpelintir, keliru secara politis, dan menampilkan petualangan keluarga Griffin yang disfungsional. Bumbling Peter dan Lois yang menderita lama memiliki tiga anak. Stewie (bayi yang cerdas namun sadis cenderung membunuh ibunya dan mengambil atas dunia), Meg (yang tertua, dan adalah gadis yang paling tidak populer di kota) dan Chris (anak tengah, dia tidak terlalu cerdas tetapi memiliki hasrat untuk filmUsedTo). "</item>
         <item>"Setelah akselerator partikel menyebabkan badai hebat, Penyelidik CSI Barry Allen disambar petir dan jatuh koma. Berbulan-bulan kemudian ia terbangun dengan kekuatan kecepatan super, memberinya kemampuan untuk bergerak melalui Kota Pusat seperti tak terlihat malaikat pelindung."</item>
         <item>"Tujuh keluarga bangsawan berjuang untuk menguasai tanah mistis Westeros. Gesekan di antara rumah-rumah mengarah ke perang skala penuh. Semua sementara kejahatan yang sangat kuno terbangun di utara yang terjauh. Di tengah perang, sebuah perintah militer yang diabaikan karena kesalahan. , Night's Watch, adalah yang berdiri di antara ranah laki-laki dan kengerian es di luar sana. "</item>
         <item>"Semua orang tahu nama Komisaris Gordon. Dia adalah salah satu musuh terbesar dunia kriminal, seorang pria yang reputasinya identik dengan hukum dan ketertiban. Tetapi apa yang diketahui dari kisah Gordon dan kebangkitannya dari detektif pemula ke Komisaris Polisi? Apa apakah diperlukan untuk menavigasi berbagai lapisan korupsi yang diam-diam memerintah Kota Gotham, tempat bertelurnya penjahat paling ikonik di dunia? "</item>

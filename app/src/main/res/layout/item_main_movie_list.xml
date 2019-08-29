@@ -82,7 +82,7 @@
         android:src="@drawable/img_movie_poster_a_star" />
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/item_imagerounded_movie_rating_back"
+        android:id="@+id/detail_imagerounded_movie_rating_back"
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:layout_constraintEnd_toEndOf="@+id/item_image_movie_poster"
@@ -97,10 +97,10 @@
         android:id="@+id/item_text_movie_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/item_imagerounded_movie_rating_back"
-        app:layout_constraintEnd_toEndOf="@id/item_imagerounded_movie_rating_back"
-        app:layout_constraintStart_toStartOf="@id/item_imagerounded_movie_rating_back"
-        app:layout_constraintTop_toTopOf="@id/item_imagerounded_movie_rating_back"
+        app:layout_constraintBottom_toBottomOf="@id/detail_imagerounded_movie_rating_back"
+        app:layout_constraintEnd_toEndOf="@id/detail_imagerounded_movie_rating_back"
+        app:layout_constraintStart_toStartOf="@id/detail_imagerounded_movie_rating_back"
+        app:layout_constraintTop_toTopOf="@id/detail_imagerounded_movie_rating_back"
         android:elevation="8dp"
         android:fontFamily="@font/lato_bold"
         android:text="@string/main_rating_mock"

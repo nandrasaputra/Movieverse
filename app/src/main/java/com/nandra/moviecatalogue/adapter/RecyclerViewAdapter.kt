@@ -1,19 +1,21 @@
 package com.nandra.moviecatalogue.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.nandra.moviecatalogue.DetailActivity
-import com.nandra.moviecatalogue.MainActivity
 import com.nandra.moviecatalogue.R
-import com.nandra.moviecatalogue.model.Film
+import com.nandra.moviecatalogue.data.Film
+import com.nandra.moviecatalogue.ui.MainFragmentDirections
 import kotlinx.android.synthetic.main.item_main_movie_list.view.*
 
-class RecyclerViewAdapter(private val filmList : ArrayList<Film>) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
+class RecyclerViewAdapter(
+    private val filmList : ArrayList<Film>,
+    private val filmType: String
+) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_main_movie_list, parent, false)
@@ -27,18 +29,17 @@ class RecyclerViewAdapter(private val filmList : ArrayList<Film>) : RecyclerView
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentMovie = filmList[position]
         holder.itemView.item_text_movie_title.text = currentMovie.title
-        holder.itemView.item_text_movie_rating.text = currentMovie.rating
-        holder.itemView.item_text_movie_genre.text = currentMovie.genre
+        holder.itemView.item_text_movie_rating.text = currentMovie.voteAverage.toString()
+        //holder.itemView.item_text_movie_genre.text = currentMovie.genre
+        val url = "https://image.tmdb.org/t/p/w185"
         Glide.with(holder.itemView)
-            .load(currentMovie.poster)
+            .load(url + currentMovie.posterPath)
             .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
             .into(holder.itemView.item_image_movie_poster)
         holder.itemView.item_text_movie_overview.text = currentMovie.overview
         holder.itemView.setOnClickListener {
-            val context = holder.itemView.context
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra(MainActivity.EXTRA_MOVIE, currentMovie)
-            context.startActivity(intent)
+            val action = MainFragmentDirections.actionMainFragmentToDetailFragment(filmType).setPosition(position)
+            holder.itemView.findNavController().navigate(action)
         }
     }
 
