@@ -67,13 +67,27 @@ class DetailFragment : Fragment() {
     }
 
     private fun prepareView(position: Int, filmType: String) {
-        film = if (filmType == getString(R.string.film_type_movie))
-            sharedViewModel.listMovies[position]
+        if (filmType == getString(R.string.film_type_movie))
+            prepareMovieView(position)
         else
-            sharedViewModel.listTVSeries[position]
+            prepareTVView(position)
+    }
 
-
+    private fun prepareMovieView(position: Int){
+        film = sharedViewModel.listMovieLive.value!![position]
         detail_text_movie_title.text = film.title
+        //detail_text_movie_genre.text = .genre
+        detail_text_movie_rating.text = film.voteAverage.toString()
+        detail_text_movie_overview.text = film.overview
+        val url = "https://image.tmdb.org/t/p/w342"
+        Glide.with(this)
+            .load(url + film.posterPath)
+            .into(detail_image_movie_poster)
+    }
+
+    private fun prepareTVView(position: Int) {
+        film = sharedViewModel.listTVLive.value!![position]
+        detail_text_movie_title.text = film.tvName
         //detail_text_movie_genre.text = .genre
         detail_text_movie_rating.text = film.voteAverage.toString()
         detail_text_movie_overview.text = film.overview

@@ -13,13 +13,14 @@ import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.ViewModel.SharedViewModel
 import com.nandra.moviecatalogue.adapter.RecyclerViewAdapter
-import com.nandra.moviecatalogue.network.Film
 import kotlinx.android.synthetic.main.fragment_tv_show.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class TvShowFragment : Fragment() {
 
-    private var tvShowList: ArrayList<Film> = arrayListOf()
     private lateinit var tvShowRecyclerView : RecyclerView
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var filmType: String
@@ -41,16 +42,20 @@ class TvShowFragment : Fragment() {
         sharedViewModel.isError.observe(this, Observer {
             errorIndicator(it)
         })
+        sharedViewModel.listTVLive.observe(this, Observer {
+            filmType = getString(R.string.film_type_tvshow)
+            tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(it, filmType), true)
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        filmType = getString(R.string.film_type_tvshow)
-        attemptPrepareView()
         tvShowRecyclerView.apply {
             hasFixedSize()
             layoutManager = LinearLayoutManager(context)
         }
+        filmType = getString(R.string.film_type_tvshow)
+        attemptPrepareView()
     }
 
     private fun loadingIndicator(state: Boolean) {
@@ -82,18 +87,18 @@ class TvShowFragment : Fragment() {
     }
 
     private fun prepareTVShowListView() {
+        filmType = getString(R.string.film_type_tvshow)
         val job = Job()
         val scope = CoroutineScope(Dispatchers.Main + job)
         Glide.with(this)
             .load(R.drawable.img_loading_indicator)
             .into(tvshow_loading_image)
-        scope.launch {
-            val task = async {
+        if (sharedViewModel.isDataHasLoaded)
+            tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(sharedViewModel.listTVLive.value!!, filmType), true)
+        else {
+            scope.launch {
                 sharedViewModel.getListTVSeries()
             }
-            tvShowList = task.await()
-            tvShowRecyclerView.adapter = RecyclerViewAdapter(tvShowList, filmType)
         }
     }
-
 }

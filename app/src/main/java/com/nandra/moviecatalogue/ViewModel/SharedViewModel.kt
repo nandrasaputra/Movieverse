@@ -16,8 +16,6 @@ import kotlinx.coroutines.launch
 class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     private val repository = MyRepository(app)
-    var listMovies: ArrayList<Film> = arrayListOf()
-    var listTVSeries: ArrayList<Film> = arrayListOf()
     var isDataHasLoaded: Boolean = false
     private var job = Job()
 
@@ -28,9 +26,17 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     val isError: LiveData<Boolean>
         get() = _isError
 
+    private val _listMovieLive = MutableLiveData<ArrayList<Film>>()
+    val listMovieLive: LiveData<ArrayList<Film>>
+        get() = _listMovieLive
+    private val _listTVLive = MutableLiveData<ArrayList<Film>>()
+    val listTVLive: LiveData<ArrayList<Film>>
+        get() = _listTVLive
+
     init {
         _isLoading.value = false
         _isError.value = false
+        _listMovieLive.value = arrayListOf()
     }
 
     private fun isConnectedToInternet() : Boolean {
@@ -46,8 +52,8 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                 val movieResponse = repository.fetchMovieResponse()
                 val tvShowResponse = repository.fetchTVSeriesResponse()
                 if (movieResponse.isSuccessful && tvShowResponse.isSuccessful) {
-                    listMovies = movieResponse.body()?.results as ArrayList
-                    listTVSeries = tvShowResponse.body()?.results as ArrayList
+                    _listMovieLive.postValue(movieResponse.body()?.results as ArrayList)
+                    _listTVLive.postValue(tvShowResponse.body()?.results as ArrayList)
                     _isLoading.postValue(false)
                     isDataHasLoaded = true
                     _isError.postValue(false)
@@ -63,29 +69,23 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         job.join()
     }
 
-    suspend fun getListMovie() : ArrayList<Film> {
+    suspend fun getListMovie() {
         return if(!isDataHasLoaded && isConnectedToInternet()) {
             fetchData()
-            listMovies
         } else if (!isDataHasLoaded && !isConnectedToInternet()) {
             _isError.value = true
-            listMovies
         } else {
             _isLoading.value = false
-            listMovies
         }
     }
 
-    suspend fun getListTVSeries() : ArrayList<Film> {
+    suspend fun getListTVSeries() {
         return if(!isDataHasLoaded && isConnectedToInternet()) {
             fetchData()
-            listTVSeries
         } else if (!isDataHasLoaded && !isConnectedToInternet()) {
             _isError.value = true
-            listTVSeries
         } else {
             _isLoading.value = false
-            listTVSeries
         }
     }
 

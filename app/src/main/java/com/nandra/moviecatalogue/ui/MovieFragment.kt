@@ -13,13 +13,14 @@ import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.ViewModel.SharedViewModel
 import com.nandra.moviecatalogue.adapter.RecyclerViewAdapter
-import com.nandra.moviecatalogue.network.Film
 import kotlinx.android.synthetic.main.fragment_movie.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class MovieFragment : Fragment() {
 
-    private var moviesList: ArrayList<Film> = arrayListOf()
     private lateinit var movieRecyclerView : RecyclerView
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var filmType: String
@@ -41,16 +42,20 @@ class MovieFragment : Fragment() {
         sharedViewModel.isError.observe(this, Observer {
             errorIndicator(it)
         })
+        sharedViewModel.listMovieLive.observe(this, Observer {
+            filmType = getString(R.string.film_type_movie)
+            movieRecyclerView.swapAdapter(RecyclerViewAdapter(it, filmType), true)
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        filmType = getString(R.string.film_type_movie)
-        attemptPrepareView()
         movieRecyclerView.apply {
             hasFixedSize()
             layoutManager = LinearLayoutManager(context)
         }
+        filmType = getString(R.string.film_type_movie)
+        attemptPrepareView()
     }
 
     private fun loadingIndicator(state: Boolean) {
@@ -82,17 +87,18 @@ class MovieFragment : Fragment() {
     }
 
     private fun prepareMovieListView() {
+        filmType = getString(R.string.film_type_movie)
         val job = Job()
         val scope = CoroutineScope(Dispatchers.Main + job)
         Glide.with(this)
             .load(R.drawable.img_loading_indicator)
             .into(movie_loading_image)
-        scope.launch {
-            val task = async {
+        if (sharedViewModel.isDataHasLoaded)
+            movieRecyclerView.swapAdapter(RecyclerViewAdapter(sharedViewModel.listMovieLive.value!!, filmType), true)
+        else {
+            scope.launch {
                 sharedViewModel.getListMovie()
             }
-            moviesList = task.await()
-            movieRecyclerView.adapter = RecyclerViewAdapter(moviesList, filmType)
         }
     }
 }
