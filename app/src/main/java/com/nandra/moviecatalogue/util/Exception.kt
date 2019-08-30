@@ -1,4 +1,4 @@
-package com.nandra.moviecatalogue.data
+package com.nandra.moviecatalogue.util
 
 import java.io.IOException
 

@@ -11,11 +11,13 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.ViewModel.SharedViewModel
+import com.nandra.moviecatalogue.network.Film
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment() {
 
     private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var film: Film
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_detail, container, false)
@@ -25,7 +27,7 @@ class DetailFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val position = DetailFragmentArgs.fromBundle(arguments!!).position
         val filmType = DetailFragmentArgs.fromBundle(arguments!!).filmType
-        attempPrepareView(position, filmType)
+        attemptPrepareView(position, filmType)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +37,7 @@ class DetailFragment : Fragment() {
         } ?: throw Exception("Invalid Activity")
     }
 
-    private fun attempPrepareView(position: Int, filmType: String) {
+    private fun attemptPrepareView(position: Int, filmType: String) {
         if(isConnectedToInternet()){
             prepareView(position, filmType)
         } else {
@@ -65,17 +67,19 @@ class DetailFragment : Fragment() {
     }
 
     private fun prepareView(position: Int, filmType: String) {
-        val movie = sharedViewModel.listMoviez[position]
+        film = if (filmType == getString(R.string.film_type_movie))
+            sharedViewModel.listMovies[position]
+        else
+            sharedViewModel.listTVSeries[position]
 
-        detail_text_movie_title.text = movie.title
+
+        detail_text_movie_title.text = film.title
         //detail_text_movie_genre.text = .genre
-        detail_text_movie_rating.text = movie.voteAverage.toString()
-        detail_text_movie_overview.text = movie.overview
+        detail_text_movie_rating.text = film.voteAverage.toString()
+        detail_text_movie_overview.text = film.overview
         val url = "https://image.tmdb.org/t/p/w342"
         Glide.with(this)
-            .load(url + movie.posterPath)
+            .load(url + film.posterPath)
             .into(detail_image_movie_poster)
     }
-
-
 }

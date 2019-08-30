@@ -1,32 +1,28 @@
 package com.nandra.moviecatalogue.ui
 
-import android.content.SharedPreferences
-import android.content.res.TypedArray
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
-import com.nandra.moviecatalogue.model.FilmUsedTo
+import com.nandra.moviecatalogue.ViewModel.SharedViewModel
+import com.nandra.moviecatalogue.adapter.RecyclerViewAdapter
+import com.nandra.moviecatalogue.network.Film
+import kotlinx.android.synthetic.main.fragment_tv_show.*
+import kotlinx.coroutines.*
 
-class TvShowFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class TvShowFragment : Fragment() {
 
-    private lateinit var dataTVShowTitle: Array<String>
-    private lateinit var dataTVShowRating: Array<String>
-    private lateinit var dataTVShowGenre: Array<String>
-    private lateinit var dataTVShowOverview: Array<String>
-    private lateinit var dataTVShowPoster: TypedArray
-    private var tvShowList: ArrayList<FilmUsedTo> = arrayListOf()
+    private var tvShowList: ArrayList<Film> = arrayListOf()
     private lateinit var tvShowRecyclerView : RecyclerView
-    private lateinit var sharedPreferences : SharedPreferences
-    private var currentLanguage : String? = ""
-    private lateinit var languageKey : String
-    private lateinit var languageBahasaValue : String
-    private lateinit var languageEnglishValue : String
+    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var filmType: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tv_show, container, false)
@@ -34,65 +30,70 @@ class TvShowFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         return view
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedViewModel = activity?.run {
+            ViewModelProviders.of(this)[SharedViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+        sharedViewModel.isLoading.observe(this, Observer {
+            loadingIndicator(it)
+        })
+        sharedViewModel.isError.observe(this, Observer {
+            errorIndicator(it)
+        })
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        prepareSharedPreferences()
-        prepareTVShowListView(currentLanguage!!)
+        filmType = getString(R.string.film_type_tvshow)
+        attemptPrepareView()
         tvShowRecyclerView.apply {
             hasFixedSize()
             layoutManager = LinearLayoutManager(context)
-            //adapter = RecyclerViewAdapter(tvShowList)
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        PreferenceManager.getDefaultSharedPreferences(activity)
-            .unregisterOnSharedPreferenceChangeListener(this)
+    private fun loadingIndicator(state: Boolean) {
+        if (state) {
+            tvshow_loading_back.visibility = View.VISIBLE
+        }
+        else {
+            tvshow_loading_back.visibility = View.GONE
+        }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        currentLanguage = sharedPreferences?.getString(key, languageEnglishValue)
-        if (currentLanguage!! == languageEnglishValue) {
-            prepareTVShowListView(currentLanguage!!)
-            //tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(tvShowList), true)
+    private fun errorIndicator(state: Boolean){
+        if(state){
+            tvshow_error_back.visibility = View.VISIBLE
+            tvshow_error_button.setOnClickListener {
+                prepareTVShowListView()
+            }
         } else {
-            prepareTVShowListView(currentLanguage!!)
-            //tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(tvShowList), true)
+            tvshow_error_back.visibility = View.GONE
         }
     }
 
-    private fun prepareTVShowListView(languagePref: String) {
-        if (languagePref == languageEnglishValue) {
-            dataTVShowGenre = resources.getStringArray(R.array.all_tvshow_genre_array_en)
-            dataTVShowOverview = resources.getStringArray(R.array.all_tvshow_overview_array_en)
-        } else {
-            dataTVShowGenre = resources.getStringArray(R.array.all_tvshow_genre_array_id)
-            dataTVShowOverview = resources.getStringArray(R.array.all_tvshow_overview_array_id)
+    private fun attemptPrepareView() {
+        if(sharedViewModel.isError.value == true) {
+            errorIndicator(sharedViewModel.isError.value!!)
+            return
         }
-        dataTVShowTitle = resources.getStringArray(R.array.all_tvshow_title_array)
-        dataTVShowRating = resources.getStringArray(R.array.all_tvshow_rating_array)
-        dataTVShowPoster = resources.obtainTypedArray(R.array.all_tvshow_poster_array)
-        val mTVShowList : ArrayList<FilmUsedTo> = arrayListOf()
-        for (i in dataTVShowTitle.indices) {
-            val mTitle = dataTVShowTitle[i]
-            val mRating = dataTVShowRating[i]
-            val mGenre = dataTVShowGenre[i]
-            val mOverview = dataTVShowOverview[i]
-            val mPoster = dataTVShowPoster.getResourceId(i, -1)
-            mTVShowList.add(FilmUsedTo(mTitle, mRating, mGenre, mOverview, mPoster))
-        }
-        tvShowList = mTVShowList
+        prepareTVShowListView()
     }
 
-    private fun prepareSharedPreferences() {
-        languageKey = getString(R.string.preferences_language_key)
-        languageBahasaValue = getString(R.string.preferences_language_value_bahasaindonesia)
-        languageEnglishValue = getString(R.string.preferences_language_value_english)
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-        currentLanguage = sharedPreferences.getString(getString(R.string.preferences_language_key),
-            getString(R.string.preferences_language_value_english))
+    private fun prepareTVShowListView() {
+        val job = Job()
+        val scope = CoroutineScope(Dispatchers.Main + job)
+        Glide.with(this)
+            .load(R.drawable.img_loading_indicator)
+            .into(tvshow_loading_image)
+        scope.launch {
+            val task = async {
+                sharedViewModel.getListTVSeries()
+            }
+            tvShowList = task.await()
+            tvShowRecyclerView.adapter = RecyclerViewAdapter(tvShowList, filmType)
+        }
     }
 
 }

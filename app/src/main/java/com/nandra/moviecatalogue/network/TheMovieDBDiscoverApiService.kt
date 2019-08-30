@@ -1,4 +1,4 @@
-package com.nandra.moviecatalogue.data
+package com.nandra.moviecatalogue.network
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -15,7 +15,12 @@ interface TheMovieDBApiService {
     @GET("movie")
     suspend fun getMovie(
         @Query("language") language: String
-    ) : Response<DiscoverMovieResponse>
+    ) : Response<DiscoverResponse>
+
+    @GET("tv")
+    suspend fun getTVSeries(
+        @Query("language") language: String
+    ) : Response<DiscoverResponse>
 
     companion object {
         operator fun invoke(connectivityInterceptor: ConnectivityInterceptor) : TheMovieDBApiService {

@@ -1,9 +1,9 @@
-package com.nandra.moviecatalogue.data
+package com.nandra.moviecatalogue.network
 
 
 import com.google.gson.annotations.SerializedName
 
-data class DiscoverMovieResponse(
+data class DiscoverResponse(
     val page: Int,
     @SerializedName("total_results")
     val totalResults: Int,

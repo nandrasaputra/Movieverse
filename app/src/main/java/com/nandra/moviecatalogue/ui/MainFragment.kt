@@ -17,6 +17,7 @@ class MainFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     private lateinit var viewPagerPageAdapter: ViewPagerPageAdapter
     private lateinit var sharedPreferences: SharedPreferences
     private var currentLanguage: String? = ""
+    private var changedLanguage: String? = ""
     private lateinit var languageEnglishValue : String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -44,9 +45,21 @@ class MainFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         setTabItemTitle(currentLanguage!!)
     }
 
+    override fun onStart() {
+        super.onStart()
+        checkLanguage()
+    }
+
+    private fun checkLanguage() {
+        if(currentLanguage != changedLanguage){
+            setTabItemTitle(changedLanguage!!)
+            currentLanguage = changedLanguage
+        }
+    }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        currentLanguage = sharedPreferences?.getString(key, languageEnglishValue)
-        setTabItemTitle(currentLanguage!!)
+        changedLanguage = sharedPreferences?.getString(key, languageEnglishValue)
+        //setTabItemTitle(currentLanguage!!)
     }
 
     private fun setTabItemTitle(language: String) {

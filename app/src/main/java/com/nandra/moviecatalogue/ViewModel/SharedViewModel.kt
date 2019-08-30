@@ -7,18 +7,19 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.nandra.moviecatalogue.R
-import com.nandra.moviecatalogue.data.Film
+import com.nandra.moviecatalogue.network.Film
 import com.nandra.moviecatalogue.repository.MyRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
-    var currentLanguage = app.getString(R.string.preferences_language_value_english)
-    val repository = MyRepository(app)
-    var listMoviez: ArrayList<Film> = arrayListOf()
+    private val repository = MyRepository(app)
+    var listMovies: ArrayList<Film> = arrayListOf()
+    var listTVSeries: ArrayList<Film> = arrayListOf()
     var isDataHasLoaded: Boolean = false
+    private var job = Job()
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
@@ -38,39 +39,54 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         return networkInfo != null && networkInfo.isConnected
     }
 
-    suspend fun getListMovie() : ArrayList<Film> {
-        return if(!isDataHasLoaded && isConnectedToInternet()) {
-            _isLoading.value = true
-            val job = viewModelScope.launch(Dispatchers.IO) {
-                try {
-                    val response = repository.fetchMovieResponse()
-                    if (response.isSuccessful) {
-                        listMoviez = response.body()?.results as ArrayList
-                        _isLoading.postValue(false)
-                        isDataHasLoaded = true
-                        _isError.postValue(false)
-                    } else {
-                        _isLoading.postValue(false)
-                        _isError.postValue(true)
-                    }
-                } catch (exp: Exception) {
+    private suspend fun fetchData() {
+        _isLoading.value = true
+        job = viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val movieResponse = repository.fetchMovieResponse()
+                val tvShowResponse = repository.fetchTVSeriesResponse()
+                if (movieResponse.isSuccessful && tvShowResponse.isSuccessful) {
+                    listMovies = movieResponse.body()?.results as ArrayList
+                    listTVSeries = tvShowResponse.body()?.results as ArrayList
+                    _isLoading.postValue(false)
+                    isDataHasLoaded = true
+                    _isError.postValue(false)
+                } else {
                     _isLoading.postValue(false)
                     _isError.postValue(true)
                 }
+            } catch (exp: Exception) {
+                _isLoading.postValue(false)
+                _isError.postValue(true)
             }
-            job.join()
-            listMoviez
+        }
+        job.join()
+    }
+
+    suspend fun getListMovie() : ArrayList<Film> {
+        return if(!isDataHasLoaded && isConnectedToInternet()) {
+            fetchData()
+            listMovies
         } else if (!isDataHasLoaded && !isConnectedToInternet()) {
             _isError.value = true
-            listMoviez
+            listMovies
         } else {
             _isLoading.value = false
-            listMoviez
+            listMovies
         }
     }
 
-    fun getListTVSeries() {
-
+    suspend fun getListTVSeries() : ArrayList<Film> {
+        return if(!isDataHasLoaded && isConnectedToInternet()) {
+            fetchData()
+            listTVSeries
+        } else if (!isDataHasLoaded && !isConnectedToInternet()) {
+            _isError.value = true
+            listTVSeries
+        } else {
+            _isLoading.value = false
+            listTVSeries
+        }
     }
 
 }

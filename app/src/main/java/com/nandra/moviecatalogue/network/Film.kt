@@ -1,4 +1,4 @@
-package com.nandra.moviecatalogue.data
+package com.nandra.moviecatalogue.network
 
 
 import com.google.gson.annotations.SerializedName
@@ -25,5 +25,9 @@ data class Film(
     val voteAverage: Double,
     val overview: String,
     @SerializedName("release_date")
-    val releaseDate: String
+    val releaseDate: String,
+    @SerializedName("original_name")
+    val tvOriginalName: String,
+    @SerializedName("name")
+    val tvName: String
 )

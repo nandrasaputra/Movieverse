@@ -1,8 +1,9 @@
-package com.nandra.moviecatalogue.data
+package com.nandra.moviecatalogue.network
 
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
+import com.nandra.moviecatalogue.util.NoConnectivityException
 import okhttp3.Interceptor
 import okhttp3.Response
 
