@@ -1,9 +1,8 @@
-package com.nandra.moviecatalogue.ViewModel
+package com.nandra.moviecatalogue.viewmodel
 
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,7 +19,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private val repository = MyRepository(app)
     var isDataHasLoaded: Boolean = false
     private var job : Job? = null
-    private var currentLanguage: String = ""
+    var currentLanguage: String = ""
 
     var movieGenreStringList = arrayListOf<String>()
     var tvGenreStringList = arrayListOf<String>()
@@ -79,6 +78,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                     _listTVLive.postValue(listTV)
 
                     isDataHasLoaded = true
+                    currentLanguage = language
                     _isLoading.postValue(false)
                     _isError.postValue(false)
                 } else {
@@ -94,40 +94,22 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     suspend fun requestData(language: String) {
-        Log.d("DEBUG", "REQUEST DATA")
         if(job != null){
             job?.join()
         }
 
-        /*if(isNewLanguage(language)) {
-            Log.d("DEBUG", "NEW LANGUAGE")
+        if(isNewLanguage(language)) {
             if (isConnectedToInternet()) {
                 fetchData(language)
             } else {
                 _isError.value = true
             }
         } else {
-            Log.d("DEBUG", "OLD LANGUAGE")
             if (!isDataHasLoaded && isConnectedToInternet()) {
                 fetchData(language)
             } else if (!isDataHasLoaded && !isConnectedToInternet()) {
                 _isError.value = true
             }
-        }*/
-
-        /*if (!isDataHasLoaded && isConnectedToInternet()) {
-            fetchData(language)
-        } else if (!isDataHasLoaded && !isConnectedToInternet()) {
-            _isError.value = true
-        } else {
-            _isLoading.value = false
-        }*/
-
-        //RIGHT
-        if (!isDataHasLoaded && isConnectedToInternet()) {
-            fetchData(language)
-        } else if (!isDataHasLoaded && !isConnectedToInternet()) {
-            _isError.value = true
         }
     }
 
@@ -164,6 +146,6 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     private fun isNewLanguage(language: String) : Boolean {
-        return (language == currentLanguage)
+        return (language != currentLanguage)
     }
 }

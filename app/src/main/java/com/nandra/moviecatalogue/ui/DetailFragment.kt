@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
-import com.nandra.moviecatalogue.ViewModel.SharedViewModel
 import com.nandra.moviecatalogue.network.Film
+import com.nandra.moviecatalogue.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment() {

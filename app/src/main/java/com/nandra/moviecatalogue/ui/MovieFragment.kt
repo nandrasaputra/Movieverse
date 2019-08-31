@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
-import com.nandra.moviecatalogue.ViewModel.SharedViewModel
 import com.nandra.moviecatalogue.adapter.RecyclerViewAdapter
 import com.nandra.moviecatalogue.util.Constant
+import com.nandra.moviecatalogue.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -97,7 +97,7 @@ class MovieFragment : Fragment() {
         Glide.with(this)
             .load(R.drawable.img_loading_indicator)
             .into(movie_loading_image)
-        if (sharedViewModel.isDataHasLoaded)
+        if (sharedViewModel.isDataHasLoaded && currentLanguage == sharedViewModel.currentLanguage)
             movieRecyclerView.swapAdapter(RecyclerViewAdapter(sharedViewModel.listMovieLive.value!!, Constant.MOVIE_FILM_TYPE, sharedViewModel.movieGenreStringList), true)
         else {
             scope.launch {
