@@ -75,6 +75,7 @@ class TvShowFragment : Fragment() {
     private fun errorIndicator(state: Boolean){
         if(state){
             tvshow_error_back.visibility = View.VISIBLE
+            viewLanguageAdjustment()
             tvshow_error_button.setOnClickListener {
                 prepareTVShowListView()
             }
@@ -112,5 +113,12 @@ class TvShowFragment : Fragment() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         currentLanguage = sharedPreferences.getString(preferenceLanguageKey,
             languageEnglishValue)!!
+    }
+
+    private fun viewLanguageAdjustment() {
+        if (currentLanguage == languageEnglishValue)
+            tvshow_error_button.text = getString(R.string.button_try_again_en)
+        else
+            tvshow_error_button.text = getString(R.string.button_try_again_id)
     }
 }

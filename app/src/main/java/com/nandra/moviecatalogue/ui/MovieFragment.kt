@@ -75,6 +75,7 @@ class MovieFragment : Fragment() {
     private fun errorIndicator(state: Boolean){
         if(state){
             movie_error_back.visibility = View.VISIBLE
+            viewLanguageAdjustment()
             movie_error_button.setOnClickListener {
                 prepareMovieListView()
             }
@@ -112,5 +113,12 @@ class MovieFragment : Fragment() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         currentLanguage = sharedPreferences.getString(preferenceLanguageKey,
             languageEnglishValue)!!
+    }
+
+    private fun viewLanguageAdjustment() {
+        if (currentLanguage == languageEnglishValue)
+            movie_error_button.text = getString(R.string.button_try_again_en)
+        else
+            movie_error_button.text = getString(R.string.button_try_again_id)
     }
 }

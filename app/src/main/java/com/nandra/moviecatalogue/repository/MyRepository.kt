@@ -4,9 +4,6 @@ import android.app.Application
 import com.nandra.moviecatalogue.network.*
 import retrofit2.Response
 
-const val LANGUAGE_ENGLISH = "en-US"
-const val LANGUAGE_INDONESIA = "id-ID"
-
 class MyRepository(app: Application) {
 
     private val interceptor = ConnectivityInterceptor(app)

@@ -27,8 +27,4 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    companion object {
-        @JvmStatic val EXTRA_MOVIE = "extra_movie"
-    }
 }
