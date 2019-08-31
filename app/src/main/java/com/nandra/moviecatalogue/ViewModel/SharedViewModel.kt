@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.nandra.moviecatalogue.network.Film
+import com.nandra.moviecatalogue.network.Genre
 import com.nandra.moviecatalogue.repository.MyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -18,6 +19,9 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private val repository = MyRepository(app)
     var isDataHasLoaded: Boolean = false
     private var job = Job()
+
+    var movieGenreStringList = arrayListOf<String>()
+    var tvGenreStringList = arrayListOf<String>()
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
@@ -51,11 +55,29 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
             try {
                 val movieResponse = repository.fetchMovieResponse()
                 val tvShowResponse = repository.fetchTVSeriesResponse()
-                if (movieResponse.isSuccessful && tvShowResponse.isSuccessful) {
-                    _listMovieLive.postValue(movieResponse.body()?.results as ArrayList)
-                    _listTVLive.postValue(tvShowResponse.body()?.results as ArrayList)
-                    _isLoading.postValue(false)
+                val tvGenreResponse = repository.fetchTVGenreResponse()
+                val movieGenreResponse = repository.fetchMovieGenreResponse()
+
+                if (movieResponse.isSuccessful && tvShowResponse.isSuccessful
+                    && tvGenreResponse.isSuccessful && movieGenreResponse.isSuccessful) {
+
+                    val listMovie = movieResponse.body()?.results as ArrayList
+                    val listTV = tvShowResponse.body()?.results as ArrayList
+
+
+                    val tvGenreList = tvGenreResponse.body()?.genres
+                    val movieGenreList = movieGenreResponse.body()?.genres
+                    val tvGenreMap = createMapFromList(tvGenreList!!)
+                    val movieGenreMap = createMapFromList(movieGenreList!!)
+
+                    movieGenreStringList = createGenreStringList(listMovie, movieGenreMap)
+                    tvGenreStringList = createGenreStringList(listTV, tvGenreMap)
+
+                    _listMovieLive.postValue(listMovie)
+                    _listTVLive.postValue(listTV)
+
                     isDataHasLoaded = true
+                    _isLoading.postValue(false)
                     _isError.postValue(false)
                 } else {
                     _isLoading.postValue(false)
@@ -89,4 +111,28 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
+    private fun createMapFromList(list: List<Genre>) : Map<Int, String> {
+        val mutableMap = mutableMapOf<Int, String>()
+        list.forEach{ mutableMap[it.id] = it.name }
+        return mutableMap
+    }
+
+    private fun getStringGenre(genreIdList: List<Int>, map: Map<Int, String>) : String {
+        val result = StringBuilder()
+        genreIdList.forEach {
+            result.append(map[it] + ", ")
+        }
+        result.delete(result.length - 2, result.length)
+        return result.toString()
+    }
+
+    private fun createGenreStringList(listFilm: ArrayList<Film>, map: Map<Int, String>) : ArrayList<String> {
+        val result = mutableListOf<String>()
+        listFilm.forEach {
+            val genreIdList = it.genreIds
+            val temp = getStringGenre(genreIdList, map)
+            result.add(temp)
+        }
+        return result as ArrayList<String>
+    }
 }

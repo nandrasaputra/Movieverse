@@ -75,8 +75,9 @@ class DetailFragment : Fragment() {
 
     private fun prepareMovieView(position: Int){
         film = sharedViewModel.listMovieLive.value!![position]
+        val genre = sharedViewModel.movieGenreStringList[position]
         detail_text_movie_title.text = film.title
-        //detail_text_movie_genre.text = .genre
+        detail_text_movie_genre.text = genre
         detail_text_movie_rating.text = film.voteAverage.toString()
         detail_text_movie_overview.text = film.overview
         val url = "https://image.tmdb.org/t/p/w342"
@@ -87,8 +88,9 @@ class DetailFragment : Fragment() {
 
     private fun prepareTVView(position: Int) {
         film = sharedViewModel.listTVLive.value!![position]
+        val genre = sharedViewModel.tvGenreStringList[position]
         detail_text_movie_title.text = film.tvName
-        //detail_text_movie_genre.text = .genre
+        detail_text_movie_genre.text = genre
         detail_text_movie_rating.text = film.voteAverage.toString()
         detail_text_movie_overview.text = film.overview
         val url = "https://image.tmdb.org/t/p/w342"

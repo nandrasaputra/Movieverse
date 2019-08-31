@@ -44,7 +44,7 @@ class TvShowFragment : Fragment() {
         })
         sharedViewModel.listTVLive.observe(this, Observer {
             filmType = getString(R.string.film_type_tvshow)
-            tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(it, filmType), true)
+            tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(it, filmType, sharedViewModel.tvGenreStringList), true)
         })
     }
 
@@ -94,7 +94,7 @@ class TvShowFragment : Fragment() {
             .load(R.drawable.img_loading_indicator)
             .into(tvshow_loading_image)
         if (sharedViewModel.isDataHasLoaded)
-            tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(sharedViewModel.listTVLive.value!!, filmType), true)
+            tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(sharedViewModel.listTVLive.value!!, filmType, sharedViewModel.tvGenreStringList), true)
         else {
             scope.launch {
                 sharedViewModel.getListTVSeries()

@@ -44,7 +44,7 @@ class MovieFragment : Fragment() {
         })
         sharedViewModel.listMovieLive.observe(this, Observer {
             filmType = getString(R.string.film_type_movie)
-            movieRecyclerView.swapAdapter(RecyclerViewAdapter(it, filmType), true)
+            movieRecyclerView.swapAdapter(RecyclerViewAdapter(it, filmType, sharedViewModel.movieGenreStringList), true)
         })
     }
 
@@ -94,11 +94,12 @@ class MovieFragment : Fragment() {
             .load(R.drawable.img_loading_indicator)
             .into(movie_loading_image)
         if (sharedViewModel.isDataHasLoaded)
-            movieRecyclerView.swapAdapter(RecyclerViewAdapter(sharedViewModel.listMovieLive.value!!, filmType), true)
+            movieRecyclerView.swapAdapter(RecyclerViewAdapter(sharedViewModel.listMovieLive.value!!, filmType, sharedViewModel.movieGenreStringList), true)
         else {
             scope.launch {
                 sharedViewModel.getListMovie()
             }
         }
     }
+
 }

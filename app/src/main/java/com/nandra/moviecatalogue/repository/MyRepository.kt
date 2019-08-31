@@ -1,21 +1,28 @@
 package com.nandra.moviecatalogue.repository
 
 import android.app.Application
-import com.nandra.moviecatalogue.network.ConnectivityInterceptor
-import com.nandra.moviecatalogue.network.DiscoverResponse
-import com.nandra.moviecatalogue.network.TheMovieDBApiService
+import com.nandra.moviecatalogue.network.*
 import retrofit2.Response
 
 class MyRepository(app: Application) {
 
     private val interceptor = ConnectivityInterceptor(app)
-    private val service = TheMovieDBApiService(interceptor)
+    private val discoverService = TheMovieDBApiService(interceptor)
+    private val genreService = TheMovieDBGenreApiService(interceptor)
 
     suspend fun fetchMovieResponse() : Response<DiscoverResponse> {
-        return service.getMovie("en-US")
+        return discoverService.getMovie("en-US")
     }
 
     suspend fun fetchTVSeriesResponse() : Response<DiscoverResponse> {
-        return service.getTVSeries("en-US")
+        return discoverService.getTVSeries("en-US")
+    }
+
+    suspend fun fetchTVGenreResponse() : Response<GenreResponse> {
+        return genreService.getTVGenre("en-US")
+    }
+
+    suspend fun fetchMovieGenreResponse() : Response<GenreResponse> {
+        return genreService.getMovieGenre("en-US")
     }
 }

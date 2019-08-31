@@ -14,7 +14,8 @@ import kotlinx.android.synthetic.main.item_main_movie_list.view.*
 
 class RecyclerViewAdapter(
     private val filmList : ArrayList<Film>,
-    private val filmType: String
+    private val filmType: String,
+    private val genreList: ArrayList<String>
 ) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : MyViewHolder {
@@ -28,18 +29,19 @@ class RecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentFilm = filmList[position]
+        val currentGenre = genreList[position]
         val typeMovie = holder.itemView.context.getString(R.string.film_type_movie)
 
         if(filmType == typeMovie)
-            bindMovieViewProperties(holder, position, currentFilm)
+            bindMovieViewProperties(holder, position, currentFilm, currentGenre)
         else
-            bindTVShowViewProperties(holder, position, currentFilm)
+            bindTVShowViewProperties(holder, position, currentFilm, currentGenre)
     }
 
-    private fun bindTVShowViewProperties(holder: MyViewHolder, position: Int, currentFilm: Film) {
+    private fun bindTVShowViewProperties(holder: MyViewHolder, position: Int, currentFilm: Film, currentGenre: String) {
         holder.itemView.item_text_movie_title.text = currentFilm.tvName
         holder.itemView.item_text_movie_rating.text = currentFilm.voteAverage.toString()
-        //holder.itemView.item_text_movie_genre.text = currentMovie.genre
+        holder.itemView.item_text_movie_genre.text = currentGenre
         val url = "https://image.tmdb.org/t/p/w185"
         Glide.with(holder.itemView)
             .load(url + currentFilm.posterPath)
@@ -52,10 +54,10 @@ class RecyclerViewAdapter(
         }
     }
 
-    private fun bindMovieViewProperties(holder: MyViewHolder, position: Int, currentFilm: Film) {
+    private fun bindMovieViewProperties(holder: MyViewHolder, position: Int, currentFilm: Film, currentGenre: String) {
         holder.itemView.item_text_movie_title.text = currentFilm.title
         holder.itemView.item_text_movie_rating.text = currentFilm.voteAverage.toString()
-        //holder.itemView.item_text_movie_genre.text = currentMovie.genre
+        holder.itemView.item_text_movie_genre.text = currentGenre
         val url = "https://image.tmdb.org/t/p/w185"
         Glide.with(holder.itemView)
             .load(url + currentFilm.posterPath)
