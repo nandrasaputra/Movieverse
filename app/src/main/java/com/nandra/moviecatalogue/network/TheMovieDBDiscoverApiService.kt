@@ -1,5 +1,6 @@
 package com.nandra.moviecatalogue.network
 
+import com.nandra.moviecatalogue.util.Constant.API_KEY
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -8,7 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-const val API_KEY = "b035113688699fc69bf05ff16f32aa80"
 // https://api.themoviedb.org/3/discover/movie?api_key=b035113688699fc69bf05ff16f32aa80&language=en-US
 interface TheMovieDBApiService {
 

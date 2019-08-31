@@ -17,8 +17,8 @@
     <string name="preferences_language_title_en">"Language"</string>
     <string name="preferences_language_title_id">"Bahasa"</string>
     <string name="preferences_language_key">"language"</string>
-    <string name="preferences_language_value_bahasaindonesia">"value_bahasa"</string>
-    <string name="preferences_language_value_english">"value_english"</string>
+    <string name="preferences_language_value_bahasaindonesia">"id-ID"</string>
+    <string name="preferences_language_value_english">"en-US"</string>
     <string name="preferences_language_listpreferences_negative_text_en">"Cancel"</string>
     <string name="preferences_language_listpreferences_negative_text_id">"Batal"</string>
 

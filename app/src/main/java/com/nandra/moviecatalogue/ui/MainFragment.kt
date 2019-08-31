@@ -12,12 +12,12 @@ import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.adapter.ViewPagerPageAdapter
 import kotlinx.android.synthetic.main.fragment_main.*
 
-class MainFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class MainFragment : Fragment() {
 
     private lateinit var viewPagerPageAdapter: ViewPagerPageAdapter
     private lateinit var sharedPreferences: SharedPreferences
     private var currentLanguage: String? = ""
-    private var changedLanguage: String? = ""
+    private var initialLanguage: String? = null
     private lateinit var languageEnglishValue : String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,24 +42,19 @@ class MainFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
             }
         })
         main_fragment_viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(main_fragment_tab_layout))
-        setTabItemTitle(currentLanguage!!)
+        checkLanguage(currentLanguage!!)
     }
 
-    override fun onStart() {
-        super.onStart()
-        checkLanguage()
-    }
-
-    private fun checkLanguage() {
-        if(currentLanguage != changedLanguage){
-            setTabItemTitle(changedLanguage!!)
-            currentLanguage = changedLanguage
+    private fun checkLanguage(language: String) {
+        if (initialLanguage == null) {
+            initialLanguage = language
+            setTabItemTitle(language)
+        } else {
+            if(currentLanguage != initialLanguage){
+                setTabItemTitle(language)
+                initialLanguage = currentLanguage
+            }
         }
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        changedLanguage = sharedPreferences?.getString(key, languageEnglishValue)
-        //setTabItemTitle(currentLanguage!!)
     }
 
     private fun setTabItemTitle(language: String) {
@@ -75,7 +70,6 @@ class MainFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     private fun prepareSharedPreferences() {
         languageEnglishValue = getString(R.string.preferences_language_value_english)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
         currentLanguage = sharedPreferences.getString(getString(R.string.preferences_language_key),
             getString(R.string.preferences_language_value_english))
     }

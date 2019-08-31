@@ -3,6 +3,7 @@ package com.nandra.moviecatalogue.ViewModel
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +19,8 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     private val repository = MyRepository(app)
     var isDataHasLoaded: Boolean = false
-    private var job = Job()
+    private var job : Job? = null
+    private var currentLanguage: String = ""
 
     var movieGenreStringList = arrayListOf<String>()
     var tvGenreStringList = arrayListOf<String>()
@@ -49,14 +51,14 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         return networkInfo != null && networkInfo.isConnected
     }
 
-    private suspend fun fetchData() {
+    private suspend fun fetchData(language: String) {
         _isLoading.value = true
         job = viewModelScope.launch(Dispatchers.IO) {
             try {
-                val movieResponse = repository.fetchMovieResponse()
-                val tvShowResponse = repository.fetchTVSeriesResponse()
-                val tvGenreResponse = repository.fetchTVGenreResponse()
-                val movieGenreResponse = repository.fetchMovieGenreResponse()
+                val movieResponse = repository.fetchMovieResponse(language)
+                val tvShowResponse = repository.fetchTVSeriesResponse(language)
+                val tvGenreResponse = repository.fetchTVGenreResponse(language)
+                val movieGenreResponse = repository.fetchMovieGenreResponse(language)
 
                 if (movieResponse.isSuccessful && tvShowResponse.isSuccessful
                     && tvGenreResponse.isSuccessful && movieGenreResponse.isSuccessful) {
@@ -88,26 +90,44 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                 _isError.postValue(true)
             }
         }
-        job.join()
+        job?.join()
     }
 
-    suspend fun getListMovie() {
-        return if(!isDataHasLoaded && isConnectedToInternet()) {
-            fetchData()
-        } else if (!isDataHasLoaded && !isConnectedToInternet()) {
-            _isError.value = true
-        } else {
-            _isLoading.value = false
+    suspend fun requestData(language: String) {
+        Log.d("DEBUG", "REQUEST DATA")
+        if(job != null){
+            job?.join()
         }
-    }
 
-    suspend fun getListTVSeries() {
-        return if(!isDataHasLoaded && isConnectedToInternet()) {
-            fetchData()
+        /*if(isNewLanguage(language)) {
+            Log.d("DEBUG", "NEW LANGUAGE")
+            if (isConnectedToInternet()) {
+                fetchData(language)
+            } else {
+                _isError.value = true
+            }
+        } else {
+            Log.d("DEBUG", "OLD LANGUAGE")
+            if (!isDataHasLoaded && isConnectedToInternet()) {
+                fetchData(language)
+            } else if (!isDataHasLoaded && !isConnectedToInternet()) {
+                _isError.value = true
+            }
+        }*/
+
+        /*if (!isDataHasLoaded && isConnectedToInternet()) {
+            fetchData(language)
         } else if (!isDataHasLoaded && !isConnectedToInternet()) {
             _isError.value = true
         } else {
             _isLoading.value = false
+        }*/
+
+        //RIGHT
+        if (!isDataHasLoaded && isConnectedToInternet()) {
+            fetchData(language)
+        } else if (!isDataHasLoaded && !isConnectedToInternet()) {
+            _isError.value = true
         }
     }
 
@@ -120,10 +140,17 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private fun getStringGenre(genreIdList: List<Int>, map: Map<Int, String>) : String {
         val result = StringBuilder()
         genreIdList.forEach {
-            result.append(map[it] + ", ")
+            val tempValue = map[it]
+            if (tempValue != null){
+                result.append(tempValue)
+                result.append(", ")
+            }
         }
-        result.delete(result.length - 2, result.length)
-        return result.toString()
+        return if (result.length > 2){
+            result.delete(result.length - 2, result.length)
+            result.toString()
+        } else
+            result.toString()
     }
 
     private fun createGenreStringList(listFilm: ArrayList<Film>, map: Map<Int, String>) : ArrayList<String> {
@@ -134,5 +161,9 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
             result.add(temp)
         }
         return result as ArrayList<String>
+    }
+
+    private fun isNewLanguage(language: String) : Boolean {
+        return (language == currentLanguage)
     }
 }
