@@ -19,5 +19,4 @@ class ConnectivityInterceptor(val app: Application) : Interceptor {
         val networkInfo = connectivityManager.activeNetworkInfo
         return networkInfo != null && networkInfo.isConnected
     }
-
 }

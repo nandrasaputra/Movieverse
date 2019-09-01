@@ -18,12 +18,12 @@ import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment() {
 
-    private lateinit var sharedViewModel: SharedViewModel
-    private lateinit var film: Film
-    private lateinit var sharedPreferences: SharedPreferences
     private var currentLanguage: String = ""
+    private lateinit var film: Film
     private lateinit var languageEnglishValue : String
     private lateinit var preferenceLanguageKey : String
+    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_detail, container, false)
@@ -32,6 +32,10 @@ class DetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
+        detail_fragment_toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
+        detail_fragment_toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
         val position = DetailFragmentArgs.fromBundle(arguments!!).position
         val filmType = DetailFragmentArgs.fromBundle(arguments!!).filmType
         attemptPrepareView(position, filmType)
@@ -77,7 +81,12 @@ class DetailFragment : Fragment() {
         detail_text_movie_title.text = film.title
         detail_text_movie_genre.text = genre
         detail_text_movie_rating.text = film.voteAverage.toString()
-        detail_text_movie_overview.text = film.overview
+        if(film.overview == ""){
+            val text = getString(R.string.overview_not_available_id)
+            detail_text_movie_overview.text = text
+        } else {
+            detail_text_movie_overview.text = film.overview
+        }
         val url = "https://image.tmdb.org/t/p/w342"
         Glide.with(this)
             .load(url + film.posterPath)
@@ -90,7 +99,12 @@ class DetailFragment : Fragment() {
         detail_text_movie_title.text = film.tvName
         detail_text_movie_genre.text = genre
         detail_text_movie_rating.text = film.voteAverage.toString()
-        detail_text_movie_overview.text = film.overview
+        if(film.overview == ""){
+            val text = getString(R.string.overview_not_available_id)
+            detail_text_movie_overview.text = text
+        } else {
+            detail_text_movie_overview.text = film.overview
+        }
         val url = "https://image.tmdb.org/t/p/w342"
         Glide.with(this)
             .load(url + film.posterPath)

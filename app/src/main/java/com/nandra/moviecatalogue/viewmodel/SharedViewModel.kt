@@ -16,38 +16,45 @@ import kotlinx.coroutines.launch
 
 class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
-    private val repository = MyRepository(app)
+    var currentLanguage: String = ""
     var isDataHasLoaded: Boolean = false
     private var job : Job? = null
-    var currentLanguage: String = ""
-
+    private val repository = MyRepository(app)
     var movieGenreStringList = arrayListOf<String>()
     var tvGenreStringList = arrayListOf<String>()
 
-    private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
         get() = _isLoading
-    private val _isError = MutableLiveData<Boolean>()
     val isError: LiveData<Boolean>
         get() = _isError
-
-    private val _listMovieLive = MutableLiveData<ArrayList<Film>>()
     val listMovieLive: LiveData<ArrayList<Film>>
         get() = _listMovieLive
-    private val _listTVLive = MutableLiveData<ArrayList<Film>>()
     val listTVLive: LiveData<ArrayList<Film>>
         get() = _listTVLive
 
-    init {
-        _isLoading.value = false
-        _isError.value = false
-        _listMovieLive.value = arrayListOf()
-    }
+    private val _isLoading = MutableLiveData<Boolean>()
+    private val _listMovieLive = MutableLiveData<ArrayList<Film>>()
+    private val _isError = MutableLiveData<Boolean>()
+    private val _listTVLive = MutableLiveData<ArrayList<Film>>()
 
-    private fun isConnectedToInternet() : Boolean {
-        val connectivityManager = app.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = connectivityManager.activeNetworkInfo
-        return networkInfo != null && networkInfo.isConnected
+    suspend fun requestData(language: String) {
+        if(job != null){
+            job?.join()
+        }
+
+        if(isNewLanguage(language)) {
+            if (isConnectedToInternet()) {
+                fetchData(language)
+            } else {
+                _isError.value = true
+            }
+        } else {
+            if (!isDataHasLoaded && isConnectedToInternet()) {
+                fetchData(language)
+            } else if (!isDataHasLoaded && !isConnectedToInternet()) {
+                _isError.value = true
+            }
+        }
     }
 
     private suspend fun fetchData(language: String) {
@@ -93,24 +100,10 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         job?.join()
     }
 
-    suspend fun requestData(language: String) {
-        if(job != null){
-            job?.join()
-        }
-
-        if(isNewLanguage(language)) {
-            if (isConnectedToInternet()) {
-                fetchData(language)
-            } else {
-                _isError.value = true
-            }
-        } else {
-            if (!isDataHasLoaded && isConnectedToInternet()) {
-                fetchData(language)
-            } else if (!isDataHasLoaded && !isConnectedToInternet()) {
-                _isError.value = true
-            }
-        }
+    private fun isConnectedToInternet() : Boolean {
+        val connectivityManager = app.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
     }
 
     private fun createMapFromList(list: List<Genre>) : Map<Int, String> {

@@ -1,10 +1,7 @@
 package com.nandra.moviecatalogue.ui
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import com.nandra.moviecatalogue.R
 
 class MainActivity : AppCompatActivity() {
@@ -14,17 +11,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.main_menu, menu)
         return true
-    }
+    }*/
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.main_menu_action_settings) {
             findNavController(R.id.main_fragment_container).navigate(R.id.action_mainFragment_to_settingsPreferenceFragment)
         }
         return super.onOptionsItemSelected(item)
-    }
+    }*/
 }

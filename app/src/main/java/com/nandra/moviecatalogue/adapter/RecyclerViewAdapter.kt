@@ -47,7 +47,12 @@ class RecyclerViewAdapter(
             .load(url + currentFilm.posterPath)
             .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
             .into(holder.itemView.item_image_movie_poster)
-        holder.itemView.item_text_movie_overview.text = currentFilm.overview
+        if(currentFilm.overview == ""){
+            val text = holder.itemView.context.getString(R.string.overview_not_available_id)
+            holder.itemView.item_text_movie_overview.text = text
+        } else {
+            holder.itemView.item_text_movie_overview.text = currentFilm.overview
+        }
         holder.itemView.setOnClickListener {
             val action = MainFragmentDirections.actionMainFragmentToDetailFragment(filmType).setPosition(position)
             holder.itemView.findNavController().navigate(action)
@@ -63,7 +68,12 @@ class RecyclerViewAdapter(
             .load(url + currentFilm.posterPath)
             .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
             .into(holder.itemView.item_image_movie_poster)
-        holder.itemView.item_text_movie_overview.text = currentFilm.overview
+        if(currentFilm.overview == ""){
+            val text = holder.itemView.context.getString(R.string.overview_not_available_id)
+            holder.itemView.item_text_movie_overview.text = text
+        } else {
+            holder.itemView.item_text_movie_overview.text = currentFilm.overview
+        }
         holder.itemView.setOnClickListener {
             val action = MainFragmentDirections.actionMainFragmentToDetailFragment(filmType).setPosition(position)
             holder.itemView.findNavController().navigate(action)
@@ -71,5 +81,4 @@ class RecyclerViewAdapter(
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
-
 }

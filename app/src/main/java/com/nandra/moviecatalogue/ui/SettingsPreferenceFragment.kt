@@ -6,12 +6,13 @@ import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.nandra.moviecatalogue.R
+import kotlinx.android.synthetic.main.fragment_setting_preferences.*
 
 class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private var currentLanguage: String? = ""
     private var listPreference : ListPreference? = null
     private lateinit var sharedPreferences: SharedPreferences
-    private var currentLanguage: String? = ""
     private lateinit var languageEnglishValue : String
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -22,6 +23,10 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
         super.onActivityCreated(savedInstanceState)
         listPreference = findPreference(getString(R.string.preferences_language_key))
         prepareSharedPreferences()
+        setting_fragment_toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
+        setting_fragment_toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
         changePreferenceAttribute(currentLanguage!!)
     }
 
@@ -31,23 +36,25 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
             .unregisterOnSharedPreferenceChangeListener(this)
     }
 
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        currentLanguage = sharedPreferences?.getString(key, languageEnglishValue)
+        changePreferenceAttribute(currentLanguage!!)
+    }
+
     private fun changePreferenceAttribute(language: String) {
         if (language == languageEnglishValue) {
             listPreference?.run{
                 negativeButtonText = getString(R.string.preferences_language_listpreferences_negative_text_en)
                 title = getString(R.string.preferences_language_title_en)
             }
+            setting_fragment_toolbar.title = getString(R.string.main_menu_settings_title_en)
         } else {
             listPreference?.run{
                 negativeButtonText = getString(R.string.preferences_language_listpreferences_negative_text_id)
                 title = getString(R.string.preferences_language_title_id)
             }
+            setting_fragment_toolbar.title = getString(R.string.main_menu_settings_title_id)
         }
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        currentLanguage = sharedPreferences?.getString(key, languageEnglishValue)
-        changePreferenceAttribute(currentLanguage!!)
     }
 
     private fun prepareSharedPreferences() {

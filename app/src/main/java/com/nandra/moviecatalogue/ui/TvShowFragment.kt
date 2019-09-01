@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.adapter.RecyclerViewAdapter
@@ -24,17 +23,14 @@ import kotlinx.coroutines.launch
 
 class TvShowFragment : Fragment() {
 
-    private lateinit var tvShowRecyclerView : RecyclerView
-    private lateinit var sharedViewModel: SharedViewModel
-    private lateinit var sharedPreferences: SharedPreferences
     private var currentLanguage: String = ""
     private lateinit var languageEnglishValue : String
     private lateinit var preferenceLanguageKey : String
+    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_tv_show, container, false)
-        tvShowRecyclerView = view.findViewById(R.id.tvshow_recyclerview)
-        return view
+        return inflater.inflate(R.layout.fragment_tv_show, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,14 +45,14 @@ class TvShowFragment : Fragment() {
             errorIndicator(it)
         })
         sharedViewModel.listTVLive.observe(this, Observer {
-            tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(it, Constant.TV_FILM_TYPE, sharedViewModel.tvGenreStringList), true)
+            tvshow_recyclerview.swapAdapter(RecyclerViewAdapter(it, Constant.TV_FILM_TYPE, sharedViewModel.tvGenreStringList), true)
         })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
-        tvShowRecyclerView.apply {
+        tvshow_recyclerview.apply {
             hasFixedSize()
             layoutManager = LinearLayoutManager(context)
         }
@@ -99,7 +95,7 @@ class TvShowFragment : Fragment() {
             .load(R.drawable.img_loading_indicator)
             .into(tvshow_loading_image)
         if (sharedViewModel.isDataHasLoaded && currentLanguage == sharedViewModel.currentLanguage)
-            tvShowRecyclerView.swapAdapter(RecyclerViewAdapter(sharedViewModel.listTVLive.value!!, Constant.TV_FILM_TYPE, sharedViewModel.tvGenreStringList), true)
+            tvshow_recyclerview.swapAdapter(RecyclerViewAdapter(sharedViewModel.listTVLive.value!!, Constant.TV_FILM_TYPE, sharedViewModel.tvGenreStringList), true)
         else {
             scope.launch {
                 sharedViewModel.requestData(currentLanguage)

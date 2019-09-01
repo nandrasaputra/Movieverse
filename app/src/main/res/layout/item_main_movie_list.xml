@@ -79,7 +79,7 @@
         android:layout_marginTop="8dp"
         android:elevation="4dp"
         app:riv_corner_radius="16dp"
-        android:src="@drawable/img_movie_poster_a_star" />
+        android:src="@drawable/img_movie_poster_dragon" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/detail_imagerounded_movie_rating_back"

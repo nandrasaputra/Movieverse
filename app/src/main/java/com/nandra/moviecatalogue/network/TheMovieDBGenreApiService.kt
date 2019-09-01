@@ -9,8 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-//https://api.themoviedb.org/3/genre/movie/list?api_key=b035113688699fc69bf05ff16f32aa80&language=en-US
-//https://api.themoviedb.org/3/genre/tv/list?api_key=b035113688699fc69bf05ff16f32aa80&language=en-US
 interface TheMovieDBGenreApiService {
 
     @GET("movie/list")

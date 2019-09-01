@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.adapter.RecyclerViewAdapter
@@ -24,17 +23,14 @@ import kotlinx.coroutines.launch
 
 class MovieFragment : Fragment() {
 
-    private lateinit var movieRecyclerView : RecyclerView
-    private lateinit var sharedViewModel: SharedViewModel
-    private lateinit var sharedPreferences: SharedPreferences
     private var currentLanguage: String = ""
     private lateinit var languageEnglishValue : String
     private lateinit var preferenceLanguageKey : String
+    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_movie, container, false)
-        movieRecyclerView = view.findViewById(R.id.movie_recyclerview)
-        return view
+        return inflater.inflate(R.layout.fragment_movie, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,14 +45,14 @@ class MovieFragment : Fragment() {
             errorIndicator(it)
         })
         sharedViewModel.listMovieLive.observe(this, Observer {
-            movieRecyclerView.swapAdapter(RecyclerViewAdapter(it, Constant.MOVIE_FILM_TYPE, sharedViewModel.movieGenreStringList), true)
+            movie_recyclerview.swapAdapter(RecyclerViewAdapter(it, Constant.MOVIE_FILM_TYPE, sharedViewModel.movieGenreStringList), true)
         })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
-        movieRecyclerView.apply {
+        movie_recyclerview.apply {
             hasFixedSize()
             layoutManager = LinearLayoutManager(context)
         }
@@ -99,7 +95,7 @@ class MovieFragment : Fragment() {
             .load(R.drawable.img_loading_indicator)
             .into(movie_loading_image)
         if (sharedViewModel.isDataHasLoaded && currentLanguage == sharedViewModel.currentLanguage)
-            movieRecyclerView.swapAdapter(RecyclerViewAdapter(sharedViewModel.listMovieLive.value!!, Constant.MOVIE_FILM_TYPE, sharedViewModel.movieGenreStringList), true)
+            movie_recyclerview.swapAdapter(RecyclerViewAdapter(sharedViewModel.listMovieLive.value!!, Constant.MOVIE_FILM_TYPE, sharedViewModel.movieGenreStringList), true)
         else {
             scope.launch {
                 sharedViewModel.requestData(currentLanguage)
