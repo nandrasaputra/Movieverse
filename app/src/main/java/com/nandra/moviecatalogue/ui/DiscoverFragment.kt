@@ -10,9 +10,9 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.tabs.TabLayout
 import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.adapter.ViewPagerPageAdapter
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_discover.*
 
-class MainFragment : Fragment() {
+class DiscoverFragment : Fragment() {
 
     private lateinit var viewPagerPageAdapter: ViewPagerPageAdapter
     private lateinit var sharedPreferences: SharedPreferences
@@ -21,7 +21,7 @@ class MainFragment : Fragment() {
     private lateinit var languageEnglishValue : String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return inflater.inflate(R.layout.fragment_discover, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -87,7 +87,7 @@ class MainFragment : Fragment() {
         val id = item.itemId
         if (id == R.id.main_menu_action_settings) {
             //findNavController(R.id.main_fragment_container).navigate(R.id.action_mainFragment_to_settingsPreferenceFragment)
-            findNavController().navigate(R.id.action_mainFragment_to_settingsPreferenceFragment)
+            findNavController().navigate(R.id.action_discoverFragment_to_settingsPreferenceFragment)
         }
         return super.onOptionsItemSelected(item)
     }

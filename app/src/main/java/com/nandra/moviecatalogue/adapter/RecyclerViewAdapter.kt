@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.network.Film
-import com.nandra.moviecatalogue.ui.MainFragmentDirections
+import com.nandra.moviecatalogue.ui.DiscoverFragmentDirections
 import kotlinx.android.synthetic.main.item_main_movie_list.view.*
 
 class RecyclerViewAdapter(
@@ -54,7 +54,7 @@ class RecyclerViewAdapter(
             holder.itemView.item_text_movie_overview.text = currentFilm.overview
         }
         holder.itemView.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToDetailFragment(filmType).setPosition(position)
+            val action = DiscoverFragmentDirections.actionDiscoverFragmentToDetailFragment(filmType).setPosition(position)
             holder.itemView.findNavController().navigate(action)
         }
     }
@@ -75,7 +75,7 @@ class RecyclerViewAdapter(
             holder.itemView.item_text_movie_overview.text = currentFilm.overview
         }
         holder.itemView.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToDetailFragment(filmType).setPosition(position)
+            val action = DiscoverFragmentDirections.actionDiscoverFragmentToDetailFragment(filmType).setPosition(position)
             holder.itemView.findNavController().navigate(action)
         }
     }

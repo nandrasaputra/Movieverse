@@ -5,13 +5,13 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.nandra.moviecatalogue.ui.MainFragment"
+        android:name="com.nandra.moviecatalogue.ui.DiscoverFragment"
         android:label="MainFragment" >
         <action
-            android:id="@+id/action_mainFragment_to_settingsPreferenceFragment"
+            android:id="@+id/action_discoverFragment_to_settingsPreferenceFragment"
             app:destination="@id/settingsPreferenceFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_detailFragment"
+            android:id="@+id/action_discoverFragment_to_detailFragment"
             app:destination="@id/detailFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
