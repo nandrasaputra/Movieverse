@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:outlineProvider="bounds"
-        android:elevation="6dp">
+        android:elevation="4dp">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/main_fragment_tab_item_movie"

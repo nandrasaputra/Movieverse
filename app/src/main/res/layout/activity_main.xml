@@ -21,6 +21,9 @@
         app:menu="@menu/bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:elevation="4dp"
+        android:background="@android:color/white"
+        android:outlineProvider="bounds"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

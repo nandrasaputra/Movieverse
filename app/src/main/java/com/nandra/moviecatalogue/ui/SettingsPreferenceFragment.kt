@@ -23,10 +23,6 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
         super.onActivityCreated(savedInstanceState)
         listPreference = findPreference(getString(R.string.preferences_language_key))
         prepareSharedPreferences()
-        setting_fragment_toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
-        setting_fragment_toolbar.setNavigationOnClickListener {
-            activity?.onBackPressed()
-        }
         changePreferenceAttribute(currentLanguage!!)
     }
 
