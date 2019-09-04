@@ -3,9 +3,7 @@ package com.nandra.moviecatalogue.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.util.setupWithNavController
@@ -40,9 +38,9 @@ class MainActivity : AppCompatActivity() {
             intent = intent
         )
 
-        controller.observe(this, Observer { navController ->
+        /*controller.observe(this, Observer { navController ->
             setupActionBarWithNavController(navController)
-        })
+        })*/
         currentNavController = controller
     }
 

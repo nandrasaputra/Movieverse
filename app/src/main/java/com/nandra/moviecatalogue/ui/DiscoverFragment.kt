@@ -29,7 +29,6 @@ class DiscoverFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         val activity = activity as AppCompatActivity
-        activity.setSupportActionBar(main_fragment_toolbar)
 
         prepareSharedPreferences()
 
