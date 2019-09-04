@@ -2,10 +2,11 @@ package com.nandra.moviecatalogue.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.tabs.TabLayout
 import com.nandra.moviecatalogue.R
@@ -29,7 +30,6 @@ class DiscoverFragment : Fragment() {
 
         val activity = activity as AppCompatActivity
         activity.setSupportActionBar(main_fragment_toolbar)
-        setHasOptionsMenu(true)
 
         prepareSharedPreferences()
 
@@ -79,16 +79,4 @@ class DiscoverFragment : Fragment() {
             getString(R.string.preferences_language_value_english))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == R.id.main_menu_action_settings) {
-            //findNavController(R.id.main_fragment_container).navigate(R.id.action_mainFragment_to_settingsPreferenceFragment)
-            findNavController().navigate(R.id.action_discoverFragment_to_settingsPreferenceFragment)
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

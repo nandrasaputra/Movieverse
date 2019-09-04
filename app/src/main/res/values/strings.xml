@@ -13,6 +13,14 @@
     <string name="main_menu_settings_title_en">"Settings"</string>
     <string name="main_menu_settings_title_id">"Pengaturan"</string>
 
+    <string name="cd_discover">"Discover"</string>
+    <string name="cd_favorite">"Favorite"</string>
+    <string name="cd_setting">"Setting"</string>
+
+    <string name="title_discover">"Discover"</string>
+    <string name="title_favorite">"Favorite"</string>
+    <string name="title_setting">"Setting"</string>
+
     <string name = "main_tab_1_title_en">"Movie"</string>
     <string name = "main_tab_1_title_id">"Film"</string>
     <string name = "main_tab_2_title_en">"TV Series"</string>

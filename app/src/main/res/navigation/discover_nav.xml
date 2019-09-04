@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_nav"
-    app:startDestination="@id/mainFragment">
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/discover"
+    app:startDestination="@id/discoverFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/discoverFragment"
         android:name="com.nandra.moviecatalogue.ui.DiscoverFragment"
-        android:label="MainFragment" >
-        <action
-            android:id="@+id/action_discoverFragment_to_settingsPreferenceFragment"
-            app:destination="@id/settingsPreferenceFragment" />
+        android:label="DiscoverFragment" >
         <action
             android:id="@+id/action_discoverFragment_to_detailFragment"
             app:destination="@id/detailFragment"
@@ -30,8 +29,4 @@
             android:name="filmType"
             app:argType="string" />
     </fragment>
-    <fragment
-        android:id="@+id/settingsPreferenceFragment"
-        android:name="com.nandra.moviecatalogue.ui.SettingsPreferenceFragment"
-        android:label="SettingsPreferenceFragment" />
 </navigation>
