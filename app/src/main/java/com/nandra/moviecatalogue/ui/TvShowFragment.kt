@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
-import com.nandra.moviecatalogue.adapter.RecyclerViewAdapter
+import com.nandra.moviecatalogue.adapter.RecyclerViewGridAdapter
 import com.nandra.moviecatalogue.util.Constant
 import com.nandra.moviecatalogue.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_tv_show.*
@@ -45,7 +45,7 @@ class TvShowFragment : Fragment() {
             errorIndicator(it)
         })
         sharedViewModel.listTVLive.observe(this, Observer {
-            tvshow_recyclerview.swapAdapter(RecyclerViewAdapter(it, Constant.TV_FILM_TYPE, sharedViewModel.tvGenreStringList), true)
+            tvshow_recyclerview.swapAdapter(RecyclerViewGridAdapter(it, Constant.TV_FILM_TYPE, sharedViewModel.tvGenreStringList), true)
         })
     }
 
@@ -54,7 +54,7 @@ class TvShowFragment : Fragment() {
         prepareSharedPreferences()
         tvshow_recyclerview.apply {
             hasFixedSize()
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context, 3)
         }
         attemptPrepareView()
     }
@@ -95,7 +95,7 @@ class TvShowFragment : Fragment() {
             .load(R.drawable.img_loading_indicator)
             .into(tvshow_loading_image)
         if (sharedViewModel.isDataHasLoaded && currentLanguage == sharedViewModel.currentLanguage)
-            tvshow_recyclerview.swapAdapter(RecyclerViewAdapter(sharedViewModel.listTVLive.value!!, Constant.TV_FILM_TYPE, sharedViewModel.tvGenreStringList), true)
+            tvshow_recyclerview.swapAdapter(RecyclerViewGridAdapter(sharedViewModel.listTVLive.value!!, Constant.TV_FILM_TYPE, sharedViewModel.tvGenreStringList), true)
         else {
             scope.launch {
                 sharedViewModel.requestData(currentLanguage)

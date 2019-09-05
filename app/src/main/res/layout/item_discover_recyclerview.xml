@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintDimensionRatio="W,3:2"
+    android:layout_margin="4dp"
+    android:elevation="1dp"
+    android:background="@drawable/grid_back"
+    android:outlineProvider="background">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/item_grid_poster"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/img_movie_poster_dragon"
+        app:layout_constraintDimensionRatio="W,3:2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:riv_corner_radius="24dp"/>
+
+    <ImageView
+        android:id="@+id/item_grid_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/gradient"
+        app:layout_constraintDimensionRatio="W,2:3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/item_grid_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/main_title_mock"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        android:fontFamily="@font/lato_medium"
+        android:textColor="@color/colorPureWhite" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

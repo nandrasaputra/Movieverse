@@ -7,7 +7,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tvshow_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="4dp"
+        android:paddingStart="4dp"
+        android:scrollbars="none"
+        android:clipToPadding="false"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/tvshow_error_back"

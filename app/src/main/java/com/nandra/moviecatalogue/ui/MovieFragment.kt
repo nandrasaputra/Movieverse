@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
-import com.nandra.moviecatalogue.adapter.RecyclerViewAdapter
+import com.nandra.moviecatalogue.adapter.RecyclerViewGridAdapter
 import com.nandra.moviecatalogue.util.Constant
 import com.nandra.moviecatalogue.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_movie.*
@@ -45,7 +45,7 @@ class MovieFragment : Fragment() {
             errorIndicator(it)
         })
         sharedViewModel.listMovieLive.observe(this, Observer {
-            movie_recyclerview.swapAdapter(RecyclerViewAdapter(it, Constant.MOVIE_FILM_TYPE, sharedViewModel.movieGenreStringList), true)
+            movie_recyclerview.swapAdapter(RecyclerViewGridAdapter(it, Constant.MOVIE_FILM_TYPE, sharedViewModel.movieGenreStringList), true)
         })
     }
 
@@ -54,7 +54,7 @@ class MovieFragment : Fragment() {
         prepareSharedPreferences()
         movie_recyclerview.apply {
             hasFixedSize()
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context, 3)
         }
         attemptPrepareView()
     }
@@ -95,7 +95,7 @@ class MovieFragment : Fragment() {
             .load(R.drawable.img_loading_indicator)
             .into(movie_loading_image)
         if (sharedViewModel.isDataHasLoaded && currentLanguage == sharedViewModel.currentLanguage)
-            movie_recyclerview.swapAdapter(RecyclerViewAdapter(sharedViewModel.listMovieLive.value!!, Constant.MOVIE_FILM_TYPE, sharedViewModel.movieGenreStringList), true)
+            movie_recyclerview.swapAdapter(RecyclerViewGridAdapter(sharedViewModel.listMovieLive.value!!, Constant.MOVIE_FILM_TYPE, sharedViewModel.movieGenreStringList), true)
         else {
             scope.launch {
                 sharedViewModel.requestData(currentLanguage)
