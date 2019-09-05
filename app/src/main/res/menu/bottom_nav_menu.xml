@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/discover"
+        android:icon="@drawable/ic_compass"
+        android:contentDescription="@string/cd_discover"
+        android:title="@string/title_discover" />
+    <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/ic_hearts"
+        android:contentDescription="@string/cd_favorite"
+        android:title="@string/title_favorite" />
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/ic_settings_white_24dp"
+        android:contentDescription="@string/cd_setting"
+        android:title="@string/title_setting" />
+</menu>

@@ -40,9 +40,13 @@
                 android:layout_marginStart="@dimen/detail_start_margin"
                 android:layout_marginEnd="@dimen/detail_end_margin"
                 android:layout_marginBottom="@dimen/detail_bottom_margin"
-                android:padding="24dp"
+                android:paddingTop="24dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="40dp"
                 android:background="@color/colorPureWhite"
-                android:elevation="2dp">
+                android:outlineProvider="bounds"
+                android:elevation="1dp">
 
                 <TextView
                     android:id="@+id/detail_text_movie_title"
@@ -100,7 +104,8 @@
                 android:scaleType="centerCrop"
                 tools:ignore="ContentDescription"
                 app:riv_corner_radius="12dp"
-                android:elevation="6dp"/>
+                android:outlineProvider="background"
+                android:elevation="2dp"/>
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/detail_imagerounded_movie_rating_back"

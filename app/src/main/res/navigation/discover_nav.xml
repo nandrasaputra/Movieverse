@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/discover"
+    app:startDestination="@id/discoverFragment">
+
+    <fragment
+        android:id="@+id/discoverFragment"
+        android:name="com.nandra.moviecatalogue.ui.DiscoverFragment"
+        android:label="DiscoverFragment" >
+        <action
+            android:id="@+id/action_discoverFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.nandra.moviecatalogue.ui.DetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="position"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="filmType"
+            app:argType="string" />
+    </fragment>
+</navigation>

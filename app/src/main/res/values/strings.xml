@@ -4,6 +4,7 @@
     <string name="toolbar_main_title">"Movie Catalogue"</string>
     <string name="toolbar_detail_title">"Detail"</string>
     <string name="toolbar_setting_title">"Setting"</string>
+    <string name="toolbar_favorite_title">"Favorite"</string>
 
     <string name="main_title_mock">Movie Title</string>
     <string name="main_genre_mock">Genre, Genre, Genre</string>
@@ -12,6 +13,14 @@
 
     <string name="main_menu_settings_title_en">"Settings"</string>
     <string name="main_menu_settings_title_id">"Pengaturan"</string>
+
+    <string name="cd_discover">"Discover"</string>
+    <string name="cd_favorite">"Favorite"</string>
+    <string name="cd_setting">"Setting"</string>
+
+    <string name="title_discover">"Discover"</string>
+    <string name="title_favorite">"Favorite"</string>
+    <string name="title_setting">"Setting"</string>
 
     <string name = "main_tab_1_title_en">"Movie"</string>
     <string name = "main_tab_1_title_id">"Film"</string>
