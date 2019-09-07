@@ -1,5 +1,7 @@
-package com.nandra.moviecatalogue.network
+package com.nandra.moviecatalogue.network.apiservice
 
+import com.nandra.moviecatalogue.network.ConnectivityInterceptor
+import com.nandra.moviecatalogue.network.GenreResponse
 import com.nandra.moviecatalogue.util.Constant.API_KEY
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -9,20 +11,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface TheMovieDBApiService {
+interface TheMovieDBGenreApiService {
 
-    @GET("movie")
-    suspend fun getMovie(
+    @GET("movie/list")
+    suspend fun getMovieGenre(
         @Query("language") language: String
-    ) : Response<DiscoverResponse>
+    ) : Response<GenreResponse>
 
-    @GET("tv")
-    suspend fun getTVSeries(
+    @GET("tv/list")
+    suspend fun getTVGenre(
         @Query("language") language: String
-    ) : Response<DiscoverResponse>
+    ) : Response<GenreResponse>
 
     companion object {
-        operator fun invoke(connectivityInterceptor: ConnectivityInterceptor) : TheMovieDBApiService {
+        operator fun invoke(connectivityInterceptor: ConnectivityInterceptor): TheMovieDBGenreApiService {
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
                     .url()
@@ -42,10 +44,10 @@ interface TheMovieDBApiService {
 
             return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("https://api.themoviedb.org/3/discover/")
+                .baseUrl("https://api.themoviedb.org/3/genre/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(TheMovieDBApiService::class.java)
+                .create(TheMovieDBGenreApiService::class.java)
         }
     }
 }

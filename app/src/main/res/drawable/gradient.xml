@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <corners
-        android:bottomLeftRadius="24dp"
-        android:bottomRightRadius="24dp"/>
+        android:bottomLeftRadius="@dimen/discover_round_radius"
+        android:bottomRightRadius="@dimen/discover_round_radius"/>
     <gradient
         android:startColor="#00000000"
         android:endColor="#CC000000"

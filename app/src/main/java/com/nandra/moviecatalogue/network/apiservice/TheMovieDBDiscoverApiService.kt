@@ -1,0 +1,53 @@
+package com.nandra.moviecatalogue.network.apiservice
+
+import com.nandra.moviecatalogue.network.ConnectivityInterceptor
+import com.nandra.moviecatalogue.network.DiscoverResponse
+import com.nandra.moviecatalogue.util.Constant.API_KEY
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
+
+interface TheMovieDBDiscoverApiService {
+
+    @GET("movie")
+    suspend fun getMovie(
+        @Query("language") language: String
+    ) : Response<DiscoverResponse>
+
+    @GET("tv")
+    suspend fun getTVSeries(
+        @Query("language") language: String
+    ) : Response<DiscoverResponse>
+
+    companion object {
+        operator fun invoke(connectivityInterceptor: ConnectivityInterceptor) : TheMovieDBDiscoverApiService {
+            val requestInterceptor = Interceptor { chain ->
+                val url = chain.request()
+                    .url()
+                    .newBuilder()
+                    .addQueryParameter("api_key", API_KEY)
+                    .build()
+                val request = chain.request()
+                    .newBuilder()
+                    .url(url)
+                    .build()
+                return@Interceptor chain.proceed(request)
+            }
+            val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(requestInterceptor)
+                .addInterceptor(connectivityInterceptor)
+                .build()
+
+            return Retrofit.Builder()
+                .client(okHttpClient)
+                .baseUrl("https://api.themoviedb.org/3/discover/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(TheMovieDBDiscoverApiService::class.java)
+        }
+    }
+}

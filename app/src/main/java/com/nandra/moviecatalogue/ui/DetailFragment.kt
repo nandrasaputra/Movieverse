@@ -88,9 +88,13 @@ class DetailFragment : Fragment() {
             detail_text_movie_overview.text = film.overview
         }
         val url = "https://image.tmdb.org/t/p/w342"
+        val backdropUrl = "https://image.tmdb.org/t/p/w500"
         Glide.with(this)
             .load(url + film.posterPath)
             .into(detail_image_movie_poster)
+        Glide.with(this)
+            .load(backdropUrl + film.backdropPath)
+            .into(detail_backdrop)
     }
 
     private fun prepareTVView(position: Int) {
@@ -106,26 +110,26 @@ class DetailFragment : Fragment() {
             detail_text_movie_overview.text = film.overview
         }
         val url = "https://image.tmdb.org/t/p/w342"
+        val backdropUrl = "https://image.tmdb.org/t/p/w500"
         Glide.with(this)
             .load(url + film.posterPath)
             .into(detail_image_movie_poster)
+        Glide.with(this)
+            .load(backdropUrl + film.backdropPath)
+            .into(detail_backdrop)
     }
 
     private fun errorIndicator(state: Boolean) {
         if (state) {
-            detail_content.visibility = View.GONE
             detail_error_button.visibility = View.VISIBLE
             detail_text_movie_rating.visibility = View.GONE
-            detail_imagerounded_movie_rating_back.visibility = View.GONE
             viewLanguageAdjustment()
             Glide.with(this)
                 .load(R.drawable.img_noconnection2)
                 .into(detail_image_movie_poster)
         } else {
-            detail_content.visibility = View.VISIBLE
             detail_error_button.visibility = View.GONE
             detail_text_movie_rating.visibility = View.VISIBLE
-            detail_imagerounded_movie_rating_back.visibility = View.VISIBLE
         }
     }
 

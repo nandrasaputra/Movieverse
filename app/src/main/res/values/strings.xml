@@ -40,4 +40,5 @@
     <string name="button_try_again_id">"Coba Lagi"</string>
 
     <string name="overview_not_available_id">"Ikhtisar Tidak Tersedia Untuk Bahasa Ini"</string>
+    <string name="detail_backdrop_cd">backdrop</string>
 </resources>

@@ -141,4 +141,8 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private fun isNewLanguage(language: String) : Boolean {
         return (language != currentLanguage)
     }
+
+    private suspend fun fetchDetail() {
+
+    }
 }
