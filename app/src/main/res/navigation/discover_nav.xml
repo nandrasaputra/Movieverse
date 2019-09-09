@@ -2,8 +2,10 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/discover"
-    app:startDestination="@id/discoverFragment">
+    app:startDestination="@id/discoverFragment"
+    tools:ignore="UnusedNavigation">
 
     <fragment
         android:id="@+id/discoverFragment"
@@ -18,8 +20,8 @@
         android:name="com.nandra.moviecatalogue.ui.DetailFragment"
         android:label="DetailFragment" >
         <argument
-            android:name="position"
-            app:argType="integer"
+            android:name="id"
+            app:argType="string"
             android:defaultValue="0" />
         <argument
             android:name="filmType"

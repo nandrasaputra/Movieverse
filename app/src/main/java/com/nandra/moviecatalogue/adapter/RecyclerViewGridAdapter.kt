@@ -45,7 +45,7 @@ class RecyclerViewGridAdapter(
             .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
             .into(holder.itemView.item_grid_poster)
         holder.itemView.setOnClickListener {
-            val action = DiscoverFragmentDirections.actionDiscoverFragmentToDetailFragment(filmType).setPosition(position)
+            val action = DiscoverFragmentDirections.actionDiscoverFragmentToDetailFragment(filmType).setId(currentFilm.id.toString())
             holder.itemView.findNavController().navigate(action)
         }
     }
@@ -58,7 +58,7 @@ class RecyclerViewGridAdapter(
             .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
             .into(holder.itemView.item_grid_poster)
         holder.itemView.setOnClickListener {
-            val action = DiscoverFragmentDirections.actionDiscoverFragmentToDetailFragment(filmType).setPosition(position)
+            val action = DiscoverFragmentDirections.actionDiscoverFragmentToDetailFragment(filmType).setId(currentFilm.id.toString())
             holder.itemView.findNavController().navigate(action)
         }
     }

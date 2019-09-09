@@ -9,13 +9,13 @@
         android:id="@+id/main_fragment_host_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/main_fragment_bottom_navigation"
+        app:layout_constraintBottom_toTopOf="@id/main_activity_bottom_navigation"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/main_fragment_bottom_navigation"
+        android:id="@+id/main_activity_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:menu="@menu/bottom_nav_menu"

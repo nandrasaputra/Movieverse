@@ -18,9 +18,12 @@
     <string name="cd_favorite">"Favorite"</string>
     <string name="cd_setting">"Setting"</string>
 
-    <string name="title_discover">"Discover"</string>
-    <string name="title_favorite">"Favorite"</string>
-    <string name="title_setting">"Setting"</string>
+    <string name="title_discover_en">"Discover"</string>
+    <string name="title_favorite_en">"Favorite"</string>
+    <string name="title_setting_en">"Setting"</string>
+    <string name="title_discover_id">"Jelajah"</string>
+    <string name="title_favorite_id">"Favorit"</string>
+    <string name="title_setting_id">"Pengaturan"</string>
 
     <string name = "main_tab_1_title_en">"Movie"</string>
     <string name = "main_tab_1_title_id">"Film"</string>

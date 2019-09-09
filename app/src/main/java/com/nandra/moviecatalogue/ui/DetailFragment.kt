@@ -8,13 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
+import com.nandra.moviecatalogue.network.DetailResponse
 import com.nandra.moviecatalogue.network.Film
+import com.nandra.moviecatalogue.network.GenreX
+import com.nandra.moviecatalogue.util.Constant
 import com.nandra.moviecatalogue.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class DetailFragment : Fragment() {
 
@@ -24,6 +32,8 @@ class DetailFragment : Fragment() {
     private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
+    private var id = ""
+    private var filmType = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_detail, container, false)
@@ -36,9 +46,13 @@ class DetailFragment : Fragment() {
         detail_fragment_toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
-        val position = DetailFragmentArgs.fromBundle(arguments!!).position
-        val filmType = DetailFragmentArgs.fromBundle(arguments!!).filmType
-        attemptPrepareView(position, filmType)
+        id = DetailFragmentArgs.fromBundle(arguments!!).id
+        filmType = DetailFragmentArgs.fromBundle(arguments!!).filmType
+        sharedViewModel.detailFilm.observe(this, Observer {
+            prepareView(it)
+            detail_veil.visibility = View.GONE
+        })
+        attemptPrepareView()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,14 +62,26 @@ class DetailFragment : Fragment() {
         } ?: throw Exception("Invalid Activity")
     }
 
-    private fun attemptPrepareView(position: Int, filmType: String) {
+    override fun onResume() {
+        super.onResume()
+        if(!sharedViewModel.isOnDetailFragment){
+            detail_veil.visibility = View.VISIBLE
+        }
+        sharedViewModel.isOnDetailFragment = true
+    }
+
+    private fun attemptPrepareView() {
         if(isConnectedToInternet()){
-            prepareView(position, filmType)
+            val job = Job()
+            val scope = CoroutineScope(Dispatchers.Main + job)
+            scope.launch {
+                sharedViewModel.fetchDetail(id, filmType)
+            }
         } else {
             errorIndicator(true)
             detail_error_button.setOnClickListener {
                 if (isConnectedToInternet()) {
-                    prepareView(position, filmType)
+                    //TODO prepareView(id, filmType)
                     errorIndicator(false)
                 }
             }
@@ -68,54 +94,30 @@ class DetailFragment : Fragment() {
         return networkInfo != null && networkInfo.isConnected
     }
 
-    private fun prepareView(position: Int, filmType: String) {
-        if (filmType == getString(R.string.film_type_movie))
-            prepareMovieView(position)
-        else
-            prepareTVView(position)
-    }
-
-    private fun prepareMovieView(position: Int){
-        film = sharedViewModel.listMovieLive.value!![position]
-        val genre = sharedViewModel.movieGenreStringList[position]
-        detail_text_movie_title.text = film.title
-        detail_text_movie_genre.text = genre
-        detail_text_movie_rating.text = film.voteAverage.toString()
-        if(film.overview == ""){
+    private fun prepareView(data: DetailResponse) {
+        if(filmType == Constant.MOVIE_FILM_TYPE) {
+            detail_text_movie_title.text = data.title
+            detail_text_release_date.text = data.releaseDate
+            val runtime = "${data.runtime} Minutes"
+            detail_text_runtime.text = runtime
+        } else {
+            detail_text_movie_title.text = data.tvTitle
+        }
+        detail_text_movie_genre.text = data.genres.getStringGenre()
+        detail_text_movie_rating.text = data.voteAverage.toString()
+        if(data.overview == ""){
             val text = getString(R.string.overview_not_available_id)
             detail_text_movie_overview.text = text
         } else {
-            detail_text_movie_overview.text = film.overview
+            detail_text_movie_overview.text = data.overview
         }
         val url = "https://image.tmdb.org/t/p/w342"
         val backdropUrl = "https://image.tmdb.org/t/p/w500"
         Glide.with(this)
-            .load(url + film.posterPath)
+            .load(url + data.posterPath)
             .into(detail_image_movie_poster)
         Glide.with(this)
-            .load(backdropUrl + film.backdropPath)
-            .into(detail_backdrop)
-    }
-
-    private fun prepareTVView(position: Int) {
-        film = sharedViewModel.listTVLive.value!![position]
-        val genre = sharedViewModel.tvGenreStringList[position]
-        detail_text_movie_title.text = film.tvName
-        detail_text_movie_genre.text = genre
-        detail_text_movie_rating.text = film.voteAverage.toString()
-        if(film.overview == ""){
-            val text = getString(R.string.overview_not_available_id)
-            detail_text_movie_overview.text = text
-        } else {
-            detail_text_movie_overview.text = film.overview
-        }
-        val url = "https://image.tmdb.org/t/p/w342"
-        val backdropUrl = "https://image.tmdb.org/t/p/w500"
-        Glide.with(this)
-            .load(url + film.posterPath)
-            .into(detail_image_movie_poster)
-        Glide.with(this)
-            .load(backdropUrl + film.backdropPath)
+            .load(backdropUrl + data.backdropPath)
             .into(detail_backdrop)
     }
 
@@ -147,4 +149,19 @@ class DetailFragment : Fragment() {
         currentLanguage = sharedPreferences.getString(preferenceLanguageKey,
             languageEnglishValue)!!
     }
+
+    private fun List<GenreX>.getStringGenre() : String {
+        val stringBuilder = StringBuilder()
+        return if (this.isEmpty()) {
+            "No Genre Information"
+        } else {
+            this.forEach {
+                stringBuilder.append(it.name)
+                stringBuilder.append(", ")
+            }
+            val result = stringBuilder.delete(stringBuilder.length - 2, stringBuilder.length)
+            result.toString()
+        }
+    }
+
 }

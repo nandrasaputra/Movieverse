@@ -3,13 +3,16 @@ package com.nandra.moviecatalogue.viewmodel
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.nandra.moviecatalogue.network.DetailResponse
 import com.nandra.moviecatalogue.network.Film
 import com.nandra.moviecatalogue.network.Genre
 import com.nandra.moviecatalogue.repository.MyRepository
+import com.nandra.moviecatalogue.util.Constant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -18,10 +21,16 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     var currentLanguage: String = ""
     var isDataHasLoaded: Boolean = false
-    private var job : Job? = null
+    private var discoverJob : Job? = null
+    private var detailJob : Job? = null
     private val repository = MyRepository(app)
     var movieGenreStringList = arrayListOf<String>()
     var tvGenreStringList = arrayListOf<String>()
+    var isOnDetailFragment = false
+
+    val detailFilm: LiveData<DetailResponse>
+        get() = _detailFilm
+    private val _detailFilm = MutableLiveData<DetailResponse>()
 
     val isLoading: LiveData<Boolean>
         get() = _isLoading
@@ -38,8 +47,8 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private val _listTVLive = MutableLiveData<ArrayList<Film>>()
 
     suspend fun requestData(language: String) {
-        if(job != null){
-            job?.join()
+        if(discoverJob != null){
+            discoverJob?.join()
         }
 
         if(isNewLanguage(language)) {
@@ -59,7 +68,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     private suspend fun fetchData(language: String) {
         _isLoading.value = true
-        job = viewModelScope.launch(Dispatchers.IO) {
+        discoverJob = viewModelScope.launch(Dispatchers.IO) {
             try {
                 val movieResponse = repository.fetchMovieResponse(language)
                 val tvShowResponse = repository.fetchTVSeriesResponse(language)
@@ -97,7 +106,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                 _isError.postValue(true)
             }
         }
-        job?.join()
+        discoverJob?.join()
     }
 
     private fun isConnectedToInternet() : Boolean {
@@ -142,7 +151,36 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         return (language != currentLanguage)
     }
 
-    private suspend fun fetchDetail() {
+    suspend fun fetchDetail(id: String, filmType: String) {
+        if (detailJob != null) {
+            if (detailJob!!.isActive)     {
+                detailJob!!.join()
+            }
+        }
+        detailJob = viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = if (filmType == Constant.MOVIE_FILM_TYPE) {
+                    Log.d("DEBUG", "FETCH MOVIE$id")
+                    repository.fetchMovieDetailResponse(id)
+                } else {
+                    Log.d("DEBUG", "FETCH TV$id")
+                    repository.fetchTVDetailResponse(id)
+                }
 
+                Log.d("DEBUG", response.isSuccessful.toString())
+
+                if (response.isSuccessful) {
+                    val film = response.body()
+                    _detailFilm.postValue(film)
+                    Log.d("DEBUG", "Success : " + response.code().toString())
+                } else {
+                    Log.d("DEBUG", "Error : " + response.code().toString())
+                }
+
+                Log.d("DEBUG", response.errorBody().toString())
+            } catch (error: Exception){
+
+            }
+        }
     }
 }

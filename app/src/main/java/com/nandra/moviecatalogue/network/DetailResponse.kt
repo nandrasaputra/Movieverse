@@ -38,5 +38,7 @@ data class DetailResponse(
     @SerializedName("vote_count")
     val voteCount: Int,
     val videos: Videos,
-    val credits: Credits
+    val credits: Credits,
+    @SerializedName("name")
+    val tvTitle: String
 )

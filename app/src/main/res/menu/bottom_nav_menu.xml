@@ -4,15 +4,15 @@
         android:id="@+id/discover"
         android:icon="@drawable/ic_compass"
         android:contentDescription="@string/cd_discover"
-        android:title="@string/title_discover" />
+        android:title="@string/title_discover_en" />
     <item
         android:id="@+id/favorite"
         android:icon="@drawable/ic_hearts"
         android:contentDescription="@string/cd_favorite"
-        android:title="@string/title_favorite" />
+        android:title="@string/title_favorite_en" />
     <item
         android:id="@+id/setting"
         android:icon="@drawable/ic_settings_white_24dp"
         android:contentDescription="@string/cd_setting"
-        android:title="@string/title_setting" />
+        android:title="@string/title_setting_en" />
 </menu>

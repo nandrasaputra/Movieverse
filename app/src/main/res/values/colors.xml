@@ -7,4 +7,7 @@
     <color name="colorShadowGray">#414141</color>
     <color name="colorPureWhite">#FFFFFF</color>
     <color name="colorBlueDarker">#076896</color>
+
+    <color name="placeholderColorOne">#C9C9C9</color>
+    <color name="placeholderColorTwo">#ACACAC</color>
 </resources>

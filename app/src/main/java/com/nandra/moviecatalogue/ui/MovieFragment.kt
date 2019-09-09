@@ -68,6 +68,11 @@ class MovieFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.isOnDetailFragment = false
+    }
+
     private fun errorIndicator(state: Boolean){
         if(state){
             movie_error_back.visibility = View.VISIBLE

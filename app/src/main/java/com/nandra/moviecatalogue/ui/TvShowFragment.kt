@@ -49,6 +49,11 @@ class TvShowFragment : Fragment() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.isOnDetailFragment = false
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
