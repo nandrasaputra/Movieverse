@@ -45,7 +45,7 @@ class MovieFragment : Fragment() {
             errorIndicator(it)
         })
         sharedViewModel.listMovieLive.observe(this, Observer {
-            movie_recyclerview.swapAdapter(RecyclerViewGridAdapter(it, Constant.MOVIE_FILM_TYPE, sharedViewModel.movieGenreStringList), true)
+            movie_recyclerview.swapAdapter(RecyclerViewGridAdapter(it, Constant.MOVIE_FILM_TYPE), true)
         })
     }
 
@@ -70,6 +70,7 @@ class MovieFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        sharedViewModel.detailState.value = Constant.STATE_NOSTATE
         sharedViewModel.isOnDetailFragment = false
     }
 
@@ -100,7 +101,7 @@ class MovieFragment : Fragment() {
             .load(R.drawable.img_loading_indicator)
             .into(movie_loading_image)
         if (sharedViewModel.isDataHasLoaded && currentLanguage == sharedViewModel.currentLanguage)
-            movie_recyclerview.swapAdapter(RecyclerViewGridAdapter(sharedViewModel.listMovieLive.value!!, Constant.MOVIE_FILM_TYPE, sharedViewModel.movieGenreStringList), true)
+            movie_recyclerview.swapAdapter(RecyclerViewGridAdapter(sharedViewModel.listMovieLive.value!!, Constant.MOVIE_FILM_TYPE), true)
         else {
             scope.launch {
                 sharedViewModel.requestData(currentLanguage)

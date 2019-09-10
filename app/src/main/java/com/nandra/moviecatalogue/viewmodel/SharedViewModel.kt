@@ -3,14 +3,12 @@ package com.nandra.moviecatalogue.viewmodel
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.nandra.moviecatalogue.network.DetailResponse
 import com.nandra.moviecatalogue.network.Film
-import com.nandra.moviecatalogue.network.Genre
 import com.nandra.moviecatalogue.repository.MyRepository
 import com.nandra.moviecatalogue.util.Constant
 import kotlinx.coroutines.Dispatchers
@@ -24,9 +22,9 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private var discoverJob : Job? = null
     private var detailJob : Job? = null
     private val repository = MyRepository(app)
-    var movieGenreStringList = arrayListOf<String>()
-    var tvGenreStringList = arrayListOf<String>()
     var isOnDetailFragment = false
+
+    val detailState = MutableLiveData<Int>()
 
     val detailFilm: LiveData<DetailResponse>
         get() = _detailFilm
@@ -72,23 +70,11 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
             try {
                 val movieResponse = repository.fetchMovieResponse(language)
                 val tvShowResponse = repository.fetchTVSeriesResponse(language)
-                val tvGenreResponse = repository.fetchTVGenreResponse(language)
-                val movieGenreResponse = repository.fetchMovieGenreResponse(language)
 
-                if (movieResponse.isSuccessful && tvShowResponse.isSuccessful
-                    && tvGenreResponse.isSuccessful && movieGenreResponse.isSuccessful) {
+                if (movieResponse.isSuccessful && tvShowResponse.isSuccessful) {
 
                     val listMovie = movieResponse.body()?.results as ArrayList
                     val listTV = tvShowResponse.body()?.results as ArrayList
-
-
-                    val tvGenreList = tvGenreResponse.body()?.genres
-                    val movieGenreList = movieGenreResponse.body()?.genres
-                    val tvGenreMap = createMapFromList(tvGenreList!!)
-                    val movieGenreMap = createMapFromList(movieGenreList!!)
-
-                    movieGenreStringList = createGenreStringList(listMovie, movieGenreMap)
-                    tvGenreStringList = createGenreStringList(listTV, tvGenreMap)
 
                     _listMovieLive.postValue(listMovie)
                     _listTVLive.postValue(listTV)
@@ -115,72 +101,44 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         return networkInfo != null && networkInfo.isConnected
     }
 
-    private fun createMapFromList(list: List<Genre>) : Map<Int, String> {
-        val mutableMap = mutableMapOf<Int, String>()
-        list.forEach{ mutableMap[it.id] = it.name }
-        return mutableMap
-    }
-
-    private fun getStringGenre(genreIdList: List<Int>, map: Map<Int, String>) : String {
-        val result = StringBuilder()
-        genreIdList.forEach {
-            val tempValue = map[it]
-            if (tempValue != null){
-                result.append(tempValue)
-                result.append(", ")
-            }
-        }
-        return if (result.length > 2){
-            result.delete(result.length - 2, result.length)
-            result.toString()
-        } else
-            result.toString()
-    }
-
-    private fun createGenreStringList(listFilm: ArrayList<Film>, map: Map<Int, String>) : ArrayList<String> {
-        val result = mutableListOf<String>()
-        listFilm.forEach {
-            val genreIdList = it.genreIds
-            val temp = getStringGenre(genreIdList, map)
-            result.add(temp)
-        }
-        return result as ArrayList<String>
-    }
-
     private fun isNewLanguage(language: String) : Boolean {
         return (language != currentLanguage)
     }
 
-    suspend fun fetchDetail(id: String, filmType: String) {
+    suspend fun requestDetail(id: String, filmType: String) {
+        if (isConnectedToInternet())
+            fetchDetail(id, filmType)
+        else
+            detailState.value = Constant.STATE_NO_CONNECTION
+    }
+
+    private suspend fun fetchDetail(id: String, filmType: String) {
         if (detailJob != null) {
             if (detailJob!!.isActive)     {
                 detailJob!!.join()
             }
         }
         detailJob = viewModelScope.launch(Dispatchers.IO) {
+            detailState.postValue(Constant.STATE_LOADING)
             try {
                 val response = if (filmType == Constant.MOVIE_FILM_TYPE) {
-                    Log.d("DEBUG", "FETCH MOVIE$id")
                     repository.fetchMovieDetailResponse(id)
                 } else {
-                    Log.d("DEBUG", "FETCH TV$id")
                     repository.fetchTVDetailResponse(id)
                 }
-
-                Log.d("DEBUG", response.isSuccessful.toString())
 
                 if (response.isSuccessful) {
                     val film = response.body()
                     _detailFilm.postValue(film)
-                    Log.d("DEBUG", "Success : " + response.code().toString())
+                    detailState.postValue(Constant.STATE_SUCCESS)
                 } else {
-                    Log.d("DEBUG", "Error : " + response.code().toString())
+                    detailState.postValue(Constant.STATE_SERVER_ERROR)
                 }
 
-                Log.d("DEBUG", response.errorBody().toString())
             } catch (error: Exception){
-
+                detailState.postValue(Constant.STATE_SERVER_ERROR)
             }
         }
     }
+
 }

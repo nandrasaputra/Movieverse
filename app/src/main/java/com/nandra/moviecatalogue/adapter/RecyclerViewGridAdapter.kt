@@ -14,8 +14,7 @@ import kotlinx.android.synthetic.main.item_discover_recyclerview.view.*
 
 class RecyclerViewGridAdapter(
     private val filmList : ArrayList<Film>,
-    private val filmType: String,
-    private val genreList: ArrayList<String>
+    private val filmType: String
 ) : RecyclerView.Adapter<RecyclerViewGridAdapter.DiscoverViewHolder> () {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiscoverViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_discover_recyclerview, parent, false)
@@ -28,16 +27,15 @@ class RecyclerViewGridAdapter(
 
     override fun onBindViewHolder(holder: DiscoverViewHolder, position: Int) {
         val currentFilm = filmList[position]
-        val currentGenre = genreList[position]
         val typeMovie = holder.itemView.context.getString(R.string.film_type_movie)
 
         if(filmType == typeMovie)
-            bindMovieViewProperties(holder, position, currentFilm, currentGenre)
+            bindMovieViewProperties(holder, currentFilm)
         else
-            bindTVShowViewProperties(holder, position, currentFilm, currentGenre)
+            bindTVShowViewProperties(holder, currentFilm)
     }
 
-    private fun bindMovieViewProperties(holder: DiscoverViewHolder, position: Int, currentFilm: Film, currentGenre: String) {
+    private fun bindMovieViewProperties(holder: DiscoverViewHolder, currentFilm: Film) {
         holder.itemView.item_grid_title.text = currentFilm.title
         val url = "https://image.tmdb.org/t/p/w185"
         Glide.with(holder.itemView)
@@ -50,7 +48,7 @@ class RecyclerViewGridAdapter(
         }
     }
 
-    private fun bindTVShowViewProperties(holder: DiscoverViewHolder, position: Int, currentFilm: Film, currentGenre: String) {
+    private fun bindTVShowViewProperties(holder: DiscoverViewHolder, currentFilm: Film) {
         holder.itemView.item_grid_title.text = currentFilm.tvName
         val url = "https://image.tmdb.org/t/p/w185"
         Glide.with(holder.itemView)

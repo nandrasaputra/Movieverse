@@ -45,12 +45,13 @@ class TvShowFragment : Fragment() {
             errorIndicator(it)
         })
         sharedViewModel.listTVLive.observe(this, Observer {
-            tvshow_recyclerview.swapAdapter(RecyclerViewGridAdapter(it, Constant.TV_FILM_TYPE, sharedViewModel.tvGenreStringList), true)
+            tvshow_recyclerview.swapAdapter(RecyclerViewGridAdapter(it, Constant.TV_FILM_TYPE), true)
         })
     }
 
     override fun onResume() {
         super.onResume()
+        sharedViewModel.detailState.value = Constant.STATE_NOSTATE
         sharedViewModel.isOnDetailFragment = false
     }
 
@@ -100,7 +101,7 @@ class TvShowFragment : Fragment() {
             .load(R.drawable.img_loading_indicator)
             .into(tvshow_loading_image)
         if (sharedViewModel.isDataHasLoaded && currentLanguage == sharedViewModel.currentLanguage)
-            tvshow_recyclerview.swapAdapter(RecyclerViewGridAdapter(sharedViewModel.listTVLive.value!!, Constant.TV_FILM_TYPE, sharedViewModel.tvGenreStringList), true)
+            tvshow_recyclerview.swapAdapter(RecyclerViewGridAdapter(sharedViewModel.listTVLive.value!!, Constant.TV_FILM_TYPE), true)
         else {
             scope.launch {
                 sharedViewModel.requestData(currentLanguage)

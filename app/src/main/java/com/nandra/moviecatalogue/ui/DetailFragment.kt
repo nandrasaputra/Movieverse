@@ -1,12 +1,11 @@
 package com.nandra.moviecatalogue.ui
 
-import android.content.Context
 import android.content.SharedPreferences
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -14,8 +13,7 @@ import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.network.DetailResponse
-import com.nandra.moviecatalogue.network.Film
-import com.nandra.moviecatalogue.network.GenreX
+import com.nandra.moviecatalogue.network.Genre
 import com.nandra.moviecatalogue.util.Constant
 import com.nandra.moviecatalogue.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
@@ -27,7 +25,6 @@ import kotlinx.coroutines.launch
 class DetailFragment : Fragment() {
 
     private var currentLanguage: String = ""
-    private lateinit var film: Film
     private lateinit var languageEnglishValue : String
     private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
@@ -48,11 +45,15 @@ class DetailFragment : Fragment() {
         }
         id = DetailFragmentArgs.fromBundle(arguments!!).id
         filmType = DetailFragmentArgs.fromBundle(arguments!!).filmType
+        sharedViewModel.detailState.observe(this, Observer {
+            handleState(it)
+        })
         sharedViewModel.detailFilm.observe(this, Observer {
             prepareView(it)
-            detail_veil.visibility = View.GONE
         })
-        attemptPrepareView()
+        if (!sharedViewModel.isOnDetailFragment) {
+            attemptPrepareView()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,34 +65,19 @@ class DetailFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if(!sharedViewModel.isOnDetailFragment){
-            detail_veil.visibility = View.VISIBLE
+        if (!sharedViewModel.isOnDetailFragment){
+            detail_cover.visibility = View.VISIBLE
+            detail_fab.hide()
+            sharedViewModel.isOnDetailFragment = true
         }
-        sharedViewModel.isOnDetailFragment = true
     }
 
     private fun attemptPrepareView() {
-        if(isConnectedToInternet()){
-            val job = Job()
-            val scope = CoroutineScope(Dispatchers.Main + job)
-            scope.launch {
-                sharedViewModel.fetchDetail(id, filmType)
-            }
-        } else {
-            errorIndicator(true)
-            detail_error_button.setOnClickListener {
-                if (isConnectedToInternet()) {
-                    //TODO prepareView(id, filmType)
-                    errorIndicator(false)
-                }
-            }
+        val job = Job()
+        val scope = CoroutineScope(Dispatchers.Main + job)
+        scope.launch {
+            sharedViewModel.requestDetail(id, filmType)
         }
-    }
-
-    private fun isConnectedToInternet() : Boolean {
-        val connectivityManager = activity?.application?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = connectivityManager.activeNetworkInfo
-        return networkInfo != null && networkInfo.isConnected
     }
 
     private fun prepareView(data: DetailResponse) {
@@ -121,20 +107,6 @@ class DetailFragment : Fragment() {
             .into(detail_backdrop)
     }
 
-    private fun errorIndicator(state: Boolean) {
-        if (state) {
-            detail_error_button.visibility = View.VISIBLE
-            detail_text_movie_rating.visibility = View.GONE
-            viewLanguageAdjustment()
-            Glide.with(this)
-                .load(R.drawable.img_noconnection2)
-                .into(detail_image_movie_poster)
-        } else {
-            detail_error_button.visibility = View.GONE
-            detail_text_movie_rating.visibility = View.VISIBLE
-        }
-    }
-
     private fun viewLanguageAdjustment() {
         if (currentLanguage == languageEnglishValue)
             detail_error_button.text = getString(R.string.button_try_again_en)
@@ -150,7 +122,7 @@ class DetailFragment : Fragment() {
             languageEnglishValue)!!
     }
 
-    private fun List<GenreX>.getStringGenre() : String {
+    private fun List<Genre>.getStringGenre() : String {
         val stringBuilder = StringBuilder()
         return if (this.isEmpty()) {
             "No Genre Information"
@@ -164,4 +136,35 @@ class DetailFragment : Fragment() {
         }
     }
 
+    private fun handleState(state: Int) {
+        when(state){
+            Constant.STATE_NO_CONNECTION -> {
+                detail_loading_indicator.visibility = View.GONE
+                detail_shimmer.stopShimmer()
+                detail_shimmer.visibility = View.GONE
+                Toast.makeText(activity, "No Internet Connection", Toast.LENGTH_SHORT).show()
+            }
+            Constant.STATE_SERVER_ERROR -> {
+                detail_loading_indicator.visibility = View.GONE
+                detail_shimmer.stopShimmer()
+                detail_shimmer.visibility = View.GONE
+                Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show()
+            }
+            Constant.STATE_SUCCESS -> {
+                detail_loading_indicator.visibility = View.GONE
+                detail_shimmer.stopShimmer()
+                detail_shimmer.visibility = View.GONE
+                detail_cover.visibility = View.GONE
+                detail_fab.show()
+                Toast.makeText(activity, "Success", Toast.LENGTH_SHORT).show()
+            }
+            Constant.STATE_LOADING -> {
+                detail_cover.visibility = View.VISIBLE
+                detail_shimmer.visibility = View.VISIBLE
+                detail_shimmer.startShimmer()
+                detail_loading_indicator.visibility = View.VISIBLE
+                Toast.makeText(activity, "Loading", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 }
