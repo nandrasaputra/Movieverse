@@ -142,17 +142,6 @@
                 android:textAlignment="textStart"
                 android:fontFamily="@font/lato_medium"
                 android:textSize="@dimen/detail_text_overview_size" />
-
-            <Button
-                android:id="@+id/detail_error_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@id/detail_image_movie_poster"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/button_try_again_en"
-                android:visibility="gone"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
@@ -164,7 +153,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_fragment_toolbar"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="ContentDescription" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/detail_shimmer"

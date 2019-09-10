@@ -2,6 +2,7 @@ package com.nandra.moviecatalogue.util
 
 object Constant {
     const val API_KEY = "b035113688699fc69bf05ff16f32aa80"
+    const val API_KEY_YANDEX = "trnsl.1.1.20190910T083918Z.868689de3016aba1.bf717172054fff263a45c7a9801c2db3192d6137"
     const val TV_FILM_TYPE = "tvshow"
     const val MOVIE_FILM_TYPE = "movie"
 

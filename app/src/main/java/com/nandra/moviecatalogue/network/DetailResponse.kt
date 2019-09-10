@@ -30,7 +30,6 @@ data class DetailResponse(
     val revenue: Int,
     val runtime: Int,
     val status: String,
-    val tagline: String,
     val title: String,
     val video: Boolean,
     @SerializedName("vote_average")
@@ -40,5 +39,10 @@ data class DetailResponse(
     val videos: Videos,
     val credits: Credits,
     @SerializedName("name")
-    val tvTitle: String
+    val tvTitle: String,
+    @SerializedName("first_air_date")
+    val tvAirDate: String,
+    @SerializedName("number_of_episodes")
+    val tvNumberOfEpisode: String
+
 )

@@ -9,8 +9,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.nandra.moviecatalogue.network.DetailResponse
 import com.nandra.moviecatalogue.network.Film
+import com.nandra.moviecatalogue.network.YandexResponse
 import com.nandra.moviecatalogue.repository.MyRepository
 import com.nandra.moviecatalogue.util.Constant
+import com.nandra.moviecatalogue.util.getStringGenre
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -29,6 +31,10 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     val detailFilm: LiveData<DetailResponse>
         get() = _detailFilm
     private val _detailFilm = MutableLiveData<DetailResponse>()
+
+    val detailFilmTranslated: LiveData<YandexResponse>
+        get() = _detailFilmTranslated
+    private val _detailFilmTranslated = MutableLiveData<YandexResponse>()
 
     val isLoading: LiveData<Boolean>
         get() = _isLoading
@@ -129,8 +135,15 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
                 if (response.isSuccessful) {
                     val film = response.body()
-                    _detailFilm.postValue(film)
-                    detailState.postValue(Constant.STATE_SUCCESS)
+                    val translateResponse = repository.translateText(listOf(film!!.overview, film.genres.getStringGenre()))
+                    if (translateResponse.isSuccessful) {
+                        val translatedFilm = translateResponse.body()
+                        _detailFilm.postValue(film)
+                        _detailFilmTranslated.postValue(translatedFilm)
+                        detailState.postValue(Constant.STATE_SUCCESS)
+                    } else {
+                        detailState.postValue(Constant.STATE_SERVER_ERROR)
+                    }
                 } else {
                     detailState.postValue(Constant.STATE_SERVER_ERROR)
                 }

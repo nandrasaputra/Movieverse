@@ -4,8 +4,10 @@ import android.app.Application
 import com.nandra.moviecatalogue.network.ConnectivityInterceptor
 import com.nandra.moviecatalogue.network.DetailResponse
 import com.nandra.moviecatalogue.network.DiscoverResponse
+import com.nandra.moviecatalogue.network.YandexResponse
 import com.nandra.moviecatalogue.network.apiservice.TheMovieDBDetailApiService
 import com.nandra.moviecatalogue.network.apiservice.TheMovieDBDiscoverApiService
+import com.nandra.moviecatalogue.network.apiservice.YandexTranslationApiService
 import retrofit2.Response
 
 class MyRepository(app: Application) {
@@ -15,6 +17,8 @@ class MyRepository(app: Application) {
         TheMovieDBDiscoverApiService(interceptor)
     private val detailService =
         TheMovieDBDetailApiService(interceptor)
+    private val yandexService =
+        YandexTranslationApiService(interceptor)
 
     suspend fun fetchMovieResponse(language: String) : Response<DiscoverResponse> {
         return discoverService.getMovie(language)
@@ -30,5 +34,9 @@ class MyRepository(app: Application) {
 
     suspend fun fetchTVDetailResponse(id: String, parameter: String = "videos,credits") : Response<DetailResponse> {
         return detailService.getTVDetail(id, parameter)
+    }
+
+    suspend fun translateText(text: List<String>) : Response<YandexResponse> {
+        return yandexService.translateText("en-id", text)
     }
 }
