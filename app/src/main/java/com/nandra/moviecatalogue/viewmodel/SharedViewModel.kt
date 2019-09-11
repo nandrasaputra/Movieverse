@@ -50,7 +50,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private val _isError = MutableLiveData<Boolean>()
     private val _listTVLive = MutableLiveData<ArrayList<Film>>()
 
-    suspend fun requestData(language: String) {
+    suspend fun requestDiscoverData(language: String) {
         if(discoverJob != null){
             discoverJob?.join()
         }

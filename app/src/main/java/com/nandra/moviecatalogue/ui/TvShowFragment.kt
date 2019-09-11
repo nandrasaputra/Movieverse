@@ -104,7 +104,7 @@ class TvShowFragment : Fragment() {
             tvshow_recyclerview.swapAdapter(RecyclerViewGridAdapter(sharedViewModel.listTVLive.value!!, Constant.TV_FILM_TYPE), true)
         else {
             scope.launch {
-                sharedViewModel.requestData(currentLanguage)
+                sharedViewModel.requestDiscoverData(currentLanguage)
             }
         }
     }

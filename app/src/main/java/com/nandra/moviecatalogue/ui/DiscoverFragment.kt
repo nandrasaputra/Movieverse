@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.google.android.material.tabs.TabLayout
@@ -27,9 +26,6 @@ class DiscoverFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        val activity = activity as AppCompatActivity
-
         prepareSharedPreferences()
 
         viewPagerPageAdapter = ViewPagerPageAdapter(

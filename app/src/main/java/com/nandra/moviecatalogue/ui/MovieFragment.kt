@@ -104,7 +104,7 @@ class MovieFragment : Fragment() {
             movie_recyclerview.swapAdapter(RecyclerViewGridAdapter(sharedViewModel.listMovieLive.value!!, Constant.MOVIE_FILM_TYPE), true)
         else {
             scope.launch {
-                sharedViewModel.requestData(currentLanguage)
+                sharedViewModel.requestDiscoverData(currentLanguage)
             }
         }
     }
