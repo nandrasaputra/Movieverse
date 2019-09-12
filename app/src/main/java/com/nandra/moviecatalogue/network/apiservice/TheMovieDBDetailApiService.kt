@@ -1,7 +1,7 @@
 package com.nandra.moviecatalogue.network.apiservice
 
 import com.nandra.moviecatalogue.network.ConnectivityInterceptor
-import com.nandra.moviecatalogue.network.DetailResponse
+import com.nandra.moviecatalogue.network.response.DetailResponse
 import com.nandra.moviecatalogue.util.Constant
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -31,7 +31,7 @@ interface TheMovieDBDetailApiService {
                 val url = chain.request()
                     .url()
                     .newBuilder()
-                    .addQueryParameter("api_key", Constant.API_KEY)
+                    .addQueryParameter("api_key", Constant.API_KEY_MOVIE_DB)
                     .build()
                 val request = chain.request()
                     .newBuilder()

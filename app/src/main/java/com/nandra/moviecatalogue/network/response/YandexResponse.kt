@@ -1,4 +1,4 @@
-package com.nandra.moviecatalogue.network
+package com.nandra.moviecatalogue.network.response
 
 
 data class YandexResponse(

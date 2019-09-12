@@ -100,11 +100,11 @@ class TvShowFragment : Fragment() {
         Glide.with(this)
             .load(R.drawable.img_loading_indicator)
             .into(tvshow_loading_image)
-        if (sharedViewModel.isDataHasLoaded && currentLanguage == sharedViewModel.currentLanguage)
+        if (sharedViewModel.isDataHasLoaded)
             tvshow_recyclerview.swapAdapter(RecyclerViewGridAdapter(sharedViewModel.listTVLive.value!!, Constant.TV_FILM_TYPE), true)
         else {
             scope.launch {
-                sharedViewModel.requestDiscoverData(currentLanguage)
+                sharedViewModel.requestDiscoverData()
             }
         }
     }

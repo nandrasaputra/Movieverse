@@ -8,16 +8,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.network.Film
-import kotlinx.android.synthetic.main.item_main_movie_list.view.*
+import kotlinx.android.synthetic.main.item_favorite_list.view.*
 
-class RecyclerViewAdapter(
+class RecyclerViewFavoriteAdapter(
     private val filmList : ArrayList<Film>,
     private val filmType: String,
     private val genreList: ArrayList<String>
-) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
+) : RecyclerView.Adapter<RecyclerViewFavoriteAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : MyViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_main_movie_list, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_favorite_list, parent, false)
         return MyViewHolder(view)
     }
 

@@ -2,7 +2,6 @@ package com.nandra.moviecatalogue.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
-import com.nandra.moviecatalogue.network.DetailResponse
+import com.nandra.moviecatalogue.network.response.DetailResponse
 import com.nandra.moviecatalogue.util.Constant
 import com.nandra.moviecatalogue.util.getStringGenre
 import com.nandra.moviecatalogue.viewmodel.SharedViewModel
@@ -44,6 +43,9 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         detail_fragment_toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
+        detail_favorite_section.setOnClickListener {
+            Toast.makeText(activity, "Clicked !", Toast.LENGTH_SHORT).show()
+        }
         id = DetailFragmentArgs.fromBundle(arguments!!).id
         filmType = DetailFragmentArgs.fromBundle(arguments!!).filmType
         sharedViewModel.detailState.observe(this, Observer {
@@ -68,7 +70,6 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         super.onResume()
         if (!sharedViewModel.isOnDetailFragment){
             detail_cover.visibility = View.VISIBLE
-            detail_fab.hide()
             sharedViewModel.isOnDetailFragment = true
         }
     }
@@ -104,7 +105,8 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
                 "${data.tvNumberOfEpisode} Episode"
             detail_text_runtime.text = totalEpisodes
         }
-        detail_text_movie_rating.text = data.voteAverage.toString()
+        val rating = "${data.voteAverage.toString()} / 10"
+        detail_text_movie_rating.text = rating
         if(currentLanguage == languageEnglishValue) {
             detail_text_movie_genre.text = data.genres.getStringGenre()
             if(data.overview == ""){
@@ -113,6 +115,9 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
             } else {
                 detail_text_movie_overview.text = data.overview
             }
+            val voteCount = "From ${data.voteCount} Votes"
+            detail_text_movie_rating_count.text = voteCount
+            detail_favorite_text.text = "Add To\nFavorite"
         } else {
             detail_text_movie_genre.text = sharedViewModel.detailFilmTranslated.value!!.text[1]
             if(data.overview == ""){
@@ -120,8 +125,10 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
                 detail_text_movie_overview.text = text
             } else {
                 detail_text_movie_overview.text = sharedViewModel.detailFilmTranslated.value!!.text[0]
-                Log.d("DEBUG", sharedViewModel.detailFilmTranslated.value!!.text[0])
             }
+            val voteCount = "Dari ${data.voteCount} Suara"
+            detail_text_movie_rating_count.text = voteCount
+            detail_favorite_text.text = "Tambahkan Ke\nFavorit"
         }
         val url = "https://image.tmdb.org/t/p/w342"
         val backdropUrl = "https://image.tmdb.org/t/p/w500"
@@ -160,15 +167,12 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
                 detail_shimmer.stopShimmer()
                 detail_shimmer.visibility = View.GONE
                 detail_cover.visibility = View.GONE
-                detail_fab.show()
-                Toast.makeText(activity, "Success", Toast.LENGTH_SHORT).show()
             }
             Constant.STATE_LOADING -> {
                 detail_cover.visibility = View.VISIBLE
                 detail_shimmer.visibility = View.VISIBLE
                 detail_shimmer.startShimmer()
                 detail_loading_indicator.visibility = View.VISIBLE
-                Toast.makeText(activity, "Loading", Toast.LENGTH_SHORT).show()
             }
         }
     }

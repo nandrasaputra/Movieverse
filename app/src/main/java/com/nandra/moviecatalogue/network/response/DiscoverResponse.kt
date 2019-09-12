@@ -1,7 +1,8 @@
-package com.nandra.moviecatalogue.network
+package com.nandra.moviecatalogue.network.response
 
 
 import com.google.gson.annotations.SerializedName
+import com.nandra.moviecatalogue.network.Film
 
 data class DiscoverResponse(
     val page: Int,

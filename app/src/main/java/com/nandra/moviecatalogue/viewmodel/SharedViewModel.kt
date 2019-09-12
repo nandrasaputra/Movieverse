@@ -7,9 +7,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.nandra.moviecatalogue.network.DetailResponse
 import com.nandra.moviecatalogue.network.Film
-import com.nandra.moviecatalogue.network.YandexResponse
+import com.nandra.moviecatalogue.network.response.DetailResponse
+import com.nandra.moviecatalogue.network.response.YandexResponse
 import com.nandra.moviecatalogue.repository.MyRepository
 import com.nandra.moviecatalogue.util.Constant
 import com.nandra.moviecatalogue.util.getStringGenre
@@ -50,32 +50,23 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private val _isError = MutableLiveData<Boolean>()
     private val _listTVLive = MutableLiveData<ArrayList<Film>>()
 
-    suspend fun requestDiscoverData(language: String) {
+    suspend fun requestDiscoverData() {
         if(discoverJob != null){
             discoverJob?.join()
         }
-
-        if(isNewLanguage(language)) {
-            if (isConnectedToInternet()) {
-                fetchData(language)
-            } else {
-                _isError.value = true
-            }
-        } else {
-            if (!isDataHasLoaded && isConnectedToInternet()) {
-                fetchData(language)
-            } else if (!isDataHasLoaded && !isConnectedToInternet()) {
-                _isError.value = true
-            }
+        if (!isDataHasLoaded && isConnectedToInternet()) {
+            fetchDiscoverData()
+        } else if (!isDataHasLoaded && !isConnectedToInternet()) {
+            _isError.value = true
         }
     }
 
-    private suspend fun fetchData(language: String) {
+    private suspend fun fetchDiscoverData() {
         _isLoading.value = true
         discoverJob = viewModelScope.launch(Dispatchers.IO) {
             try {
-                val movieResponse = repository.fetchMovieResponse(language)
-                val tvShowResponse = repository.fetchTVSeriesResponse(language)
+                val movieResponse = repository.fetchDiscoverMovieResponse()
+                val tvShowResponse = repository.fetchDiscoverTVSeriesResponse()
 
                 if (movieResponse.isSuccessful && tvShowResponse.isSuccessful) {
 
@@ -86,7 +77,6 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                     _listTVLive.postValue(listTV)
 
                     isDataHasLoaded = true
-                    currentLanguage = language
                     _isLoading.postValue(false)
                     _isError.postValue(false)
                 } else {

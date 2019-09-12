@@ -1,7 +1,7 @@
 package com.nandra.moviecatalogue.network.apiservice
 
 import com.nandra.moviecatalogue.network.ConnectivityInterceptor
-import com.nandra.moviecatalogue.network.YandexResponse
+import com.nandra.moviecatalogue.network.response.YandexResponse
 import com.nandra.moviecatalogue.util.Constant
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

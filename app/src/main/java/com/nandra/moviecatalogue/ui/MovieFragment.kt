@@ -100,11 +100,11 @@ class MovieFragment : Fragment() {
         Glide.with(this)
             .load(R.drawable.img_loading_indicator)
             .into(movie_loading_image)
-        if (sharedViewModel.isDataHasLoaded && currentLanguage == sharedViewModel.currentLanguage)
+        if (sharedViewModel.isDataHasLoaded)
             movie_recyclerview.swapAdapter(RecyclerViewGridAdapter(sharedViewModel.listMovieLive.value!!, Constant.MOVIE_FILM_TYPE), true)
         else {
             scope.launch {
-                sharedViewModel.requestDiscoverData(currentLanguage)
+                sharedViewModel.requestDiscoverData()
             }
         }
     }

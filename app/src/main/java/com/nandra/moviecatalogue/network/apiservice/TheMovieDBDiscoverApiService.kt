@@ -1,8 +1,8 @@
 package com.nandra.moviecatalogue.network.apiservice
 
 import com.nandra.moviecatalogue.network.ConnectivityInterceptor
-import com.nandra.moviecatalogue.network.DiscoverResponse
-import com.nandra.moviecatalogue.util.Constant.API_KEY
+import com.nandra.moviecatalogue.network.response.DiscoverResponse
+import com.nandra.moviecatalogue.util.Constant.API_KEY_MOVIE_DB
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -29,7 +29,7 @@ interface TheMovieDBDiscoverApiService {
                 val url = chain.request()
                     .url()
                     .newBuilder()
-                    .addQueryParameter("api_key", API_KEY)
+                    .addQueryParameter("api_key", API_KEY_MOVIE_DB)
                     .build()
                 val request = chain.request()
                     .newBuilder()

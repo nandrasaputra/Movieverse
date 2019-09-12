@@ -1,7 +1,11 @@
-package com.nandra.moviecatalogue.network
+package com.nandra.moviecatalogue.network.response
 
 
 import com.google.gson.annotations.SerializedName
+import com.nandra.moviecatalogue.network.Credits
+import com.nandra.moviecatalogue.network.Genre
+import com.nandra.moviecatalogue.network.ProductionCompany
+import com.nandra.moviecatalogue.network.Videos
 
 data class DetailResponse(
     val adult: Boolean,
