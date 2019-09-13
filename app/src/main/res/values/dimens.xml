@@ -15,7 +15,7 @@
     <dimen name="detail_end_margin">16dp</dimen>
     <dimen name="detail_bottom_margin">16dp</dimen>
 
-    <dimen name="detail_text_title_size">20sp</dimen>
+    <dimen name="detail_text_title_size">18sp</dimen>
     <dimen name="detail_text_genre_size">12sp</dimen>
     <dimen name="detail_text_overview_size">15sp</dimen>
 

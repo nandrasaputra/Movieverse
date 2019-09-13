@@ -10,11 +10,11 @@ import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.network.Film
 import kotlinx.android.synthetic.main.item_favorite_list.view.*
 
-class RecyclerViewFavoriteAdapter(
+class FavoriteRecyclerViewAdapter(
     private val filmList : ArrayList<Film>,
     private val filmType: String,
     private val genreList: ArrayList<String>
-) : RecyclerView.Adapter<RecyclerViewFavoriteAdapter.MyViewHolder>() {
+) : RecyclerView.Adapter<FavoriteRecyclerViewAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_favorite_list, parent, false)

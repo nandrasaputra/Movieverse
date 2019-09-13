@@ -12,10 +12,10 @@ import com.nandra.moviecatalogue.network.Film
 import com.nandra.moviecatalogue.ui.DiscoverFragmentDirections
 import kotlinx.android.synthetic.main.item_discover_recyclerview.view.*
 
-class RecyclerViewGridAdapter(
+class DiscoverRecyclerViewAdapter(
     private val filmList : ArrayList<Film>,
     private val filmType: String
-) : RecyclerView.Adapter<RecyclerViewGridAdapter.DiscoverViewHolder> () {
+) : RecyclerView.Adapter<DiscoverRecyclerViewAdapter.DiscoverViewHolder> () {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiscoverViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_discover_recyclerview, parent, false)
         return DiscoverViewHolder(view)

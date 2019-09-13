@@ -12,16 +12,16 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
-import com.nandra.moviecatalogue.adapter.RecyclerViewGridAdapter
+import com.nandra.moviecatalogue.adapter.DiscoverRecyclerViewAdapter
 import com.nandra.moviecatalogue.util.Constant
 import com.nandra.moviecatalogue.viewmodel.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_tv_show.*
+import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class TvShowFragment : Fragment() {
+class DiscoverMovieFragment : Fragment() {
 
     private var currentLanguage: String = ""
     private lateinit var languageEnglishValue : String
@@ -30,7 +30,7 @@ class TvShowFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_tv_show, container, false)
+        return inflater.inflate(R.layout.fragment_movie, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,21 +44,15 @@ class TvShowFragment : Fragment() {
         sharedViewModel.isError.observe(this, Observer {
             errorIndicator(it)
         })
-        sharedViewModel.listTVLive.observe(this, Observer {
-            tvshow_recyclerview.swapAdapter(RecyclerViewGridAdapter(it, Constant.TV_FILM_TYPE), true)
+        sharedViewModel.listMovieLive.observe(this, Observer {
+            movie_recyclerview.swapAdapter(DiscoverRecyclerViewAdapter(it, Constant.MOVIE_FILM_TYPE), true)
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        sharedViewModel.detailState.value = Constant.STATE_NOSTATE
-        sharedViewModel.isOnDetailFragment = false
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
-        tvshow_recyclerview.apply {
+        movie_recyclerview.apply {
             hasFixedSize()
             layoutManager = GridLayoutManager(context, 3)
         }
@@ -67,22 +61,28 @@ class TvShowFragment : Fragment() {
 
     private fun loadingIndicator(state: Boolean) {
         if (state) {
-            tvshow_loading_back.visibility = View.VISIBLE
+            movie_loading_back.visibility = View.VISIBLE
         }
         else {
-            tvshow_loading_back.visibility = View.GONE
+            movie_loading_back.visibility = View.GONE
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.detailState.value = Constant.STATE_NOSTATE
+        sharedViewModel.isOnDetailFragment = false
     }
 
     private fun errorIndicator(state: Boolean){
         if(state){
-            tvshow_error_back.visibility = View.VISIBLE
+            movie_error_back.visibility = View.VISIBLE
             viewLanguageAdjustment()
-            tvshow_error_button.setOnClickListener {
-                prepareTVShowListView()
+            movie_error_button.setOnClickListener {
+                prepareMovieListView()
             }
         } else {
-            tvshow_error_back.visibility = View.GONE
+            movie_error_back.visibility = View.GONE
         }
     }
 
@@ -91,17 +91,17 @@ class TvShowFragment : Fragment() {
             errorIndicator(sharedViewModel.isError.value!!)
             return
         }
-        prepareTVShowListView()
+        prepareMovieListView()
     }
 
-    private fun prepareTVShowListView() {
+    private fun prepareMovieListView() {
         val job = Job()
         val scope = CoroutineScope(Dispatchers.Main + job)
         Glide.with(this)
             .load(R.drawable.img_loading_indicator)
-            .into(tvshow_loading_image)
+            .into(movie_loading_image)
         if (sharedViewModel.isDataHasLoaded)
-            tvshow_recyclerview.swapAdapter(RecyclerViewGridAdapter(sharedViewModel.listTVLive.value!!, Constant.TV_FILM_TYPE), true)
+            movie_recyclerview.swapAdapter(DiscoverRecyclerViewAdapter(sharedViewModel.listMovieLive.value!!, Constant.MOVIE_FILM_TYPE), true)
         else {
             scope.launch {
                 sharedViewModel.requestDiscoverData()
@@ -119,8 +119,8 @@ class TvShowFragment : Fragment() {
 
     private fun viewLanguageAdjustment() {
         if (currentLanguage == languageEnglishValue)
-            tvshow_error_button.text = getString(R.string.button_try_again_en)
+            movie_error_button.text = getString(R.string.button_try_again_en)
         else
-            tvshow_error_button.text = getString(R.string.button_try_again_id)
+            movie_error_button.text = getString(R.string.button_try_again_id)
     }
 }
