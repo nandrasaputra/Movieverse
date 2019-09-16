@@ -7,13 +7,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.nandra.moviecatalogue.database.FavoriteMovie
+import com.nandra.moviecatalogue.database.FavoriteTV
 import com.nandra.moviecatalogue.network.Film
 import com.nandra.moviecatalogue.network.response.DetailResponse
 import com.nandra.moviecatalogue.network.response.YandexResponse
 import com.nandra.moviecatalogue.repository.MyRepository
 import com.nandra.moviecatalogue.util.Constant
 import com.nandra.moviecatalogue.util.getStringGenre
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -23,6 +24,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     var isDataHasLoaded: Boolean = false
     private var discoverJob : Job? = null
     private var detailJob : Job? = null
+    private var roomJob: Job? = null
     private val repository = MyRepository(app)
     var isOnDetailFragment = false
 
@@ -35,6 +37,13 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     val detailFilmTranslated: LiveData<YandexResponse>
         get() = _detailFilmTranslated
     private val _detailFilmTranslated = MutableLiveData<YandexResponse>()
+
+    val favoriteRoomState = MutableLiveData<FavoriteRoomState>().apply {
+        this.value = FavoriteRoomState.NotInitialized
+    }
+
+    var movieFavoriteList = repository.getFavoriteMovieList()
+    var tvFavoriteList = repository.getFavoriteTVList()
 
     val isLoading: LiveData<Boolean>
         get() = _isLoading
@@ -50,6 +59,10 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private val _isError = MutableLiveData<Boolean>()
     private val _listTVLive = MutableLiveData<ArrayList<Film>>()
 
+    val roomState = MutableLiveData<RoomState>().apply {
+        this.value = RoomState.StandBy
+    }
+
     suspend fun requestDiscoverData() {
         if(discoverJob != null){
             discoverJob?.join()
@@ -63,7 +76,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     private suspend fun fetchDiscoverData() {
         _isLoading.value = true
-        discoverJob = viewModelScope.launch(Dispatchers.IO) {
+        discoverJob = viewModelScope.launch {
             try {
                 val movieResponse = repository.fetchDiscoverMovieResponse()
                 val tvShowResponse = repository.fetchDiscoverTVSeriesResponse()
@@ -97,10 +110,6 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         return networkInfo != null && networkInfo.isConnected
     }
 
-    private fun isNewLanguage(language: String) : Boolean {
-        return (language != currentLanguage)
-    }
-
     suspend fun requestDetail(id: String, filmType: String) {
         if (isConnectedToInternet())
             fetchDetail(id, filmType)
@@ -114,7 +123,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                 detailJob!!.join()
             }
         }
-        detailJob = viewModelScope.launch(Dispatchers.IO) {
+        detailJob = viewModelScope.launch {
             detailState.postValue(Constant.STATE_LOADING)
             try {
                 val response = if (filmType == Constant.MOVIE_FILM_TYPE) {
@@ -142,6 +151,68 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                 detailState.postValue(Constant.STATE_SERVER_ERROR)
             }
         }
+    }
+
+    fun saveToFavorite(
+        data: DetailResponse,
+        filmType: String,
+        genreIndonesia: String,
+        overviewIndonesia: String
+    ) {
+        roomJob = viewModelScope.launch {
+            roomState.value = RoomState.Loading
+            try {
+                if(filmType == Constant.MOVIE_FILM_TYPE) {
+                    val movie = FavoriteMovie(
+                        data.id.toString(),
+                        data.title,
+                        data.posterPath,
+                        data.backdropPath,
+                        data.voteAverage.toString(),
+                        filmType,
+                        data.genres.getStringGenre(),
+                        genreIndonesia,
+                        data.overview,
+                        overviewIndonesia
+                    )
+                    repository.saveMovieToFavorite(movie)
+                    roomState.value = RoomState.Success
+                    roomState.value = RoomState.StandBy
+                } else {
+                    val tv = FavoriteTV(
+                        data.id.toString(),
+                        data.tvTitle,
+                        data.posterPath,
+                        data.backdropPath,
+                        data.voteAverage.toString(),
+                        filmType,
+                        data.genres.getStringGenre(),
+                        genreIndonesia,
+                        data.overview,
+                        overviewIndonesia
+                    )
+                    repository.saveTVToFavorite(tv)
+                    roomState.value = RoomState.Success
+                    roomState.value = RoomState.StandBy
+                }
+            } catch (exp: Exception) {
+                roomState.value = RoomState.Failure
+                roomState.value = RoomState.StandBy
+            }
+        }
+    }
+
+    sealed class RoomState {
+        object StandBy : RoomState()
+        object Loading : RoomState()
+        object Success : RoomState()
+        object Failure : RoomState()
+    }
+
+    sealed class FavoriteRoomState {
+        object NotInitialized: FavoriteRoomState()
+        object Loading : FavoriteRoomState()
+        object Loaded : FavoriteRoomState()
     }
 
 }

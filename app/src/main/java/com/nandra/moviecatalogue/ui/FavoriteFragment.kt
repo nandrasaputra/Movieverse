@@ -59,4 +59,6 @@ class FavoriteFragment : Fragment() {
         currentLanguage = sharedPreferences.getString(getString(R.string.preferences_language_key),
             getString(R.string.preferences_language_value_english))
     }
+
+
 }

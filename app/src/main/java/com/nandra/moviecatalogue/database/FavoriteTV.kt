@@ -11,5 +11,8 @@ data class FavoriteTV (
     val backdropPath: String,
     val rating: String,
     val filmType: String,
-    val genre: String
+    val genreEnglish: String,
+    val genreIndonesia: String,
+    val overviewEnglish: String,
+    val overviewIndonesia: String
 ) : FilmData()

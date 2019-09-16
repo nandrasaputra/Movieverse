@@ -44,7 +44,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
             activity?.onBackPressed()
         }
         detail_favorite_section.setOnClickListener {
-            Toast.makeText(activity, "Clicked !", Toast.LENGTH_SHORT).show()
+            saveToFavorite()
         }
         id = DetailFragmentArgs.fromBundle(arguments!!).id
         filmType = DetailFragmentArgs.fromBundle(arguments!!).filmType
@@ -53,6 +53,9 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         })
         sharedViewModel.detailFilmTranslated.observe(this, Observer {
             prepareView(sharedViewModel.detailFilm.value!!)
+        })
+        sharedViewModel.roomState.observe(this, Observer {
+            onRoomStateChange(it)
         })
         if (!sharedViewModel.isOnDetailFragment) {
             attemptPrepareView()
@@ -68,7 +71,8 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
 
     override fun onResume() {
         super.onResume()
-        if (!sharedViewModel.isOnDetailFragment){
+        if (!sharedViewModel.isOnDetailFragment || sharedViewModel.detailState.value == Constant.STATE_NO_CONNECTION
+            || sharedViewModel.detailState.value == Constant.STATE_SERVER_ERROR){
             detail_cover.visibility = View.VISIBLE
             sharedViewModel.isOnDetailFragment = true
         }
@@ -79,6 +83,32 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         val scope = CoroutineScope(Dispatchers.Main + job)
         scope.launch {
             sharedViewModel.requestDetail(id, filmType)
+        }
+    }
+
+    private fun saveToFavorite() {
+        val data = sharedViewModel.detailFilm.value!!
+        val indonesiaGenre = sharedViewModel.detailFilmTranslated.value!!.text[1]
+        val indonesiaOverview = sharedViewModel.detailFilmTranslated.value!!.text[0]
+        if(filmType == Constant.MOVIE_FILM_TYPE) {
+            sharedViewModel.saveToFavorite(data, Constant.MOVIE_FILM_TYPE, indonesiaGenre, indonesiaOverview)
+        } else {
+            sharedViewModel.saveToFavorite(data, Constant.TV_FILM_TYPE, indonesiaGenre, indonesiaOverview)
+        }
+
+    }
+
+    private fun onRoomStateChange(state: SharedViewModel.RoomState?) {
+        when (state) {
+            SharedViewModel.RoomState.Success -> {
+                Toast.makeText(activity, "Loaded", Toast.LENGTH_SHORT).show()
+            }
+            SharedViewModel.RoomState.Failure -> {
+                Toast.makeText(activity, "Failure", Toast.LENGTH_SHORT).show()
+            }
+            SharedViewModel.RoomState.StandBy -> {
+                Toast.makeText(activity, "StandBy", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -105,7 +135,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
                 "${data.tvNumberOfEpisode} Episode"
             detail_text_runtime.text = totalEpisodes
         }
-        val rating = "${data.voteAverage.toString()} / 10"
+        val rating = "${data.voteAverage} / 10"
         detail_text_movie_rating.text = rating
         if(currentLanguage == languageEnglishValue) {
             detail_text_movie_genre.text = data.genres.getStringGenre()

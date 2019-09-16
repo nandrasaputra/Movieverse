@@ -1,15 +1,16 @@
 package com.nandra.moviecatalogue.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
 interface FavoriteTVDao {
     @Query("SELECT * FROM favorite_tv")
-    fun getAllFavoriteTV() : List<FavoriteTV>
+    fun getAllFavoriteTV() : LiveData<List<FavoriteTV>>
 
     @Delete
-    fun deleteFavoriteTV(tv: FavoriteTV)
+    suspend fun deleteFavoriteTV(tv: FavoriteTV)
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertToFavoriteTV(tv: FavoriteTV)
+    suspend fun insertToFavoriteTV(tv: FavoriteTV)
 }

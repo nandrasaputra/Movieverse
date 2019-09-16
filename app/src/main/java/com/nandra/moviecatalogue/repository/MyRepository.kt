@@ -1,6 +1,10 @@
 package com.nandra.moviecatalogue.repository
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import com.nandra.moviecatalogue.database.FavoriteMovie
+import com.nandra.moviecatalogue.database.FavoriteTV
+import com.nandra.moviecatalogue.database.MovieCatalogueDatabase
 import com.nandra.moviecatalogue.network.ConnectivityInterceptor
 import com.nandra.moviecatalogue.network.apiservice.TheMovieDBDetailApiService
 import com.nandra.moviecatalogue.network.apiservice.TheMovieDBDiscoverApiService
@@ -19,6 +23,7 @@ class MyRepository(app: Application) {
         TheMovieDBDetailApiService(interceptor)
     private val yandexService =
         YandexTranslationApiService(interceptor)
+    private val database = MovieCatalogueDatabase.getInstance(app)
 
     suspend fun fetchDiscoverMovieResponse() : Response<DiscoverResponse> {
         return discoverService.getMovie("en-US")
@@ -38,5 +43,21 @@ class MyRepository(app: Application) {
 
     suspend fun translateText(text: List<String>) : Response<YandexResponse> {
         return yandexService.translateText("en-id", text)
+    }
+
+    suspend fun saveMovieToFavorite(movie: FavoriteMovie) {
+        database.favoriteMovieDao().insertToFavoriteMovie(movie)
+    }
+
+    suspend fun saveTVToFavorite(tv: FavoriteTV) {
+        database.favoriteTVDao().insertToFavoriteTV(tv)
+    }
+
+    fun getFavoriteMovieList() : LiveData<List<FavoriteMovie>> {
+        return database.favoriteMovieDao().getAllFavoriteMovie()
+    }
+
+    fun getFavoriteTVList() : LiveData<List<FavoriteTV>> {
+        return database.favoriteTVDao().getAllFavoriteTV()
     }
 }
