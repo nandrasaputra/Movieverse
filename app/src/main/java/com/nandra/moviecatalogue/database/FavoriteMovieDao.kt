@@ -6,7 +6,10 @@ import androidx.room.*
 @Dao
 interface FavoriteMovieDao {
     @Query("SELECT * FROM favorite_movie")
-    fun getAllFavoriteMovie() : LiveData<List<FavoriteMovie>>
+    fun getFavoriteMovieList() : LiveData<List<FavoriteMovie>>
+
+    @Query("SELECT * FROM favorite_movie WHERE id = :movieId")
+    suspend fun getFavoriteMovie(movieId: String) : FavoriteMovie?
 
     @Delete
     suspend fun deleteFavoriteMovie(movie: FavoriteMovie)

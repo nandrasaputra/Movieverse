@@ -65,12 +65,13 @@
             android:textSize="@dimen/item_main_box_text_description_size" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/item_delete_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabSize="mini"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_hearts"
+            android:src="@drawable/ic_delete"
             android:elevation="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

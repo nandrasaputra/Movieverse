@@ -16,7 +16,7 @@ import com.nandra.moviecatalogue.database.FavoriteMovie
 import com.nandra.moviecatalogue.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_favorite_movie.*
 
-class FavoriteMovieFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class FavoriteMovieFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener, FavoriteMovieRecyclerViewAdapter.IFavoriteMovieRecyclerViewAdapterCallback {
 
     private var currentLanguage: String = ""
     private lateinit var languageEnglishValue : String
@@ -41,11 +41,11 @@ class FavoriteMovieFragment : Fragment(), SharedPreferences.OnSharedPreferenceCh
     }
 
     private fun attemptPrepareView() {
-        favorite_movie_recyclerview.swapAdapter(FavoriteMovieRecyclerViewAdapter(listMovie, currentLanguage), true)
+        favorite_movie_recyclerview.swapAdapter(FavoriteMovieRecyclerViewAdapter(listMovie, currentLanguage, this), true)
     }
 
     private fun handleFavoriteMovieListChanged(data: List<FavoriteMovie>) {
-        favorite_movie_recyclerview.swapAdapter(FavoriteMovieRecyclerViewAdapter(data, currentLanguage), true)
+        favorite_movie_recyclerview.swapAdapter(FavoriteMovieRecyclerViewAdapter(data, currentLanguage, this), true)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -66,5 +66,9 @@ class FavoriteMovieFragment : Fragment(), SharedPreferences.OnSharedPreferenceCh
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         currentLanguage = sharedPreferences.getString(preferenceLanguageKey,
             languageEnglishValue)!!
+    }
+
+    override fun onAdapterDeleteButtonPressed(position: Int) {
+        sharedViewModel.deleteFavoriteMovie(listMovie[position])
     }
 }

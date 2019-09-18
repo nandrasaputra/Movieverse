@@ -7,7 +7,7 @@
         android:title="@string/title_discover_en" />
     <item
         android:id="@+id/favorite"
-        android:icon="@drawable/ic_hearts"
+        android:icon="@drawable/ic_heart"
         android:contentDescription="@string/cd_favorite"
         android:title="@string/title_favorite_en" />
     <item

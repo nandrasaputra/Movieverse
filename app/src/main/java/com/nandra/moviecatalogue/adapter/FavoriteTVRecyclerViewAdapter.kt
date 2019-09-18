@@ -13,12 +13,12 @@ import kotlinx.android.synthetic.main.item_favorite_list.view.*
 
 class FavoriteTVRecyclerViewAdapter(
     private var dataList : List<FavoriteTV>,
-    private var currentLanguage : String
+    private var currentLanguage : String,
+    private val callback: IFavoriteTVRecyclerViewAdapterCallback
 ) : RecyclerView.Adapter<FavoriteTVRecyclerViewAdapter.MyViewHolder>() {
 
-    fun changeFavoriteTVList(newList: List<FavoriteTV>) {
-        dataList = newList
-        notifyDataSetChanged()
+    interface IFavoriteTVRecyclerViewAdapterCallback {
+        fun onAdapterDeleteButtonPressed(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : MyViewHolder {
@@ -56,9 +56,8 @@ class FavoriteTVRecyclerViewAdapter(
             }
             holder.itemView.item_text_movie_genre.text = currentMovie.genreIndonesia
         }
-        holder.itemView.setOnClickListener {
-            //TODO val action = DiscoverFragmentDirections.actionDiscoverFragmentToDetailFragment(filmType).setPosition(position)
-            //TODO holder.itemView.findNavController().navigate(action)
+        holder.itemView.item_delete_fab.setOnClickListener {
+            callback.onAdapterDeleteButtonPressed(holder.adapterPosition)
         }
     }
 

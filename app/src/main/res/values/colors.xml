@@ -10,4 +10,6 @@
 
     <color name="placeholderColorOne">#C9C9C9</color>
     <color name="placeholderColorTwo">#ACACAC</color>
+
+    <color name="colorGray">#747474</color>
 </resources>

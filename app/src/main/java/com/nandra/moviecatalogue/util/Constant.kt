@@ -12,7 +12,4 @@ object Constant {
     const val STATE_SUCCESS = 3
     const val STATE_LOADING = 4
     const val STATE_NOSTATE = 5
-
-    const val ROOM_STATE_SUCCESS = 1
-    const val ROOM_STATE_VAILED = 2
 }

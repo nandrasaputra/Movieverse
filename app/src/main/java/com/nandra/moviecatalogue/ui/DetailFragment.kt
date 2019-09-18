@@ -36,15 +36,19 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedViewModel = activity?.run {
+            ViewModelProviders.of(this)[SharedViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
         detail_fragment_toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
         detail_fragment_toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
-        }
-        detail_favorite_section.setOnClickListener {
-            saveToFavorite()
         }
         id = DetailFragmentArgs.fromBundle(arguments!!).id
         filmType = DetailFragmentArgs.fromBundle(arguments!!).filmType
@@ -60,13 +64,15 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         if (!sharedViewModel.isOnDetailFragment) {
             attemptPrepareView()
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedViewModel = activity?.run {
-            ViewModelProviders.of(this)[SharedViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
+        if (filmType == Constant.MOVIE_FILM_TYPE) {
+            sharedViewModel.movieFavoriteList.observe(this, Observer {
+                checkFavoriteState()
+            })
+        } else {
+            sharedViewModel.tvFavoriteList.observe(this, Observer {
+                checkFavoriteState()
+            })
+        }
     }
 
     override fun onResume() {
@@ -101,13 +107,16 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
     private fun onRoomStateChange(state: SharedViewModel.RoomState?) {
         when (state) {
             SharedViewModel.RoomState.Success -> {
-                Toast.makeText(activity, "Loaded", Toast.LENGTH_SHORT).show()
+                if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
+                    Toast.makeText(activity, "Added Into Favorite List", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(activity, "Berhasil Ditambahkan Ke List Favorit", Toast.LENGTH_SHORT).show()
             }
             SharedViewModel.RoomState.Failure -> {
-                Toast.makeText(activity, "Failure", Toast.LENGTH_SHORT).show()
-            }
-            SharedViewModel.RoomState.StandBy -> {
-                Toast.makeText(activity, "StandBy", Toast.LENGTH_SHORT).show()
+                if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
+                    Toast.makeText(activity, "Failed To Add Into Favorite List", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(activity, "Gagal Menambahkan Ke List Favorit", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -115,6 +124,47 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         currentLanguage = sharedPreferences?.getString(key, languageEnglishValue)!!
         prepareView(sharedViewModel.detailFilm.value!!)
+    }
+
+    private fun checkFavoriteState() {
+        val data = sharedViewModel.detailFilm.value
+        val state = if (filmType == Constant.MOVIE_FILM_TYPE) {
+            sharedViewModel.movieFavoriteList.value?.any {
+                    x -> x.id == data?.id.toString()
+            }
+        } else {
+            sharedViewModel.tvFavoriteList.value?.any { x -> x.id == data?.id.toString()
+            }
+        }
+        if (state!!) {
+            detail_image_hearth.setImageResource(R.drawable.ic_hearth_pink)
+            if (currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
+                detail_favorite_text.text = getString(R.string.favorite_text_remove_to_favorite_en)
+            else
+                detail_favorite_text.text = getString(R.string.favorite_text_remove_to_favorite_id)
+            detail_favorite_section.setOnClickListener {
+                if (filmType == Constant.MOVIE_FILM_TYPE){
+                    val movie = sharedViewModel.movieFavoriteList.value!!.first { it.id == data?.id.toString() }
+                    sharedViewModel.deleteFavoriteMovie(movie)
+                } else {
+                    val tv = sharedViewModel.tvFavoriteList.value!!.first { it.id == data?.id.toString() }
+                    sharedViewModel.deleteFavoriteTV(tv)
+                }
+                if (currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
+                    Toast.makeText(activity, getString(R.string.removed_from_favorite_en), Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(activity, getString(R.string.removed_from_favorite_id), Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            detail_image_hearth.setImageResource(R.drawable.ic_hearth_gray)
+            if (currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
+                detail_favorite_text.text = getString(R.string.favorite_text_add_to_favorite_en)
+            else
+                detail_favorite_text.text = getString(R.string.favorite_text_add_to_favorite_id)
+            detail_favorite_section.setOnClickListener {
+                saveToFavorite()
+            }
+        }
     }
 
     private fun prepareView(data: DetailResponse) {
@@ -147,7 +197,6 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
             }
             val voteCount = "From ${data.voteCount} Votes"
             detail_text_movie_rating_count.text = voteCount
-            detail_favorite_text.text = "Add To\nFavorite"
         } else {
             detail_text_movie_genre.text = sharedViewModel.detailFilmTranslated.value!!.text[1]
             if(data.overview == ""){
@@ -158,7 +207,6 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
             }
             val voteCount = "Dari ${data.voteCount} Suara"
             detail_text_movie_rating_count.text = voteCount
-            detail_favorite_text.text = "Tambahkan Ke\nFavorit"
         }
         val url = "https://image.tmdb.org/t/p/w342"
         val backdropUrl = "https://image.tmdb.org/t/p/w500"
@@ -168,6 +216,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         Glide.with(this)
             .load(backdropUrl + data.backdropPath)
             .into(detail_backdrop)
+        checkFavoriteState()
     }
 
     private fun prepareSharedPreferences() {

@@ -54,10 +54,18 @@ class MyRepository(app: Application) {
     }
 
     fun getFavoriteMovieList() : LiveData<List<FavoriteMovie>> {
-        return database.favoriteMovieDao().getAllFavoriteMovie()
+        return database.favoriteMovieDao().getFavoriteMovieList()
     }
 
     fun getFavoriteTVList() : LiveData<List<FavoriteTV>> {
-        return database.favoriteTVDao().getAllFavoriteTV()
+        return database.favoriteTVDao().getFavoriteTVList()
+    }
+
+    suspend fun removeFavorieMovie(movie: FavoriteMovie) {
+        database.favoriteMovieDao().deleteFavoriteMovie(movie)
+    }
+
+    suspend fun removeFavorieTV(tv: FavoriteTV) {
+        database.favoriteTVDao().deleteFavoriteTV(tv)
     }
 }

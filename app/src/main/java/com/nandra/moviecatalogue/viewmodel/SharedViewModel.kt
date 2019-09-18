@@ -38,10 +38,6 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         get() = _detailFilmTranslated
     private val _detailFilmTranslated = MutableLiveData<YandexResponse>()
 
-    val favoriteRoomState = MutableLiveData<FavoriteRoomState>().apply {
-        this.value = FavoriteRoomState.NotInitialized
-    }
-
     var movieFavoriteList = repository.getFavoriteMovieList()
     var tvFavoriteList = repository.getFavoriteTVList()
 
@@ -115,6 +111,18 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
             fetchDetail(id, filmType)
         else
             detailState.value = Constant.STATE_NO_CONNECTION
+    }
+
+    fun deleteFavoriteMovie(movie: FavoriteMovie) {
+        viewModelScope.launch {
+            repository.removeFavorieMovie(movie)
+        }
+    }
+
+    fun deleteFavoriteTV(tv: FavoriteTV) {
+        viewModelScope.launch {
+            repository.removeFavorieTV(tv)
+        }
     }
 
     private suspend fun fetchDetail(id: String, filmType: String) {
@@ -207,12 +215,6 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         object Loading : RoomState()
         object Success : RoomState()
         object Failure : RoomState()
-    }
-
-    sealed class FavoriteRoomState {
-        object NotInitialized: FavoriteRoomState()
-        object Loading : FavoriteRoomState()
-        object Loaded : FavoriteRoomState()
     }
 
 }
