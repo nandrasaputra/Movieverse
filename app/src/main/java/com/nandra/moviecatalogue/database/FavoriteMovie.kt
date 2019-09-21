@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 data class FavoriteMovie (
     @PrimaryKey val id: String,
     val title: String,
-    val posterPath: String,
-    val backdropPath: String,
+    val posterPath: String?,
+    val backdropPath: String?,
     val rating: String,
     val filmType: String,
     val genreEnglish: String,

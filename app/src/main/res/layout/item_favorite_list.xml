@@ -91,7 +91,7 @@
         android:elevation="2dp"
         android:outlineProvider="background"
         app:riv_corner_radius="16dp"
-        android:src="@drawable/img_movie_poster_dragon" />
+        android:src="@drawable/img_back_potrait_default" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/detail_imagerounded_movie_rating_back"

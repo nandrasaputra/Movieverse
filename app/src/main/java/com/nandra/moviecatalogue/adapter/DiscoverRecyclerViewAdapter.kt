@@ -52,10 +52,12 @@ class DiscoverRecyclerViewAdapter(
     private fun bindTVShowViewProperties(holder: DiscoverViewHolder, currentFilm: Film) {
         holder.itemView.item_grid_title.text = currentFilm.tvName
         val url = "https://image.tmdb.org/t/p/w185"
-        Glide.with(holder.itemView)
-            .load(url + currentFilm.posterPath)
-            .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
-            .into(holder.itemView.item_grid_poster)
+        if(currentFilm.posterPath != null) {
+            Glide.with(holder.itemView)
+                .load(url + currentFilm.posterPath)
+                .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
+                .into(holder.itemView.item_grid_poster)
+        }
         holder.itemView.setOnClickListener {
             val action = DiscoverFragmentDirections.actionDiscoverFragmentToDetailFragment(filmType).setId(currentFilm.id.toString())
             holder.itemView.findNavController().navigate(action)

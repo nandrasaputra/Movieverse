@@ -9,11 +9,11 @@ data class Film(
     val voteCount: Int,
     val video: Boolean,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     val id: Int,
     val adult: Boolean,
     @SerializedName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
     @SerializedName("original_language")
     val originalLanguage: String,
     @SerializedName("original_title")

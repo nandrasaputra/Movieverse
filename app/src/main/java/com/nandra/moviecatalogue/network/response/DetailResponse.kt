@@ -2,15 +2,12 @@ package com.nandra.moviecatalogue.network.response
 
 
 import com.google.gson.annotations.SerializedName
-import com.nandra.moviecatalogue.network.Credits
-import com.nandra.moviecatalogue.network.Genre
-import com.nandra.moviecatalogue.network.ProductionCompany
-import com.nandra.moviecatalogue.network.Videos
+import com.nandra.moviecatalogue.network.*
 
 data class DetailResponse(
     val adult: Boolean,
     @SerializedName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
     @SerializedName("belongs_to_collection")
     val belongsToCollection: Any,
     val budget: Int,
@@ -26,7 +23,7 @@ data class DetailResponse(
     val overview: String,
     val popularity: Double,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("production_companies")
     val productionCompanies: List<ProductionCompany>,
     @SerializedName("release_date")
@@ -47,6 +44,6 @@ data class DetailResponse(
     @SerializedName("first_air_date")
     val tvAirDate: String,
     @SerializedName("number_of_episodes")
-    val tvNumberOfEpisode: String
-
+    val tvNumberOfEpisode: String,
+    val images: Images
 )

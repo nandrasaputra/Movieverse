@@ -35,10 +35,12 @@ class FavoriteMovieRecyclerViewAdapter(
         holder.itemView.item_text_movie_title.text = currentMovie.title
         holder.itemView.item_text_movie_rating.text = currentMovie.rating
         val url = "https://image.tmdb.org/t/p/w185"
-        Glide.with(holder.itemView)
-            .load(url + currentMovie.posterPath)
-            .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
-            .into(holder.itemView.item_image_movie_poster)
+        if(currentMovie.posterPath != null) {
+            Glide.with(holder.itemView)
+                .load(url + currentMovie.posterPath)
+                .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
+                .into(holder.itemView.item_image_movie_poster)
+        }
         if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE) {
             if(currentMovie.overviewEnglish == ""){
                 val text = holder.itemView.context.getString(R.string.overview_not_available_en)

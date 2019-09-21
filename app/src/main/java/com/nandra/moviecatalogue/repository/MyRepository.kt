@@ -33,11 +33,11 @@ class MyRepository(app: Application) {
         return discoverService.getTVSeries("en-US")
     }
 
-    suspend fun fetchMovieDetailResponse(id: String, parameter: String = "videos,credits") : Response<DetailResponse> {
+    suspend fun fetchMovieDetailResponse(id: String, parameter: String = "videos,credits,images") : Response<DetailResponse> {
         return detailService.getMovieDetail(id, parameter)
     }
 
-    suspend fun fetchTVDetailResponse(id: String, parameter: String = "videos,credits") : Response<DetailResponse> {
+    suspend fun fetchTVDetailResponse(id: String, parameter: String = "videos,credits,images") : Response<DetailResponse> {
         return detailService.getTVDetail(id, parameter)
     }
 

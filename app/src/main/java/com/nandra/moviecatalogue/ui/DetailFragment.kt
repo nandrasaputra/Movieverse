@@ -140,7 +140,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
             }
         }
         if (state != null && state == true) {
-            detail_image_hearth.setImageResource(R.drawable.ic_hearth_pink)
+            detail_image_hearth.setImageResource(R.drawable.ic_heart_pink)
             if (currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
                 detail_favorite_text.text = getString(R.string.favorite_text_remove_to_favorite_en)
             else
@@ -159,7 +159,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
                     Toast.makeText(activity, getString(R.string.removed_from_favorite_id), Toast.LENGTH_SHORT).show()
             }
         } else {
-            detail_image_hearth.setImageResource(R.drawable.ic_hearth_gray)
+            detail_image_hearth.setImageResource(R.drawable.ic_heart_hollow)
             if (currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
                 detail_favorite_text.text = getString(R.string.favorite_text_add_to_favorite_en)
             else
@@ -213,16 +213,37 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         }
         val url = "https://image.tmdb.org/t/p/w342"
         val backdropUrl = "https://image.tmdb.org/t/p/w500"
-        Glide.with(this)
-            .load(url + data.posterPath)
-            .into(detail_image_movie_poster)
-        Glide.with(this)
-            .load(backdropUrl + data.backdropPath)
-            .into(detail_backdrop)
-        val castList = if (data.credits.cast.size > 20) {
-            data.credits.cast.take(20)
+        if(data.posterPath != null) {
+            Glide.with(this)
+                .load(url + data.posterPath)
+                .into(detail_image_movie_poster)
         } else {
-            data.credits.cast
+            Glide.with(this)
+                .load(R.drawable.img_back_potrait_default)
+                .into(detail_image_movie_poster)
+        }
+        if(data.backdropPath != null) {
+            Glide.with(this)
+                .load(backdropUrl + data.backdropPath)
+                .into(detail_backdrop)
+        } else {
+            Glide.with(this)
+                .load(R.drawable.img_back_landscape_default)
+                .into(detail_backdrop)
+        }
+        val castList = when {
+            data.credits.cast.size > 20 -> {
+                detail_fragment_cast_text.visibility = View.VISIBLE
+                data.credits.cast.take(20)
+            }
+            data.credits.cast.isEmpty() -> {
+                detail_fragment_cast_text.visibility = View.GONE
+                data.credits.cast
+            }
+            else -> {
+                detail_fragment_cast_text.visibility = View.VISIBLE
+                data.credits.cast
+            }
         }
         detail_cast_recyclerview.swapAdapter(CastRecyclerViewAdapter(castList), true)
         checkFavoriteState()

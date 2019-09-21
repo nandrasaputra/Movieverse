@@ -46,14 +46,16 @@
     <string name="overview_not_available_en">"Overview Not Available"</string>
     <string name="detail_backdrop_cd">backdrop</string>
 
-    <string name="favorite_text_add_to_favorite_en">"Add To\nFavorite"</string>
-    <string name="favorite_text_add_to_favorite_id">"Tambahkan Ke\nFavorit"</string>
-    <string name="favorite_text_remove_to_favorite_en">"Remove From\nFavorite"</string>
-    <string name="favorite_text_remove_to_favorite_id">"Hapus Dari\nFavorit"</string>
+    <string name="favorite_text_add_to_favorite_en">"Add To Favorite"</string>
+    <string name="favorite_text_add_to_favorite_id">"Tambahkan Ke Favorit"</string>
+    <string name="favorite_text_remove_to_favorite_en">"Remove From Favorite"</string>
+    <string name="favorite_text_remove_to_favorite_id">"Hapus Dari Favorit"</string>
 
     <string name="removed_from_favorite_en">Removed From Favorite</string>
     <string name="removed_from_favorite_id">Dihapuskan Dari Favorit</string>
     <string name="detail_rating_mock">10 / 10</string>
     <string name="detail_vote_count_mock">From 1089 Votes</string>
-    <string name="detail_add_to_fav_mock">Add To Favorite</string>
+    <string name="detail_add_to_fav_mock">"Add To\nFavorite"</string>
+    <string name="detail_cast">Cast</string>
+    <string name="detail_overview">Overview</string>
 </resources>
