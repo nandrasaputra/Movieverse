@@ -58,4 +58,9 @@
     <string name="detail_add_to_fav_mock">"Add To\nFavorite"</string>
     <string name="detail_cast">Cast</string>
     <string name="detail_overview">Overview</string>
+    <string name="detail_gallery">Gallery</string>
+    <string name="cd_images">images</string>
+    <string name="detail_videos">Videos</string>
+    <string name="video_thumbnail">video_thumbnail</string>
+    <string name="heart_icon_picture">heath_icon</string>
 </resources>

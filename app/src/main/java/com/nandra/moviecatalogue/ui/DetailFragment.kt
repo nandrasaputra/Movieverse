@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
 import com.nandra.moviecatalogue.adapter.CastRecyclerViewAdapter
+import com.nandra.moviecatalogue.adapter.ImagesRecyclerViewAdapter
+import com.nandra.moviecatalogue.adapter.VideosRecyclerAdapter
 import com.nandra.moviecatalogue.network.response.DetailResponse
 import com.nandra.moviecatalogue.util.Constant
 import com.nandra.moviecatalogue.util.getStringGenre
@@ -41,7 +43,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedViewModel = activity?.run {
-            ViewModelProviders.of(this)[SharedViewModel::class.java]
+            ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
     }
 
@@ -55,6 +57,8 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         id = DetailFragmentArgs.fromBundle(arguments!!).id
         filmType = DetailFragmentArgs.fromBundle(arguments!!).filmType
         detail_cast_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        detail_images_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        detail_videos_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         sharedViewModel.detailState.observe(this, Observer {
             handleState(it)
         })
@@ -140,7 +144,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
             }
         }
         if (state != null && state == true) {
-            detail_image_hearth.setImageResource(R.drawable.ic_heart_pink)
+            detail_image_heart.setImageResource(R.drawable.ic_heart_pink)
             if (currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
                 detail_favorite_text.text = getString(R.string.favorite_text_remove_to_favorite_en)
             else
@@ -159,7 +163,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
                     Toast.makeText(activity, getString(R.string.removed_from_favorite_id), Toast.LENGTH_SHORT).show()
             }
         } else {
-            detail_image_hearth.setImageResource(R.drawable.ic_heart_hollow)
+            detail_image_heart.setImageResource(R.drawable.ic_heart_hollow)
             if (currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
                 detail_favorite_text.text = getString(R.string.favorite_text_add_to_favorite_en)
             else
@@ -236,16 +240,46 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
                 detail_fragment_cast_text.visibility = View.VISIBLE
                 data.credits.cast.take(20)
             }
-            data.credits.cast.isEmpty() -> {
-                detail_fragment_cast_text.visibility = View.GONE
-                data.credits.cast
-            }
-            else -> {
+            data.credits.cast.isNotEmpty() -> {
                 detail_fragment_cast_text.visibility = View.VISIBLE
                 data.credits.cast
             }
+            else -> {
+                detail_fragment_cast_text.visibility = View.GONE
+                data.credits.cast
+            }
         }
+        val imageList = when {
+            data.images.backdrops.size > 10 -> {
+                detail_fragment_images_text.visibility = View.VISIBLE
+                data.images.backdrops.take(10)
+            }
+            data.credits.cast.isNotEmpty() -> {
+                detail_fragment_images_text.visibility = View.VISIBLE
+                data.images.backdrops
+            }
+            else -> {
+                detail_fragment_images_text.visibility = View.GONE
+                data.images.backdrops
+            }
+        }
+        val videoList = when {
+            data.videos.videoData.size > 3 -> {
+                detail_fragment_videos_text.visibility = View.VISIBLE
+                data.videos.videoData.take(3)
+            }
+            data.videos.videoData.isNotEmpty() -> {
+                detail_fragment_videos_text.visibility = View.VISIBLE
+                data.videos.videoData
+            }
+            else -> {
+                detail_fragment_videos_text.visibility = View.GONE
+                data.videos.videoData
+            }
+        }
+        detail_images_recyclerview.swapAdapter(ImagesRecyclerViewAdapter(imageList), true)
         detail_cast_recyclerview.swapAdapter(CastRecyclerViewAdapter(castList), true)
+        detail_videos_recyclerview.swapAdapter(VideosRecyclerAdapter(videoList), false)
         checkFavoriteState()
     }
 

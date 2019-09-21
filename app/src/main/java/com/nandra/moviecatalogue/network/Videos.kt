@@ -1,6 +1,9 @@
 package com.nandra.moviecatalogue.network
 
+import com.google.gson.annotations.SerializedName
+
 
 data class Videos(
-    val results: List<Result>
+    @SerializedName("results")
+    val videoData: List<VideoData>
 )

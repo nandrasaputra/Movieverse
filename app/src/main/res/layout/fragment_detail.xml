@@ -48,7 +48,8 @@
                 android:layout_height="0dp"
                 android:src="@color/colorPureWhite"
                 app:layout_constraintTop_toBottomOf="@id/detail_backdrop"
-                app:layout_constraintBottom_toBottomOf="@id/detail_rating_section"/>
+                app:layout_constraintBottom_toBottomOf="@id/detail_rating_section"
+                tools:ignore="ContentDescription" />
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/detail_image_movie_poster"
@@ -194,14 +195,15 @@
                     app:layout_constraintBottom_toBottomOf="parent">
 
                     <ImageView
-                        android:id="@+id/detail_image_hearth"
+                        android:id="@+id/detail_image_heart"
                         android:layout_width="28dp"
                         android:layout_height="28dp"
                         android:layout_marginEnd="8dp"
                         android:src="@drawable/ic_heart_pink"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:contentDescription="@string/heart_icon_picture"/>
 
                     <TextView
                         android:id="@+id/detail_favorite_text"
@@ -215,7 +217,7 @@
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/detail_image_hearth"
+                        app:layout_constraintStart_toEndOf="@id/detail_image_heart"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -285,8 +287,55 @@
                     android:clipToPadding="false"
                     app:layout_constraintTop_toBottomOf="@id/detail_fragment_cast_text"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/detail_fragment_images_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detail_cast_recyclerview"
+                    android:text="@string/detail_gallery"
+                    android:textSize="17sp"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/lato_medium"/>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/detail_images_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:clipToPadding="false"
+                    app:layout_constraintTop_toBottomOf="@id/detail_fragment_images_text"/>
+
+                <TextView
+                    android:id="@+id/detail_fragment_videos_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detail_images_recyclerview"
+                    android:text="@string/detail_videos"
+                    android:textSize="17sp"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/lato_medium"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/detail_videos_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:clipToPadding="false"
+                    app:layout_constraintTop_toBottomOf="@id/detail_fragment_videos_text"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
