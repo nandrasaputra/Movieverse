@@ -14,5 +14,5 @@ data class Cast(
     val name: String,
     val order: Int,
     @SerializedName("profile_path")
-    val profilePath: String
+    val profilePath: String?
 )

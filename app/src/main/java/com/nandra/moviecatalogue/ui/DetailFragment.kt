@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.nandra.moviecatalogue.R
+import com.nandra.moviecatalogue.adapter.CastRecyclerViewAdapter
 import com.nandra.moviecatalogue.network.response.DetailResponse
 import com.nandra.moviecatalogue.util.Constant
 import com.nandra.moviecatalogue.util.getStringGenre
@@ -52,6 +54,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         }
         id = DetailFragmentArgs.fromBundle(arguments!!).id
         filmType = DetailFragmentArgs.fromBundle(arguments!!).filmType
+        detail_cast_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         sharedViewModel.detailState.observe(this, Observer {
             handleState(it)
         })
@@ -136,7 +139,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
             sharedViewModel.tvFavoriteList.value?.any { x -> x.id == data?.id.toString()
             }
         }
-        if (state!!) {
+        if (state != null && state == true) {
             detail_image_hearth.setImageResource(R.drawable.ic_hearth_pink)
             if (currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
                 detail_favorite_text.text = getString(R.string.favorite_text_remove_to_favorite_en)
@@ -216,6 +219,12 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         Glide.with(this)
             .load(backdropUrl + data.backdropPath)
             .into(detail_backdrop)
+        val castList = if (data.credits.cast.size > 20) {
+            data.credits.cast.take(20)
+        } else {
+            data.credits.cast
+        }
+        detail_cast_recyclerview.swapAdapter(CastRecyclerViewAdapter(castList), true)
         checkFavoriteState()
     }
 

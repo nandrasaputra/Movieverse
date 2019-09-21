@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="16dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/item_detail_cast_photo"
+        android:layout_width="90dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/img_back_potrait_default"
+        app:layout_constraintDimensionRatio="H,4:6"
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="16dp"/>
+
+    <TextView
+        android:id="@+id/item_detail_cast_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/item_detail_cast_photo"
+        app:layout_constraintStart_toStartOf="@id/item_detail_cast_photo"
+        app:layout_constraintEnd_toEndOf="@id/item_detail_cast_photo"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lato_bold"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/item_detail_cast_character"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/item_detail_cast_name"
+        app:layout_constraintStart_toStartOf="@id/item_detail_cast_photo"
+        app:layout_constraintEnd_toEndOf="@id/item_detail_cast_photo"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/lato_regular"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textSize="13sp"
+        android:textAlignment="center"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
