@@ -59,6 +59,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         detail_cast_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         detail_images_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         detail_videos_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        detail_cover.setOnClickListener {}      //Prevent Click Through
         sharedViewModel.detailState.observe(this, Observer {
             handleState(it)
         })
@@ -204,6 +205,10 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
             }
             val voteCount = "From ${data.voteCount} Votes"
             detail_text_movie_rating_count.text = voteCount
+            detail_fragment_cast_text.text = getString(R.string.detail_cast_en)
+            detail_overview_text.text = getString(R.string.detail_overview_en)
+            detail_gallery_text.text = getString(R.string.detail_gallery_en)
+            detail_video_text.text = getString(R.string.detail_videos_en)
         } else {
             detail_text_movie_genre.text = sharedViewModel.detailFilmTranslated.value!!.text[1]
             if(data.overview == ""){
@@ -214,6 +219,10 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
             }
             val voteCount = "Dari ${data.voteCount} Suara"
             detail_text_movie_rating_count.text = voteCount
+            detail_fragment_cast_text.text = getString(R.string.detail_cast_id)
+            detail_overview_text.text = getString(R.string.detail_overview_id)
+            detail_gallery_text.text = getString(R.string.detail_gallery_id)
+            detail_video_text.text = getString(R.string.detail_videos_id)
         }
         val url = "https://image.tmdb.org/t/p/w342"
         val backdropUrl = "https://image.tmdb.org/t/p/w500"
@@ -251,29 +260,29 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         }
         val imageList = when {
             data.images.backdrops.size > 10 -> {
-                detail_fragment_images_text.visibility = View.VISIBLE
+                detail_gallery_text.visibility = View.VISIBLE
                 data.images.backdrops.take(10)
             }
             data.credits.cast.isNotEmpty() -> {
-                detail_fragment_images_text.visibility = View.VISIBLE
+                detail_gallery_text.visibility = View.VISIBLE
                 data.images.backdrops
             }
             else -> {
-                detail_fragment_images_text.visibility = View.GONE
+                detail_gallery_text.visibility = View.GONE
                 data.images.backdrops
             }
         }
         val videoList = when {
             data.videos.videoData.size > 3 -> {
-                detail_fragment_videos_text.visibility = View.VISIBLE
+                detail_video_text.visibility = View.VISIBLE
                 data.videos.videoData.take(3)
             }
             data.videos.videoData.isNotEmpty() -> {
-                detail_fragment_videos_text.visibility = View.VISIBLE
+                detail_video_text.visibility = View.VISIBLE
                 data.videos.videoData
             }
             else -> {
-                detail_fragment_videos_text.visibility = View.GONE
+                detail_video_text.visibility = View.GONE
                 data.videos.videoData
             }
         }

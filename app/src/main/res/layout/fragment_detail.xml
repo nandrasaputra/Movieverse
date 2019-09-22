@@ -231,10 +231,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginTop="8dp"
+                android:paddingBottom="8dp"
                 android:background="@color/colorPureWhite">
 
                 <TextView
-                    android:id="@+id/detail_overview_title"
+                    android:id="@+id/detail_overview_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -244,13 +245,13 @@
                     android:fontFamily="@font/lato_medium"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/detail_overview"/>
+                    android:text="@string/detail_overview_en"/>
 
                 <TextView
                     android:id="@+id/detail_text_movie_overview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/detail_overview_title"
+                    app:layout_constraintTop_toBottomOf="@id/detail_overview_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginStart="@dimen/detail_start_margin"
@@ -272,7 +273,7 @@
                     android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/detail_text_movie_overview"
-                    android:text="@string/detail_cast"
+                    android:text="@string/detail_cast_en"
                     android:textSize="17sp"
                     android:textColor="#000000"
                     android:fontFamily="@font/lato_medium"/>
@@ -288,7 +289,7 @@
                     app:layout_constraintTop_toBottomOf="@id/detail_fragment_cast_text"/>
 
                 <TextView
-                    android:id="@+id/detail_fragment_images_text"
+                    android:id="@+id/detail_gallery_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -296,7 +297,7 @@
                     android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/detail_cast_recyclerview"
-                    android:text="@string/detail_gallery"
+                    android:text="@string/detail_gallery_en"
                     android:textSize="17sp"
                     android:textColor="#000000"
                     android:fontFamily="@font/lato_medium"/>
@@ -309,10 +310,10 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:clipToPadding="false"
-                    app:layout_constraintTop_toBottomOf="@id/detail_fragment_images_text"/>
+                    app:layout_constraintTop_toBottomOf="@id/detail_gallery_text"/>
 
                 <TextView
-                    android:id="@+id/detail_fragment_videos_text"
+                    android:id="@+id/detail_video_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -320,7 +321,7 @@
                     android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/detail_images_recyclerview"
-                    android:text="@string/detail_videos"
+                    android:text="@string/detail_videos_en"
                     android:textSize="17sp"
                     android:textColor="#000000"
                     android:fontFamily="@font/lato_medium"/>
@@ -333,7 +334,7 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:clipToPadding="false"
-                    app:layout_constraintTop_toBottomOf="@id/detail_fragment_videos_text"/>
+                    app:layout_constraintTop_toBottomOf="@id/detail_video_text"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
