@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Movie Catalogue Nandra</string>
+    <string name="app_name">Movieverse</string>
 
-    <string name="toolbar_main_title">"Movie Catalogue"</string>
+    <string name="toolbar_main_title">"Movieverse"</string>
     <string name="toolbar_detail_title">"Detail"</string>
     <string name="toolbar_setting_title">"Setting"</string>
     <string name="toolbar_favorite_title">"Favorite"</string>

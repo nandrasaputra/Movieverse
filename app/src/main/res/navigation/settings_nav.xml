@@ -9,6 +9,6 @@
 
     <fragment
         android:id="@+id/settingsPreferenceFragment"
-        android:name="com.nandra.moviecatalogue.ui.SettingsPreferenceFragment"
+        android:name="com.nandra.movieverse.ui.SettingsPreferenceFragment"
         android:label="SettingsPreferenceFragment" />
 </navigation>

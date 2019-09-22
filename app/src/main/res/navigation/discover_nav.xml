@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/discoverFragment"
-        android:name="com.nandra.moviecatalogue.ui.DiscoverFragment"
+        android:name="com.nandra.movieverse.ui.DiscoverFragment"
         android:label="DiscoverFragment" >
         <action
             android:id="@+id/action_discoverFragment_to_detailFragment"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.nandra.moviecatalogue.ui.DetailFragment"
+        android:name="com.nandra.movieverse.ui.DetailFragment"
         android:label="DetailFragment" >
         <argument
             android:name="id"
