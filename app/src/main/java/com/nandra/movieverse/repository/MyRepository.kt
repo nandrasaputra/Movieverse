@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.nandra.movieverse.database.FavoriteMovie
 import com.nandra.movieverse.database.FavoriteTV
-import com.nandra.movieverse.database.MovieCatalogueDatabase
+import com.nandra.movieverse.database.MovieverseDatabase
 import com.nandra.movieverse.network.ConnectivityInterceptor
 import com.nandra.movieverse.network.apiservice.TheMovieDBDetailApiService
 import com.nandra.movieverse.network.apiservice.TheMovieDBDiscoverApiService
@@ -23,7 +23,7 @@ class MyRepository(app: Application) {
         TheMovieDBDetailApiService(interceptor)
     private val yandexService =
         YandexTranslationApiService(interceptor)
-    private val database = MovieCatalogueDatabase.getInstance(app)
+    private val database = MovieverseDatabase.getInstance(app)
 
     suspend fun fetchDiscoverMovieResponse() : Response<DiscoverResponse> {
         return discoverService.getMovie("en-US")

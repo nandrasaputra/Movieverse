@@ -2,6 +2,7 @@ package com.nandra.movieverse.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.lifecycle.LiveData

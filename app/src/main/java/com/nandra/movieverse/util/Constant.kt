@@ -5,9 +5,11 @@ import com.nandra.movieverse.BuildConfig
 object Constant {
     const val API_KEY_MOVIE_DB = BuildConfig.TMDB_API_KEY
     const val API_KEY_YANDEX = BuildConfig.YANDEX_API_KEY
+    const val API_KEY_YOUTUBE = BuildConfig.GOOGLE_YOUTUBE_API
     const val TV_FILM_TYPE = "tvshow"
     const val MOVIE_FILM_TYPE = "movie"
     const val LANGUAGE_ENGLISH_VALUE = "en-US"
+    const val EXTRA_YOUTUBE_KEY = "extra_key"
 
     const val STATE_NO_CONNECTION = 1
     const val STATE_SERVER_ERROR = 2
