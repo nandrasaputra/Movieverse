@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">@color/colorPaleGreen</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="colorShadowGray">#414141</color>
     <color name="colorPureWhite">#FFFFFF</color>
     <color name="colorBlueDarker">#076896</color>
+    <color name="statusBarColor">#08191B</color>
 
     <color name="placeholderColorOne">#C9C9C9</color>
     <color name="placeholderColorTwo">#ACACAC</color>
 
     <color name="colorGray">#747474</color>
+    <color name="colorPaleGreen">#0E2E33</color>
 </resources>

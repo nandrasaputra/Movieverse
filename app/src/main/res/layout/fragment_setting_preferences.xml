@@ -6,15 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
+    <include
         android:id="@+id/setting_fragment_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:title="@string/toolbar_setting_title"
-        app:titleTextColor="@color/colorPureWhite"
-        android:background="@color/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        layout="@layout/layout_toolbar"/>
 
     <FrameLayout
         android:id="@android:id/list_container"

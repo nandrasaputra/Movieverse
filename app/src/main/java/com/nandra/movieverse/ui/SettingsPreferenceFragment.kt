@@ -43,13 +43,11 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
                 negativeButtonText = getString(R.string.preferences_language_listpreferences_negative_text_en)
                 title = getString(R.string.preferences_language_title_en)
             }
-            setting_fragment_toolbar.title = getString(R.string.main_menu_settings_title_en)
         } else {
             listPreference?.run{
                 negativeButtonText = getString(R.string.preferences_language_listpreferences_negative_text_id)
                 title = getString(R.string.preferences_language_title_id)
             }
-            setting_fragment_toolbar.title = getString(R.string.main_menu_settings_title_id)
         }
     }
 
