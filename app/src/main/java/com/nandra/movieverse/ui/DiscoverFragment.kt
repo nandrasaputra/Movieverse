@@ -11,6 +11,11 @@ import com.google.android.material.tabs.TabLayout
 import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.DiscoverViewPagerPageAdapter
 import kotlinx.android.synthetic.main.fragment_discover.*
+import android.app.Activity
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+
 
 class DiscoverFragment : Fragment() {
 
@@ -59,5 +64,14 @@ class DiscoverFragment : Fragment() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         currentLanguage = sharedPreferences.getString(getString(R.string.preferences_language_key),
             getString(R.string.preferences_language_value_english))
+    }
+
+    private fun hideKeyboard(view: View, hasFocus: Boolean, context: Context) {
+        if (!hasFocus) {
+            val inputMethodManager =
+                context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
+            inputMethodManager!!.hideSoftInputFromWindow(view.windowToken, 0)
+            Toast.makeText(context, view.toString() + "," + hasFocus.toString(), Toast.LENGTH_SHORT).show()
+        }
     }
 }

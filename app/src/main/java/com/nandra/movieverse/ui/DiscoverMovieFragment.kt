@@ -1,10 +1,14 @@
 package com.nandra.movieverse.ui
 
+import android.app.Activity
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +19,7 @@ import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.DiscoverRecyclerViewAdapter
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_movie.*
+import kotlinx.android.synthetic.main.fragment_discover_movie.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,7 +34,7 @@ class DiscoverMovieFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_movie, container, false)
+        return inflater.inflate(R.layout.fragment_discover_movie, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +60,7 @@ class DiscoverMovieFragment : Fragment() {
             hasFixedSize()
             layoutManager = GridLayoutManager(context, 3)
         }
+        movie_searchview.setOnFocusChangeListener { view, b -> Toast.makeText(activity, "LOLZ", Toast.LENGTH_SHORT).show() }
         attemptPrepareView()
     }
 
@@ -122,5 +127,14 @@ class DiscoverMovieFragment : Fragment() {
             movie_error_button.text = getString(R.string.button_try_again_en)
         else
             movie_error_button.text = getString(R.string.button_try_again_id)
+    }
+
+    private fun hideKeyboard(view: View, hasFocus: Boolean, context: Context) {
+        if (!hasFocus) {
+            val inputMethodManager =
+                context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
+            inputMethodManager!!.hideSoftInputFromWindow(view.windowToken, 0)
+            Toast.makeText(context, view.toString() + "," + hasFocus.toString(), Toast.LENGTH_SHORT).show()
+        }
     }
 }

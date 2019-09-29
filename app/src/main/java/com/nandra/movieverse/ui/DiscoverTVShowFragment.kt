@@ -15,7 +15,7 @@ import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.DiscoverRecyclerViewAdapter
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_tv_show.*
+import kotlinx.android.synthetic.main.fragment_discover_tv.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,7 +30,7 @@ class DiscoverTVShowFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_tv_show, container, false)
+        return inflater.inflate(R.layout.fragment_discover_tv, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class DiscoverTVShowFragment : Fragment() {
             errorIndicator(it)
         })
         sharedViewModel.listTVLive.observe(this, Observer {
-            tvshow_recyclerview.swapAdapter(DiscoverRecyclerViewAdapter(it, Constant.TV_FILM_TYPE), true)
+            discover_tv_recyclerview.swapAdapter(DiscoverRecyclerViewAdapter(it, Constant.TV_FILM_TYPE), true)
         })
     }
 
@@ -58,7 +58,7 @@ class DiscoverTVShowFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
-        tvshow_recyclerview.apply {
+        discover_tv_recyclerview.apply {
             hasFixedSize()
             layoutManager = GridLayoutManager(context, 3)
         }
@@ -67,22 +67,22 @@ class DiscoverTVShowFragment : Fragment() {
 
     private fun loadingIndicator(state: Boolean) {
         if (state) {
-            tvshow_loading_back.visibility = View.VISIBLE
+            discover_tv_loading_back.visibility = View.VISIBLE
         }
         else {
-            tvshow_loading_back.visibility = View.GONE
+            discover_tv_loading_back.visibility = View.GONE
         }
     }
 
     private fun errorIndicator(state: Boolean){
         if(state){
-            tvshow_error_back.visibility = View.VISIBLE
+            discover_tv_error_back.visibility = View.VISIBLE
             viewLanguageAdjustment()
-            tvshow_error_button.setOnClickListener {
+            discover_tv_error_button.setOnClickListener {
                 prepareTVShowListView()
             }
         } else {
-            tvshow_error_back.visibility = View.GONE
+            discover_tv_error_back.visibility = View.GONE
         }
     }
 
@@ -99,9 +99,9 @@ class DiscoverTVShowFragment : Fragment() {
         val scope = CoroutineScope(Dispatchers.Main + job)
         Glide.with(this)
             .load(R.drawable.img_loading_indicator)
-            .into(tvshow_loading_image)
+            .into(discover_tv_loading_image)
         if (sharedViewModel.isDataHasLoaded)
-            tvshow_recyclerview.swapAdapter(DiscoverRecyclerViewAdapter(sharedViewModel.listTVLive.value!!, Constant.TV_FILM_TYPE), true)
+            discover_tv_recyclerview.swapAdapter(DiscoverRecyclerViewAdapter(sharedViewModel.listTVLive.value!!, Constant.TV_FILM_TYPE), true)
         else {
             scope.launch {
                 sharedViewModel.requestDiscoverData()
@@ -119,8 +119,8 @@ class DiscoverTVShowFragment : Fragment() {
 
     private fun viewLanguageAdjustment() {
         if (currentLanguage == languageEnglishValue)
-            tvshow_error_button.text = getString(R.string.button_try_again_en)
+            discover_tv_error_button.text = getString(R.string.button_try_again_en)
         else
-            tvshow_error_button.text = getString(R.string.button_try_again_id)
+            discover_tv_error_button.text = getString(R.string.button_try_again_id)
     }
 }
