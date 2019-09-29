@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_movieverse_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.nandra.movieverse.ui.MainActivity"
+        <activity
+            android:theme="@style/SplashScreenTheme"
+            android:name="com.nandra.movieverse.ui.MainActivity"
             android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTop">
             <intent-filter>
