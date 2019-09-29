@@ -10,11 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
 import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.DiscoverRecyclerViewAdapter
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
+import kotlinx.android.synthetic.main.fragment_discover_movie.*
 import kotlinx.android.synthetic.main.fragment_discover_tv.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +39,7 @@ class DiscoverTVShowFragment : Fragment() {
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
         sharedViewModel.isLoading.observe(this, Observer {
-            loadingIndicator(it)
+            checkLoadingState(it)
         })
         sharedViewModel.isError.observe(this, Observer {
             errorIndicator(it)
@@ -65,8 +65,9 @@ class DiscoverTVShowFragment : Fragment() {
         attemptPrepareView()
     }
 
-    private fun loadingIndicator(state: Boolean) {
+    private fun checkLoadingState(state: Boolean) {
         if (state) {
+            discover_tv_error_back.visibility = View.GONE
             discover_tv_progress_bar.visibility = View.VISIBLE
         }
         else {
@@ -95,6 +96,8 @@ class DiscoverTVShowFragment : Fragment() {
     }
 
     private fun prepareTVShowListView() {
+        val loadingState = sharedViewModel.isLoading.value
+        loadingState?.let { checkLoadingState(loadingState) }
         val job = Job()
         val scope = CoroutineScope(Dispatchers.Main + job)
         if (sharedViewModel.isDataHasLoaded)

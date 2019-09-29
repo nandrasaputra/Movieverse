@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
 import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.DiscoverRecyclerViewAdapter
 import com.nandra.movieverse.util.Constant
@@ -43,7 +42,7 @@ class DiscoverMovieFragment : Fragment() {
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
         sharedViewModel.isLoading.observe(this, Observer {
-            loadingIndicator(it)
+            checkLoadingState(it)
         })
         sharedViewModel.isError.observe(this, Observer {
             errorIndicator(it)
@@ -64,8 +63,9 @@ class DiscoverMovieFragment : Fragment() {
         attemptPrepareView()
     }
 
-    private fun loadingIndicator(state: Boolean) {
+    private fun checkLoadingState(state: Boolean) {
         if (state) {
+            movie_error_back.visibility = View.GONE
             discover_movie_progress_bar.visibility = View.VISIBLE
         }
         else {
@@ -92,6 +92,8 @@ class DiscoverMovieFragment : Fragment() {
     }
 
     private fun attemptPrepareView() {
+        val loadingState = sharedViewModel.isLoading.value
+        loadingState?.let { checkLoadingState(loadingState) }
         if(sharedViewModel.isError.value == true) {
             errorIndicator(sharedViewModel.isError.value!!)
             return
