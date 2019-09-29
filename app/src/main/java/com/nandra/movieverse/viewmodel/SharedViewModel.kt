@@ -15,6 +15,7 @@ import com.nandra.movieverse.network.response.YandexResponse
 import com.nandra.movieverse.repository.MyRepository
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.util.getStringGenre
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -72,7 +73,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     private suspend fun fetchDiscoverData() {
         _isLoading.value = true
-        discoverJob = viewModelScope.launch {
+        discoverJob = viewModelScope.launch(Dispatchers.IO) {
             try {
                 val movieResponse = repository.fetchDiscoverMovieResponse()
                 val tvShowResponse = repository.fetchDiscoverTVSeriesResponse()

@@ -33,13 +33,15 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private fun setBottomNavigationLabel(language: String) {
         val menu = main_activity_bottom_navigation.menu
         if (language == languageEnglishValue) {
-            menu[0].title = getString(R.string.title_discover_en)
-            menu[1].title = getString(R.string.title_favorite_en)
-            menu[2].title = getString(R.string.title_setting_en)
+            menu[0].title = getString(R.string.title_home_en)
+            menu[1].title = getString(R.string.title_discover_en)
+            menu[2].title = getString(R.string.title_favorite_en)
+            menu[3].title = getString(R.string.title_setting_en)
         } else {
-            menu[0].title = getString(R.string.title_discover_id)
-            menu[1].title = getString(R.string.title_favorite_id)
-            menu[2].title = getString(R.string.title_setting_id)
+            menu[0].title = getString(R.string.title_home_id)
+            menu[1].title = getString(R.string.title_discover_id)
+            menu[2].title = getString(R.string.title_favorite_id)
+            menu[3].title = getString(R.string.title_setting_id)
         }
     }
 
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private fun setupBottomNavigationBar() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.main_activity_bottom_navigation)
 
-        val navGraphIds = listOf(R.navigation.discover_nav, R.navigation.favorite_nav, R.navigation.settings_nav)
+        val navGraphIds = listOf(R.navigation.home_nav, R.navigation.discover_nav, R.navigation.favorite_nav, R.navigation.settings_nav)
 
         val controller = bottomNavigationView.setupWithNavController(
             navGraphIds = navGraphIds,

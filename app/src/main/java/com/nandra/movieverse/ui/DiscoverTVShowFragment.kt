@@ -67,10 +67,10 @@ class DiscoverTVShowFragment : Fragment() {
 
     private fun loadingIndicator(state: Boolean) {
         if (state) {
-            discover_tv_loading_back.visibility = View.VISIBLE
+            discover_tv_progress_bar.visibility = View.VISIBLE
         }
         else {
-            discover_tv_loading_back.visibility = View.GONE
+            discover_tv_progress_bar.visibility = View.GONE
         }
     }
 
@@ -97,9 +97,6 @@ class DiscoverTVShowFragment : Fragment() {
     private fun prepareTVShowListView() {
         val job = Job()
         val scope = CoroutineScope(Dispatchers.Main + job)
-        Glide.with(this)
-            .load(R.drawable.img_loading_indicator)
-            .into(discover_tv_loading_image)
         if (sharedViewModel.isDataHasLoaded)
             discover_tv_recyclerview.swapAdapter(DiscoverRecyclerViewAdapter(sharedViewModel.listTVLive.value!!, Constant.TV_FILM_TYPE), true)
         else {

@@ -67,4 +67,7 @@
     <string name="cd_images">images</string>
     <string name="video_thumbnail">video_thumbnail</string>
     <string name="heart_icon_picture">heath_icon</string>
+    <string name="cd_home">Home</string>
+    <string name="title_home_en">Home</string>
+    <string name="title_home_id">Utama</string>
 </resources>

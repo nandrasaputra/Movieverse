@@ -66,10 +66,10 @@ class DiscoverMovieFragment : Fragment() {
 
     private fun loadingIndicator(state: Boolean) {
         if (state) {
-            movie_loading_back.visibility = View.VISIBLE
+            discover_movie_progress_bar.visibility = View.VISIBLE
         }
         else {
-            movie_loading_back.visibility = View.GONE
+            discover_movie_progress_bar.visibility = View.GONE
         }
     }
 
@@ -102,9 +102,6 @@ class DiscoverMovieFragment : Fragment() {
     private fun prepareMovieListView() {
         val job = Job()
         val scope = CoroutineScope(Dispatchers.Main + job)
-        Glide.with(this)
-            .load(R.drawable.img_loading_indicator)
-            .into(movie_loading_image)
         if (sharedViewModel.isDataHasLoaded)
             movie_recyclerview.swapAdapter(DiscoverRecyclerViewAdapter(sharedViewModel.listMovieLive.value!!, Constant.MOVIE_FILM_TYPE), true)
         else {
