@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.FavoriteMovieRecyclerViewAdapter
 import com.nandra.movieverse.database.FavoriteMovie
+import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_favorite_movie.*
 
@@ -27,6 +28,12 @@ class FavoriteMovieFragment : Fragment(), SharedPreferences.OnSharedPreferenceCh
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_favorite_movie, container, false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.detailState.value = Constant.STATE_NOSTATE
+        sharedViewModel.isOnDetailFragment.value = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

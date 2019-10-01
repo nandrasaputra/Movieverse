@@ -10,5 +10,21 @@
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.nandra.movieverse.ui.FavoriteFragment"
-        android:label="FavoriteFragment" />
+        android:label="FavoriteFragment" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_detailFragmentFavorite"
+            app:destination="@id/detailFragmentFavorite" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragmentFavorite"
+        android:name="com.nandra.movieverse.ui.DetailFragment"
+        android:label="DetailFragmentFavorite">
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue="0" />
+        <argument
+            android:name="filmType"
+            app:argType="string" />
+    </fragment>
 </navigation>

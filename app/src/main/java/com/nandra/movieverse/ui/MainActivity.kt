@@ -2,15 +2,18 @@ package com.nandra.movieverse.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.nandra.movieverse.R
 import com.nandra.movieverse.util.setupWithNavController
+import com.nandra.movieverse.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -19,6 +22,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private var currentLanguage: String? = ""
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var languageEnglishValue : String
+    private lateinit var viewModel: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -29,6 +33,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         }
         prepareSharedPreferences()
         setBottomNavigationLabel(currentLanguage!!)
+        viewModel = ViewModelProvider(this)[SharedViewModel::class.java]
+        viewModel.isOnDetailFragment.observe(this, Observer {
+            handleBottomNavigationAppearance(it)
+        })
     }
 
     private fun setBottomNavigationLabel(language: String) {
@@ -84,6 +92,14 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
         currentLanguage = sharedPreferences.getString(getString(R.string.preferences_language_key),
             getString(R.string.preferences_language_value_english))
+    }
+
+    private fun handleBottomNavigationAppearance(value: Boolean) {
+        if(value) {
+            main_activity_bottom_navigation.visibility = View.GONE
+        } else {
+            main_activity_bottom_navigation.visibility = View.VISIBLE
+        }
     }
 
 }

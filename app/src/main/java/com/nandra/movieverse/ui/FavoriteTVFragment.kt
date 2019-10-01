@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.FavoriteTVRecyclerViewAdapter
 import com.nandra.movieverse.database.FavoriteTV
+import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_favorite_tv.*
 
@@ -38,6 +39,12 @@ class FavoriteTVFragment : Fragment(), SharedPreferences.OnSharedPreferenceChang
             tvList = it
             handleFavoriteTVListChanged(it)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.detailState.value = Constant.STATE_NOSTATE
+        sharedViewModel.isOnDetailFragment.value = false
     }
 
     private fun attemptPrepareView() {

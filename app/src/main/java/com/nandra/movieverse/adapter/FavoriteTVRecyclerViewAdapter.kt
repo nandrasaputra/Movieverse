@@ -3,11 +3,13 @@ package com.nandra.movieverse.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.nandra.movieverse.R
 import com.nandra.movieverse.database.FavoriteTV
+import com.nandra.movieverse.ui.FavoriteFragmentDirections
 import com.nandra.movieverse.util.Constant
 import kotlinx.android.synthetic.main.item_favorite_list.view.*
 
@@ -60,6 +62,10 @@ class FavoriteTVRecyclerViewAdapter(
         }
         holder.itemView.item_delete_fab.setOnClickListener {
             callback.onAdapterDeleteButtonPressed(holder.adapterPosition)
+        }
+        holder.itemView.setOnClickListener {
+            val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragmentFavorite(Constant.TV_FILM_TYPE).setId(currentMovie.id)
+            holder.itemView.findNavController().navigate(action)
         }
     }
 

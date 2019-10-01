@@ -69,7 +69,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         sharedViewModel.roomState.observe(this, Observer {
             onRoomStateChange(it)
         })
-        if (!sharedViewModel.isOnDetailFragment) {
+        if (!sharedViewModel.isOnDetailFragment.value!!) {
             attemptPrepareView()
         }
         if (filmType == Constant.MOVIE_FILM_TYPE) {
@@ -85,10 +85,10 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
 
     override fun onResume() {
         super.onResume()
-        if (!sharedViewModel.isOnDetailFragment || sharedViewModel.detailState.value == Constant.STATE_NO_CONNECTION
+        if (!sharedViewModel.isOnDetailFragment.value!! || sharedViewModel.detailState.value == Constant.STATE_NO_CONNECTION
             || sharedViewModel.detailState.value == Constant.STATE_SERVER_ERROR){
             detail_cover.visibility = View.VISIBLE
-            sharedViewModel.isOnDetailFragment = true
+            sharedViewModel.isOnDetailFragment.value = true
         }
     }
 

@@ -27,7 +27,9 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private var detailJob : Job? = null
     private var roomJob: Job? = null
     private val repository = MyRepository(app)
-    var isOnDetailFragment = false
+    val isOnDetailFragment = MutableLiveData<Boolean>().apply {
+        this.value = false
+    }
 
     val detailState = MutableLiveData<Int>()
 

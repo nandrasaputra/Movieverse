@@ -76,7 +76,7 @@ class DiscoverMovieFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         sharedViewModel.detailState.value = Constant.STATE_NOSTATE
-        sharedViewModel.isOnDetailFragment = false
+        sharedViewModel.isOnDetailFragment.value = false
     }
 
     private fun errorIndicator(state: Boolean){
