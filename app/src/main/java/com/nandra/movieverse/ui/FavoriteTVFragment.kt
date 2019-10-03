@@ -12,9 +12,11 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.FavoriteTVRecyclerViewAdapter
+import com.nandra.movieverse.database.FavoriteMovie
 import com.nandra.movieverse.database.FavoriteTV
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
+import kotlinx.android.synthetic.main.fragment_favorite_movie.*
 import kotlinx.android.synthetic.main.fragment_favorite_tv.*
 
 class FavoriteTVFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener, FavoriteTVRecyclerViewAdapter.IFavoriteTVRecyclerViewAdapterCallback {
@@ -25,6 +27,7 @@ class FavoriteTVFragment : Fragment(), SharedPreferences.OnSharedPreferenceChang
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
     private var tvList: List<FavoriteTV> = listOf()
+    private var isFavoriteListLoaded = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_favorite_tv, container, false)
@@ -48,10 +51,20 @@ class FavoriteTVFragment : Fragment(), SharedPreferences.OnSharedPreferenceChang
     }
 
     private fun attemptPrepareView() {
+        checkFavoriteListItem(sharedViewModel.tvFavoriteList.value)
         favorite_tv_recyclerview.swapAdapter(FavoriteTVRecyclerViewAdapter(tvList, currentLanguage, this), true)
     }
 
+    private fun checkFavoriteListItem(data: List<FavoriteTV>?) {
+        when {
+            data == null -> favorite_tv_no_item_back.visibility = View.GONE
+            data.isEmpty() -> favorite_tv_no_item_back.visibility = View.VISIBLE
+            else -> favorite_tv_no_item_back.visibility = View.GONE
+        }
+    }
+
     private fun handleFavoriteTVListChanged(tv: List<FavoriteTV>) {
+        checkFavoriteListItem(tv)
         favorite_tv_recyclerview.swapAdapter(FavoriteTVRecyclerViewAdapter(tv, currentLanguage, this), true)
     }
 

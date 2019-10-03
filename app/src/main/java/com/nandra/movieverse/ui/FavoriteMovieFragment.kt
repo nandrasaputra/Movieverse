@@ -48,10 +48,20 @@ class FavoriteMovieFragment : Fragment(), SharedPreferences.OnSharedPreferenceCh
     }
 
     private fun attemptPrepareView() {
+        checkFavoriteListItem(sharedViewModel.movieFavoriteList.value)
         favorite_movie_recyclerview.swapAdapter(FavoriteMovieRecyclerViewAdapter(listMovie, currentLanguage, this), true)
     }
 
+    private fun checkFavoriteListItem(data: List<FavoriteMovie>?) {
+        when {
+            data == null -> favorite_movie_no_item_back.visibility = View.GONE
+            data.isEmpty() -> favorite_movie_no_item_back.visibility = View.VISIBLE
+            else -> favorite_movie_no_item_back.visibility = View.GONE
+        }
+    }
+
     private fun handleFavoriteMovieListChanged(data: List<FavoriteMovie>) {
+        checkFavoriteListItem(data)
         favorite_movie_recyclerview.swapAdapter(FavoriteMovieRecyclerViewAdapter(data, currentLanguage, this), true)
     }
 
