@@ -6,8 +6,9 @@ import com.nandra.movieverse.database.FavoriteMovie
 import com.nandra.movieverse.database.FavoriteTV
 import com.nandra.movieverse.database.MovieverseDatabase
 import com.nandra.movieverse.network.ConnectivityInterceptor
-import com.nandra.movieverse.network.apiservice.TheMovieDBDetailApiService
-import com.nandra.movieverse.network.apiservice.TheMovieDBDiscoverApiService
+import com.nandra.movieverse.network.apiservice.TMDBDetailApiService
+import com.nandra.movieverse.network.apiservice.TMDBDiscoverApiService
+import com.nandra.movieverse.network.apiservice.TMDBTrendingApiService
 import com.nandra.movieverse.network.apiservice.YandexTranslationApiService
 import com.nandra.movieverse.network.response.DetailResponse
 import com.nandra.movieverse.network.response.DiscoverResponse
@@ -18,11 +19,13 @@ class MyRepository(app: Application) {
 
     private val interceptor = ConnectivityInterceptor(app)
     private val discoverService =
-        TheMovieDBDiscoverApiService(interceptor)
+        TMDBDiscoverApiService(interceptor)
     private val detailService =
-        TheMovieDBDetailApiService(interceptor)
+        TMDBDetailApiService(interceptor)
     private val yandexService =
         YandexTranslationApiService(interceptor)
+    private val trendingService =
+        TMDBTrendingApiService(interceptor)
     private val database = MovieverseDatabase.getInstance(app)
 
     suspend fun fetchDiscoverMovieResponse() : Response<DiscoverResponse> {
@@ -61,11 +64,15 @@ class MyRepository(app: Application) {
         return database.favoriteTVDao().getFavoriteTVList()
     }
 
-    suspend fun removeFavorieMovie(movie: FavoriteMovie) {
+    suspend fun removeFavoriteMovie(movie: FavoriteMovie) {
         database.favoriteMovieDao().deleteFavoriteMovie(movie)
     }
 
-    suspend fun removeFavorieTV(tv: FavoriteTV) {
+    suspend fun removeFavoriteTV(tv: FavoriteTV) {
         database.favoriteTVDao().deleteFavoriteTV(tv)
+    }
+
+    suspend fun fetchTrendingList() : Response<DiscoverResponse> {
+        return trendingService.getAllWeekTrending()
     }
 }

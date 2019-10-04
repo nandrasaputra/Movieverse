@@ -96,7 +96,6 @@ class DiscoverMovieFragment : Fragment() {
         loadingState?.let { checkLoadingState(loadingState) }
         if(sharedViewModel.isError.value == true) {
             errorIndicator(sharedViewModel.isError.value!!)
-            return
         }
         prepareMovieListView()
     }

@@ -26,6 +26,8 @@ data class Film(
     val overview: String,
     @SerializedName("release_date")
     val releaseDate: String,
+    @SerializedName("media_type")
+    val mediaType: String,
     @SerializedName("original_name")
     val tvOriginalName: String,
     @SerializedName("name")

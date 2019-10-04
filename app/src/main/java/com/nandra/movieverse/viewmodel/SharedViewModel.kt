@@ -23,7 +23,9 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     var currentLanguage: String = ""
     var isDataHasLoaded: Boolean = false
+    var isHomeDataHasLoaded: Boolean = false
     private var discoverJob : Job? = null
+    private var homeJob : Job? = null
     private var detailJob : Job? = null
     private var roomJob: Job? = null
     private val repository = MyRepository(app)
@@ -46,17 +48,26 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     val isLoading: LiveData<Boolean>
         get() = _isLoading
+    val isHomeLoading: LiveData<Boolean>
+        get() = _isHomeLoading
     val isError: LiveData<Boolean>
         get() = _isError
+    val isHomeError: LiveData<Boolean>
+        get() = _isHomeError
     val listMovieLive: LiveData<ArrayList<Film>>
         get() = _listMovieLive
     val listTVLive: LiveData<ArrayList<Film>>
         get() = _listTVLive
+    val listTrendingLive: LiveData<ArrayList<Film>>
+        get() = _listTrendingLive
 
     private val _isLoading = MutableLiveData<Boolean>()
+    private val _isHomeLoading = MutableLiveData<Boolean>()
     private val _listMovieLive = MutableLiveData<ArrayList<Film>>()
     private val _isError = MutableLiveData<Boolean>()
+    private val _isHomeError = MutableLiveData<Boolean>()
     private val _listTVLive = MutableLiveData<ArrayList<Film>>()
+    private val _listTrendingLive = MutableLiveData<ArrayList<Film>>()
 
     val roomState = MutableLiveData<RoomState>().apply {
         this.value = RoomState.StandBy
@@ -71,6 +82,40 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         } else if (!isDataHasLoaded && !isConnectedToInternet()) {
             _isError.value = true
         }
+    }
+
+    suspend fun requestHomeData() {
+        if(homeJob != null){
+            homeJob?.join()
+        }
+        if (!isHomeDataHasLoaded && isConnectedToInternet()) {
+            fetchHomeData()
+        } else if (!isHomeDataHasLoaded && !isConnectedToInternet()) {
+            _isHomeError.value = true
+        }
+    }
+
+    private suspend fun fetchHomeData() {
+        _isHomeLoading.value = true
+        homeJob = viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val trendingResponse = repository.fetchTrendingList()
+                if(trendingResponse.isSuccessful) {
+                    val listTrending = trendingResponse.body()?.results as ArrayList
+                    _listTrendingLive.postValue(listTrending)
+                    isHomeDataHasLoaded = true
+                    _isHomeLoading.postValue(false)
+                    _isHomeError.postValue(false)
+                } else {
+                    _isHomeLoading.postValue(false)
+                    _isHomeError.postValue(true)
+                }
+            } catch (exp: Exception){
+                _isHomeLoading.postValue(false)
+                _isHomeError.postValue(true)
+            }
+        }
+        homeJob?.join()
     }
 
     private suspend fun fetchDiscoverData() {
@@ -119,13 +164,13 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun deleteFavoriteMovie(movie: FavoriteMovie) {
         viewModelScope.launch {
-            repository.removeFavorieMovie(movie)
+            repository.removeFavoriteMovie(movie)
         }
     }
 
     fun deleteFavoriteTV(tv: FavoriteTV) {
         viewModelScope.launch {
-            repository.removeFavorieTV(tv)
+            repository.removeFavoriteTV(tv)
         }
     }
 
@@ -165,12 +210,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun saveToFavorite(
-        data: DetailResponse,
-        filmType: String,
-        genreIndonesia: String,
-        overviewIndonesia: String
-    ) {
+    fun saveToFavorite(data: DetailResponse, filmType: String, genreIndonesia: String, overviewIndonesia: String) {
         roomJob = viewModelScope.launch {
             roomState.value = RoomState.Loading
             try {

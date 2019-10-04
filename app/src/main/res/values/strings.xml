@@ -70,4 +70,6 @@
     <string name="cd_home">Home</string>
     <string name="title_home_en">Home</string>
     <string name="title_home_id">Utama</string>
+    <string name="cd_trending_image">trending_image</string>
+    <string name="cd_trending_poster">trending_poster</string>
 </resources>

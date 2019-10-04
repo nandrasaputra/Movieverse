@@ -1,37 +1,35 @@
 package com.nandra.movieverse.network.apiservice
 
 import com.nandra.movieverse.network.ConnectivityInterceptor
-import com.nandra.movieverse.network.response.DetailResponse
-import com.nandra.movieverse.util.Constant
+import com.nandra.movieverse.network.response.DiscoverResponse
+import com.nandra.movieverse.util.Constant.API_KEY_MOVIE_DB
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface TheMovieDBDetailApiService {
-    @GET("movie/{id}")
-    suspend fun getMovieDetail(
-        @Path("id") id: String,
-        @Query("append_to_response") parameter: String
-    ) : Response<DetailResponse>
+interface TMDBDiscoverApiService {
 
-    @GET("tv/{id}")
-    suspend fun getTVDetail(
-        @Path("id") id: String,
-        @Query("append_to_response") parameter: String
-    ) : Response<DetailResponse>
+    @GET("movie")
+    suspend fun getMovie(
+        @Query("language") language: String
+    ) : Response<DiscoverResponse>
+
+    @GET("tv")
+    suspend fun getTVSeries(
+        @Query("language") language: String
+    ) : Response<DiscoverResponse>
 
     companion object {
-        operator fun invoke(connectivityInterceptor: ConnectivityInterceptor) : TheMovieDBDetailApiService {
+        operator fun invoke(connectivityInterceptor: ConnectivityInterceptor) : TMDBDiscoverApiService {
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
                     .url()
                     .newBuilder()
-                    .addQueryParameter("api_key", Constant.API_KEY_MOVIE_DB)
+                    .addQueryParameter("api_key", API_KEY_MOVIE_DB)
                     .build()
                 val request = chain.request()
                     .newBuilder()
@@ -46,10 +44,10 @@ interface TheMovieDBDetailApiService {
 
             return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("https://api.themoviedb.org/3/")
+                .baseUrl("https://api.themoviedb.org/3/discover/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(TheMovieDBDetailApiService::class.java)
+                .create(TMDBDiscoverApiService::class.java)
         }
     }
 }
