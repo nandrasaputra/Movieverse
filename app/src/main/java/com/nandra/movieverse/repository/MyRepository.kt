@@ -6,10 +6,7 @@ import com.nandra.movieverse.database.FavoriteMovie
 import com.nandra.movieverse.database.FavoriteTV
 import com.nandra.movieverse.database.MovieverseDatabase
 import com.nandra.movieverse.network.ConnectivityInterceptor
-import com.nandra.movieverse.network.apiservice.TMDBDetailApiService
-import com.nandra.movieverse.network.apiservice.TMDBDiscoverApiService
-import com.nandra.movieverse.network.apiservice.TMDBTrendingApiService
-import com.nandra.movieverse.network.apiservice.YandexTranslationApiService
+import com.nandra.movieverse.network.apiservice.*
 import com.nandra.movieverse.network.response.DetailResponse
 import com.nandra.movieverse.network.response.DiscoverResponse
 import com.nandra.movieverse.network.response.YandexResponse
@@ -26,6 +23,8 @@ class MyRepository(app: Application) {
         YandexTranslationApiService(interceptor)
     private val trendingService =
         TMDBTrendingApiService(interceptor)
+    private val nowPlayingService =
+        TMDBNowPlayingApiService(interceptor)
     private val database = MovieverseDatabase.getInstance(app)
 
     suspend fun fetchDiscoverMovieResponse() : Response<DiscoverResponse> {
@@ -74,5 +73,9 @@ class MyRepository(app: Application) {
 
     suspend fun fetchTrendingList() : Response<DiscoverResponse> {
         return trendingService.getAllWeekTrending()
+    }
+
+    suspend fun fetchNowPlayingList() : Response<DiscoverResponse> {
+        return nowPlayingService.getNowPlaying(1)
     }
 }

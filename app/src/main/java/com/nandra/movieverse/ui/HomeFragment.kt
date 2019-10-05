@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.nandra.movieverse.R
+import com.nandra.movieverse.adapter.NowPlayingAdapter
 import com.nandra.movieverse.adapter.TrendingCardAdapter
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
@@ -18,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+
 
 class HomeFragment : Fragment() {
 
@@ -34,6 +36,9 @@ class HomeFragment : Fragment() {
         } ?: throw Exception("Invalid Activity")
         sharedViewModel.listTrendingLive.observe(this, Observer {
             home_trending_card_slider.adapter = TrendingCardAdapter(it)
+        })
+        sharedViewModel.listNowPlayingLive.observe(this, Observer {
+            home_now_playing_card_slider.adapter = NowPlayingAdapter(it)
         })
         sharedViewModel.isHomeError.observe(this, Observer {
             handleError(it)
@@ -79,8 +84,10 @@ class HomeFragment : Fragment() {
     private fun prepareHomeView() {
         val job = Job()
         val scope = CoroutineScope(Dispatchers.Main + job)
-        if (sharedViewModel.isHomeDataHasLoaded)
+        if (sharedViewModel.isHomeDataHasLoaded){
             home_trending_card_slider.adapter = TrendingCardAdapter(sharedViewModel.listTrendingLive.value!!)
+            home_now_playing_card_slider.adapter = NowPlayingAdapter(sharedViewModel.listNowPlayingLive.value!!)
+        }
         else {
             scope.launch {
                 sharedViewModel.requestHomeData()
