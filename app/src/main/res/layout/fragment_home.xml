@@ -32,17 +32,30 @@
         app:layout_constraintDimensionRatio="H, 2:1"
         app:cardSlider_indicator="@id/home_trending_card_slider_indicator"
         app:auto_slide_time="5"
-        app:cardSlider_smallScaleFactor="0.8"/>
+        app:cardSlider_smallScaleFactor="0.9"/>
 
     <com.github.islamkhsh.CardSliderIndicator
         android:id="@+id/home_trending_card_slider_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_trending_card_slider"
         app:indicatorsToShow="4"/>
+
+    <TextView
+        android:id="@+id/home_now_playing_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/home_trending_card_slider_indicator"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/colorBlueDarker"
+        android:text="On Cinema"
+        android:textSize="18sp"
+        android:fontFamily="@font/lato_bold"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/home_error_back"
@@ -88,7 +101,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/home_toolbar"
+        app:layout_constraintTop_toBottomOf="@id/home_now_trending_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"/>

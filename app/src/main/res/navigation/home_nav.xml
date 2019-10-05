@@ -10,5 +10,21 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.nandra.movieverse.ui.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragmentHome"
+            app:destination="@id/detailFragmentHome" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragmentHome"
+        android:name="com.nandra.movieverse.ui.DetailFragment"
+        android:label="DetailFragmentHome" >
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue="0" />
+        <argument
+            android:name="filmType"
+            app:argType="string" />
+    </fragment>
 </navigation>

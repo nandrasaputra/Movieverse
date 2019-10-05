@@ -29,11 +29,11 @@ class MyRepository(app: Application) {
     private val database = MovieverseDatabase.getInstance(app)
 
     suspend fun fetchDiscoverMovieResponse() : Response<DiscoverResponse> {
-        return discoverService.getMovie("en-US")
+        return discoverService.getMovie("en-US", "popularity.desc")
     }
 
     suspend fun fetchDiscoverTVSeriesResponse() : Response<DiscoverResponse> {
-        return discoverService.getTVSeries("en-US")
+        return discoverService.getTVSeries("en-US", "popularity.desc")
     }
 
     suspend fun fetchMovieDetailResponse(id: String, parameter: String = "videos,credits,images") : Response<DetailResponse> {

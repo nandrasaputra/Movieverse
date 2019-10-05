@@ -5,17 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.nandra.movieverse.R
-import com.nandra.movieverse.adapter.DiscoverRecyclerViewAdapter
 import com.nandra.movieverse.adapter.TrendingCardAdapter
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_discover_movie.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +41,12 @@ class HomeFragment : Fragment() {
         sharedViewModel.isHomeLoading.observe(this, Observer {
             checkLoadingState(it)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.detailState.value = Constant.STATE_NOSTATE
+        sharedViewModel.isOnDetailFragment.value = false
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
