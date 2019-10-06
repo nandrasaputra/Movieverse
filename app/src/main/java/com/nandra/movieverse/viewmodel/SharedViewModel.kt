@@ -60,7 +60,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         get() = _listTVLive
     val listTrendingLive: LiveData<ArrayList<Film>>
         get() = _listTrendingLive
-    val listNowPlayingLive: LiveData<ArrayList<Film>>
+    val listNowPlayingLive: LiveData<List<Film>>
         get() = _listNowPlayingLive
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -70,7 +70,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private val _isHomeError = MutableLiveData<Boolean>()
     private val _listTVLive = MutableLiveData<ArrayList<Film>>()
     private val _listTrendingLive = MutableLiveData<ArrayList<Film>>()
-    private val _listNowPlayingLive = MutableLiveData<ArrayList<Film>>()
+    private val _listNowPlayingLive = MutableLiveData<List<Film>>()
 
     val roomState = MutableLiveData<RoomState>().apply {
         this.value = RoomState.StandBy
@@ -106,7 +106,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                 val nowPlayingResponse = repository.fetchNowPlayingList()
                 if(trendingResponse.isSuccessful && nowPlayingResponse.isSuccessful) {
                     val listTrending = trendingResponse.body()?.results as ArrayList
-                    val listNowPlaying = nowPlayingResponse.body()?.results as ArrayList
+                    val listNowPlaying = nowPlayingResponse.body()?.results
                     _listTrendingLive.postValue(listTrending)
                     _listNowPlayingLive.postValue(listNowPlaying)
                     isHomeDataHasLoaded = true

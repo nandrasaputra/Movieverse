@@ -10,10 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.nandra.movieverse.R
-import com.nandra.movieverse.adapter.NowPlayingAdapter
+import com.nandra.movieverse.adapter.NowPlayingRecyclerViewAdapter
 import com.nandra.movieverse.adapter.TrendingCardAdapter
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +39,7 @@ class HomeFragment : Fragment() {
             home_trending_card_slider.adapter = TrendingCardAdapter(it)
         })
         sharedViewModel.listNowPlayingLive.observe(this, Observer {
-            home_now_playing_card_slider.adapter = NowPlayingAdapter(it)
+            home_now_playing_card_slider.adapter = NowPlayingRecyclerViewAdapter(it)
         })
         sharedViewModel.isHomeError.observe(this, Observer {
             handleError(it)
@@ -62,6 +63,7 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
         attemptPrepareView()
+        setupNowPlaying()
     }
 
     private fun prepareSharedPreferences() {
@@ -86,7 +88,7 @@ class HomeFragment : Fragment() {
         val scope = CoroutineScope(Dispatchers.Main + job)
         if (sharedViewModel.isHomeDataHasLoaded){
             home_trending_card_slider.adapter = TrendingCardAdapter(sharedViewModel.listTrendingLive.value!!)
-            home_now_playing_card_slider.adapter = NowPlayingAdapter(sharedViewModel.listNowPlayingLive.value!!)
+            home_now_playing_card_slider.adapter = NowPlayingRecyclerViewAdapter(sharedViewModel.listNowPlayingLive.value!!)
         }
         else {
             scope.launch {
@@ -121,5 +123,9 @@ class HomeFragment : Fragment() {
             home_error_button.text = getString(R.string.button_try_again_en)
         else
             home_error_button.text = getString(R.string.button_try_again_id)
+    }
+    
+    private fun setupNowPlaying() {
+        home_now_playing_card_slider.setItemTransformer(ScaleTransformer.Builder().setMinScale(0.8F).build())
     }
 }
