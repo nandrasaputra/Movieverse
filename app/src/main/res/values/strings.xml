@@ -72,4 +72,17 @@
     <string name="title_home_id">Utama</string>
     <string name="cd_trending_image">trending_image</string>
     <string name="cd_trending_poster">trending_poster</string>
+    <string name="cd_error_image">error_image</string>
+    <string name="cd_no_internet_connection">No Internet Connection</string>
+
+    <string name="movie_search_view_query_hint_en">Search In Movie</string>
+    <string name="movie_search_view_query_hint_id">Cari Didalam Film</string>
+    <string name="tv_search_view_query_hint_en">Search In TV</string>
+    <string name="tv_search_view_query_hint_id">Cari Didalam Serial TV</string>
+
+    <string name="home_now_playing_en">On Cinema</string>
+    <string name="home_now_playing_id">Sedang Tayang Di Bioskop</string>
+    <string name="home_trending_en">Now Trending</string>
+    <string name="home_trending_id">Sedang Populer</string>
+
 </resources>

@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/img_back_potrait_default"
+        android:src="@drawable/img_back_portrait_default"
         app:layout_constraintDimensionRatio="H,4:6"
         android:scaleType="centerCrop"
         app:riv_corner_radius="16dp"/>

@@ -13,7 +13,7 @@
         android:layout_height="56dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        app:queryHint="Search In Movie"
+        app:queryHint="@string/movie_search_view_query_hint_en"
         android:elevation="3dp"
         android:outlineProvider="background"
         android:background="@color/colorVeryLightGray"

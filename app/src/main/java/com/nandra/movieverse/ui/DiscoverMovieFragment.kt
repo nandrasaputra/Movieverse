@@ -61,6 +61,7 @@ class DiscoverMovieFragment : Fragment() {
         }
         movie_searchview.setOnFocusChangeListener { view, b -> Toast.makeText(activity, "LOLZ", Toast.LENGTH_SHORT).show() }
         attemptPrepareView()
+        languageAdjustment()
     }
 
     private fun checkLoadingState(state: Boolean) {
@@ -82,7 +83,7 @@ class DiscoverMovieFragment : Fragment() {
     private fun errorIndicator(state: Boolean){
         if(state){
             movie_error_back.visibility = View.VISIBLE
-            viewLanguageAdjustment()
+            viewErrorLanguageAdjustment()
             movie_error_button.setOnClickListener {
                 prepareMovieListView()
             }
@@ -120,11 +121,18 @@ class DiscoverMovieFragment : Fragment() {
             languageEnglishValue)!!
     }
 
-    private fun viewLanguageAdjustment() {
+    private fun viewErrorLanguageAdjustment() {
         if (currentLanguage == languageEnglishValue)
             movie_error_button.text = getString(R.string.button_try_again_en)
         else
             movie_error_button.text = getString(R.string.button_try_again_id)
+    }
+
+    private fun languageAdjustment() {
+        if (currentLanguage == languageEnglishValue)
+            movie_searchview.queryHint = resources.getString(R.string.movie_search_view_query_hint_en)
+        else
+            movie_searchview.queryHint = resources.getString(R.string.movie_search_view_query_hint_id)
     }
 
     private fun hideKeyboard(view: View, hasFocus: Boolean, context: Context) {

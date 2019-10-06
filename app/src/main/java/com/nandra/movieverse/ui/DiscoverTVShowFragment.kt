@@ -14,7 +14,6 @@ import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.DiscoverRecyclerViewAdapter
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_discover_movie.*
 import kotlinx.android.synthetic.main.fragment_discover_tv.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -63,6 +62,7 @@ class DiscoverTVShowFragment : Fragment() {
             layoutManager = GridLayoutManager(context, 3)
         }
         attemptPrepareView()
+        languageAdjustment()
     }
 
     private fun checkLoadingState(state: Boolean) {
@@ -78,7 +78,7 @@ class DiscoverTVShowFragment : Fragment() {
     private fun errorIndicator(state: Boolean){
         if(state){
             discover_tv_error_back.visibility = View.VISIBLE
-            viewLanguageAdjustment()
+            viewErrorLanguageAdjustment()
             discover_tv_error_button.setOnClickListener {
                 prepareTVShowListView()
             }
@@ -117,7 +117,14 @@ class DiscoverTVShowFragment : Fragment() {
             languageEnglishValue)!!
     }
 
-    private fun viewLanguageAdjustment() {
+    private fun languageAdjustment() {
+        if (currentLanguage == languageEnglishValue)
+            discover_tv_searchview.queryHint = resources.getString(R.string.tv_search_view_query_hint_en)
+        else
+            discover_tv_searchview.queryHint = resources.getString(R.string.tv_search_view_query_hint_id)
+    }
+
+    private fun viewErrorLanguageAdjustment() {
         if (currentLanguage == languageEnglishValue)
             discover_tv_error_button.text = getString(R.string.button_try_again_en)
         else

@@ -10,7 +10,7 @@
         android:id="@+id/discover_tv_searchview"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        app:queryHint="Search In TV"
+        app:queryHint="@string/tv_search_view_query_hint_en"
         android:background="@color/colorVeryLightGray"
         android:elevation="3dp"
         android:outlineProvider="background"

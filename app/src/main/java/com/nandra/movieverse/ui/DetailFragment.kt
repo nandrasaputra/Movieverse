@@ -232,7 +232,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
                 .into(detail_image_movie_poster)
         } else {
             Glide.with(this)
-                .load(R.drawable.img_back_potrait_default)
+                .load(R.drawable.img_back_portrait_default)
                 .into(detail_image_movie_poster)
         }
         if(data.backdropPath != null) {

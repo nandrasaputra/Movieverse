@@ -61,9 +61,11 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        home_cover.setOnClickListener {  }  //Prevent Click Through
         prepareSharedPreferences()
         attemptPrepareView()
         setupNowPlaying()
+        languageAdjustment()
     }
 
     private fun prepareSharedPreferences() {
@@ -101,8 +103,14 @@ class HomeFragment : Fragment() {
         if (state) {
             home_error_back.visibility = View.GONE
             home_progress_bar.visibility = View.VISIBLE
+            home_cover.visibility = View.VISIBLE
+            home_shimmer.visibility = View.VISIBLE
+            home_shimmer.startShimmer()
         } else {
             home_progress_bar.visibility = View.GONE
+            home_shimmer.stopShimmer()
+            home_shimmer.visibility = View.GONE
+            home_cover.visibility = View.GONE
         }
     }
 
@@ -127,5 +135,16 @@ class HomeFragment : Fragment() {
     
     private fun setupNowPlaying() {
         home_now_playing_card_slider.setItemTransformer(ScaleTransformer.Builder().setMinScale(0.8F).build())
+    }
+
+    private fun languageAdjustment() {
+        if (currentLanguage == languageEnglishValue) {
+            home_now_playing_text.text = resources.getString(R.string.home_now_playing_en)
+            home_now_trending_text.text = resources.getString(R.string.home_trending_en)
+        }
+        else {
+            home_now_playing_text.text = resources.getString(R.string.home_now_playing_id)
+            home_now_trending_text.text = resources.getString(R.string.home_trending_id)
+        }
     }
 }
