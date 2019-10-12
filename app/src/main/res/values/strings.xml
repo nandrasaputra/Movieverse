@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Movieverse</string>
 
     <string name="toolbar_main_title">"Movieverse"</string>
@@ -74,6 +74,8 @@
     <string name="cd_trending_poster">trending_poster</string>
     <string name="cd_error_image">error_image</string>
     <string name="cd_no_internet_connection">No Internet Connection</string>
+    <string name="no_internet_connection_en">No Internet Connection</string>
+    <string name="no_internet_connection_id">Tidak Ada Koneksi Internet</string>
 
     <string name="movie_search_view_query_hint_en">Search In Movie</string>
     <string name="movie_search_view_query_hint_id">Cari Didalam Film</string>
@@ -83,6 +85,9 @@
     <string name="home_now_playing_en">On Cinema</string>
     <string name="home_now_playing_id">Sedang Tayang Di Bioskop</string>
     <string name="home_trending_en">Now Trending</string>
-    <string name="home_trending_id">Sedang Populer</string>
+    <string name="home_trending_id" tools:ignore="Typos">Sedang Populer</string>
+
+    <string name="favorite_no_item_en">No Item, Just An Astronaut</string>
+    <string name="favorite_no_item_id">Tidak Terdapat Data, Hanya Ada Seorang Astronot</string>
 
 </resources>

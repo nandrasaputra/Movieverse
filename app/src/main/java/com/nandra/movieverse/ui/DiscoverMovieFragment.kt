@@ -122,10 +122,15 @@ class DiscoverMovieFragment : Fragment() {
     }
 
     private fun viewErrorLanguageAdjustment() {
-        if (currentLanguage == languageEnglishValue)
+        if (currentLanguage == languageEnglishValue){
             movie_error_button.text = getString(R.string.button_try_again_en)
-        else
+            movie_error_text.text = getString(R.string.no_internet_connection_en)
+        }
+        else {
             movie_error_button.text = getString(R.string.button_try_again_id)
+            movie_error_text.text = getString(R.string.no_internet_connection_id)
+        }
+
     }
 
     private fun languageAdjustment() {

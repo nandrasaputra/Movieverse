@@ -127,10 +127,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun viewLanguageAdjustment() {
-        if (currentLanguage == languageEnglishValue)
+        if (currentLanguage == languageEnglishValue){
             home_error_button.text = getString(R.string.button_try_again_en)
-        else
+            home_error_text.text = getString(R.string.no_internet_connection_en)
+        }
+        else {
             home_error_button.text = getString(R.string.button_try_again_id)
+            home_error_text.text = getString(R.string.no_internet_connection_id)
+        }
     }
     
     private fun setupNowPlaying() {

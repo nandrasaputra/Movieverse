@@ -55,7 +55,13 @@ class FavoriteMovieFragment : Fragment(), SharedPreferences.OnSharedPreferenceCh
     private fun checkFavoriteListItem(data: List<FavoriteMovie>?) {
         when {
             data == null -> favorite_movie_no_item_back.visibility = View.GONE
-            data.isEmpty() -> favorite_movie_no_item_back.visibility = View.VISIBLE
+            data.isEmpty() -> {
+                favorite_movie_no_item_back.visibility = View.VISIBLE
+                if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
+                    favorite_movie_no_item_text.text = getString(R.string.favorite_no_item_en)
+                else
+                    favorite_movie_no_item_text.text = getString(R.string.favorite_no_item_id)
+            }
             else -> favorite_movie_no_item_back.visibility = View.GONE
         }
     }

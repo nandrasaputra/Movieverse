@@ -34,7 +34,8 @@
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintBottom_toTopOf="@id/favorite_movie_no_item_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/cd_error_image" />
 
         <TextView
             android:id="@+id/favorite_movie_no_item_text"
@@ -47,6 +48,6 @@
             app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="No Item, Just An Astronaut"/>
+            android:text="@string/favorite_no_item_en"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

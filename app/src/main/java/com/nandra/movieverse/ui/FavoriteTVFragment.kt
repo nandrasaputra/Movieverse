@@ -12,11 +12,9 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.FavoriteTVRecyclerViewAdapter
-import com.nandra.movieverse.database.FavoriteMovie
 import com.nandra.movieverse.database.FavoriteTV
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_favorite_movie.*
 import kotlinx.android.synthetic.main.fragment_favorite_tv.*
 
 class FavoriteTVFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener, FavoriteTVRecyclerViewAdapter.IFavoriteTVRecyclerViewAdapterCallback {
@@ -58,7 +56,13 @@ class FavoriteTVFragment : Fragment(), SharedPreferences.OnSharedPreferenceChang
     private fun checkFavoriteListItem(data: List<FavoriteTV>?) {
         when {
             data == null -> favorite_tv_no_item_back.visibility = View.GONE
-            data.isEmpty() -> favorite_tv_no_item_back.visibility = View.VISIBLE
+            data.isEmpty() -> {
+                favorite_tv_no_item_back.visibility = View.VISIBLE
+                if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
+                    favorite_tv_no_item_text.text = getString(R.string.favorite_no_item_en)
+                else
+                    favorite_tv_no_item_text.text = getString(R.string.favorite_no_item_id)
+            }
             else -> favorite_tv_no_item_back.visibility = View.GONE
         }
     }

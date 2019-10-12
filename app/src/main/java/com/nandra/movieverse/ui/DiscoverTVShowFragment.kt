@@ -125,9 +125,13 @@ class DiscoverTVShowFragment : Fragment() {
     }
 
     private fun viewErrorLanguageAdjustment() {
-        if (currentLanguage == languageEnglishValue)
+        if (currentLanguage == languageEnglishValue) {
             discover_tv_error_button.text = getString(R.string.button_try_again_en)
-        else
+            discover_tv_error_text.text = getString(R.string.no_internet_connection_en)
+        }
+        else {
             discover_tv_error_button.text = getString(R.string.button_try_again_id)
+            discover_tv_error_text.text = getString(R.string.no_internet_connection_id)
+        }
     }
 }
