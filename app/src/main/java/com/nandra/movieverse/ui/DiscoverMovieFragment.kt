@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -59,7 +59,16 @@ class DiscoverMovieFragment : Fragment() {
             hasFixedSize()
             layoutManager = GridLayoutManager(context, 3)
         }
-        movie_searchview.setOnFocusChangeListener { view, b -> Toast.makeText(activity, "LOLZ", Toast.LENGTH_SHORT).show() }
+        movie_recyclerview.setOnTouchListener { v, event ->
+            val inputMethodManager =
+                context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
+            inputMethodManager!!.hideSoftInputFromWindow(v.windowToken, 0)
+            movie_searchview.findViewById<EditText>(androidx.appcompat.R.id.search_src_text).clearFocus()
+            false
+        }
+        movie_searchview.findViewById<EditText>(androidx.appcompat.R.id.search_src_text).setOnFocusChangeListener { v, hasFocus ->
+            hideKeyboard(v, hasFocus, activity as Context)
+        }
         attemptPrepareView()
         languageAdjustment()
     }
@@ -145,7 +154,6 @@ class DiscoverMovieFragment : Fragment() {
             val inputMethodManager =
                 context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
             inputMethodManager!!.hideSoftInputFromWindow(view.windowToken, 0)
-            Toast.makeText(context, view.toString() + "," + hasFocus.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 }
