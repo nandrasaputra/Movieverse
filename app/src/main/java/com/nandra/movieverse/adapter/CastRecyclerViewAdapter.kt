@@ -29,6 +29,10 @@ class CastRecyclerViewAdapter(private val castList: List<Cast>) : RecyclerView.A
             Glide.with(holder.itemView.context)
                 .load(url + currentCast.profilePath)
                 .into(holder.itemView.item_detail_cast_photo)
+        } else {
+            Glide.with(holder.itemView.context)
+                .load(R.drawable.img_back_portrait_default)
+                .into(holder.itemView.item_detail_cast_photo)
         }
     }
 

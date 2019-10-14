@@ -24,10 +24,13 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     var currentLanguage: String = ""
     var isDataHasLoaded: Boolean = false
     var isHomeDataHasLoaded: Boolean = false
+    var isDiscoverOnSearch: Boolean = false
     private var discoverJob : Job? = null
     private var homeJob : Job? = null
     private var detailJob : Job? = null
     private var roomJob: Job? = null
+    private var searchMovieJob : Job? = null
+    private var searchTVJob : Job? = null
     private val repository = MyRepository(app)
     val isOnDetailFragment = MutableLiveData<Boolean>().apply {
         this.value = false
@@ -63,6 +66,8 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     val listNowPlayingLive: LiveData<List<Film>>
         get() = _listNowPlayingLive
 
+    private val _searchMovieResult = MutableLiveData<ArrayList<Film>>()
+    private val _searchTVResult = MutableLiveData<ArrayList<Film>>()
     private val _isLoading = MutableLiveData<Boolean>()
     private val _isHomeLoading = MutableLiveData<Boolean>()
     private val _listMovieLive = MutableLiveData<ArrayList<Film>>()
@@ -214,6 +219,22 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                 detailState.postValue(Constant.STATE_SERVER_ERROR)
             }
         }
+    }
+
+    suspend fun attemptSearchMovie(query: String, page: Int = 1) {
+
+    }
+
+    suspend fun attemptSearchTV(query: String, page: Int = 1) {
+
+    }
+
+    private suspend fun searchMovie(query: String, page: Int) {
+
+    }
+
+    private suspend fun searchTV(query: String, page: Int) {
+
     }
 
     fun saveToFavorite(data: DetailResponse, filmType: String, genreIndonesia: String, overviewIndonesia: String) {

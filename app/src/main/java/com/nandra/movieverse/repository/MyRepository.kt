@@ -25,6 +25,8 @@ class MyRepository(app: Application) {
         TMDBTrendingApiService(interceptor)
     private val nowPlayingService =
         TMDBNowPlayingApiService(interceptor)
+    private val searchService =
+        TMDBSearchApiService(interceptor)
     private val database = MovieverseDatabase.getInstance(app)
 
     suspend fun fetchDiscoverMovieResponse() : Response<DiscoverResponse> {
@@ -77,5 +79,13 @@ class MyRepository(app: Application) {
 
     suspend fun fetchNowPlayingList() : Response<DiscoverResponse> {
         return nowPlayingService.getNowPlaying(1)
+    }
+
+    suspend fun searchMovie(query: String, page: Int) : Response<DiscoverResponse> {
+        return searchService.searchMovie(query, page)
+    }
+
+    suspend fun searchTV(query: String, page: Int) : Response<DiscoverResponse> {
+        return searchService.searchTV(query, page)
     }
 }

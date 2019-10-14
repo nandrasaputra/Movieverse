@@ -4,11 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,18 +21,17 @@ import com.nandra.movieverse.adapter.DiscoverRecyclerViewAdapter
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_discover_movie.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
-class DiscoverMovieFragment : Fragment() {
+class DiscoverMovieFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private var currentLanguage: String = ""
     private lateinit var languageEnglishValue : String
     private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
+    private var searchJob: Job = Job()
+    private val scope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_discover_movie, container, false)
@@ -69,6 +70,7 @@ class DiscoverMovieFragment : Fragment() {
         movie_searchview.findViewById<EditText>(androidx.appcompat.R.id.search_src_text).setOnFocusChangeListener { v, hasFocus ->
             hideKeyboard(v, hasFocus, activity as Context)
         }
+        movie_searchview.setOnQueryTextListener(this)
         attemptPrepareView()
         languageAdjustment()
     }
@@ -87,6 +89,36 @@ class DiscoverMovieFragment : Fragment() {
         super.onResume()
         sharedViewModel.detailState.value = Constant.STATE_NOSTATE
         sharedViewModel.isOnDetailFragment.value = false
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        /*val job = Job()
+        val scope = CoroutineScope(Dispatchers.Main + job)
+        scope.launch {
+            query?.run {
+                val text = sharedViewModel.attemptSearchMovie(query)
+                Log.d("DEBUG", text)
+            }
+        }*/
+        Log.d("DEBUG", "Submit: $query")
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if (newText.isNullOrEmpty()){
+            if (searchJob.isActive)
+                searchJob.cancel()
+            Log.d("DEBUG", "KOSONG")
+            return true
+        } else {
+            if (searchJob.isActive)
+                searchJob.cancel()
+            searchJob = scope.launch {
+                delay(500L)
+                Log.d("DEBUG", newText)
+            }
+            return true
+        }
     }
 
     private fun errorIndicator(state: Boolean){
