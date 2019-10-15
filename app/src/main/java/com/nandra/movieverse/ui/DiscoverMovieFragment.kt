@@ -1,15 +1,11 @@
 package com.nandra.movieverse.ui
 
-import android.app.Activity
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -60,19 +56,7 @@ class DiscoverMovieFragment : Fragment(), SearchView.OnQueryTextListener {
             hasFixedSize()
             layoutManager = GridLayoutManager(context, 3)
         }
-        movie_recyclerview.setOnTouchListener { v, event ->
-            val inputMethodManager =
-                context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-            inputMethodManager!!.hideSoftInputFromWindow(v.windowToken, 0)
-            movie_searchview.findViewById<EditText>(androidx.appcompat.R.id.search_src_text).clearFocus()
-            false
-        }
-        movie_searchview.findViewById<EditText>(androidx.appcompat.R.id.search_src_text).setOnFocusChangeListener { v, hasFocus ->
-            hideKeyboard(v, hasFocus, activity as Context)
-        }
-        movie_searchview.setOnQueryTextListener(this)
         attemptPrepareView()
-        languageAdjustment()
     }
 
     private fun checkLoadingState(state: Boolean) {
@@ -172,20 +156,5 @@ class DiscoverMovieFragment : Fragment(), SearchView.OnQueryTextListener {
             movie_error_text.text = getString(R.string.no_internet_connection_id)
         }
 
-    }
-
-    private fun languageAdjustment() {
-        if (currentLanguage == languageEnglishValue)
-            movie_searchview.queryHint = resources.getString(R.string.movie_search_view_query_hint_en)
-        else
-            movie_searchview.queryHint = resources.getString(R.string.movie_search_view_query_hint_id)
-    }
-
-    private fun hideKeyboard(view: View, hasFocus: Boolean, context: Context) {
-        if (!hasFocus) {
-            val inputMethodManager =
-                context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-            inputMethodManager!!.hideSoftInputFromWindow(view.windowToken, 0)
-        }
     }
 }

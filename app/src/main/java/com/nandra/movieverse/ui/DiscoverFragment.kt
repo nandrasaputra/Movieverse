@@ -1,20 +1,21 @@
 package com.nandra.movieverse.ui
 
+import android.app.Activity
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.tabs.TabLayout
 import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.DiscoverViewPagerPageAdapter
 import kotlinx.android.synthetic.main.fragment_discover.*
-import android.app.Activity
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 
 
 class DiscoverFragment : Fragment() {
@@ -46,6 +47,9 @@ class DiscoverFragment : Fragment() {
             }
         })
         discover_fragment_viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(discover_fragment_tab_layout))
+        discover_image_search_dummy.setOnClickListener {
+            findNavController().navigate(R.id.action_discoverFragment_to_searchFragment)
+        }
         setTabItemTitle(currentLanguage!!)
     }
 

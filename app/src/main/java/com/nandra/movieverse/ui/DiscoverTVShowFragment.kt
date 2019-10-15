@@ -1,14 +1,10 @@
 package com.nandra.movieverse.ui
 
-import android.app.Activity
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -65,18 +61,7 @@ class DiscoverTVShowFragment : Fragment() {
             hasFixedSize()
             layoutManager = GridLayoutManager(context, 3)
         }
-        discover_tv_recyclerview.setOnTouchListener { v, event ->
-            val inputMethodManager =
-                context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-            inputMethodManager!!.hideSoftInputFromWindow(v.windowToken, 0)
-            discover_tv_searchview.findViewById<EditText>(androidx.appcompat.R.id.search_src_text).clearFocus()
-            false
-        }
-        discover_tv_searchview.findViewById<EditText>(androidx.appcompat.R.id.search_src_text).setOnFocusChangeListener { v, hasFocus ->
-            hideKeyboard(v, hasFocus, activity as Context)
-        }
         attemptPrepareView()
-        languageAdjustment()
     }
 
     private fun checkLoadingState(state: Boolean) {
@@ -131,13 +116,6 @@ class DiscoverTVShowFragment : Fragment() {
             languageEnglishValue)!!
     }
 
-    private fun languageAdjustment() {
-        if (currentLanguage == languageEnglishValue)
-            discover_tv_searchview.queryHint = resources.getString(R.string.tv_search_view_query_hint_en)
-        else
-            discover_tv_searchview.queryHint = resources.getString(R.string.tv_search_view_query_hint_id)
-    }
-
     private fun viewErrorLanguageAdjustment() {
         if (currentLanguage == languageEnglishValue) {
             discover_tv_error_button.text = getString(R.string.button_try_again_en)
@@ -146,14 +124,6 @@ class DiscoverTVShowFragment : Fragment() {
         else {
             discover_tv_error_button.text = getString(R.string.button_try_again_id)
             discover_tv_error_text.text = getString(R.string.no_internet_connection_id)
-        }
-    }
-
-    private fun hideKeyboard(view: View, hasFocus: Boolean, context: Context) {
-        if (!hasFocus) {
-            val inputMethodManager =
-                context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-            inputMethodManager!!.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 }
