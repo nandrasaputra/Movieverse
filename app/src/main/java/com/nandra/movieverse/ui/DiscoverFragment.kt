@@ -1,14 +1,10 @@
 package com.nandra.movieverse.ui
 
-import android.app.Activity
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
@@ -40,10 +36,11 @@ class DiscoverFragment : Fragment() {
         discover_fragment_viewpager.adapter = discoverViewPagerPageAdapter
 
         discover_fragment_tab_layout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
-            override fun onTabReselected(p0: TabLayout.Tab?) {}
-            override fun onTabUnselected(p0: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                discover_fragment_viewpager.currentItem = tab?.position!!
+                adjustQueryHintText(currentLanguage!!, tab?.position!!)
+                discover_fragment_viewpager.currentItem = tab.position
             }
         })
         discover_fragment_viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(discover_fragment_tab_layout))
@@ -51,6 +48,7 @@ class DiscoverFragment : Fragment() {
             findNavController().navigate(R.id.action_discoverFragment_to_searchFragment)
         }
         setTabItemTitle(currentLanguage!!)
+        adjustQueryHintText(currentLanguage!!, discover_fragment_tab_layout.selectedTabPosition)
     }
 
     private fun setTabItemTitle(language: String) {
@@ -63,19 +61,26 @@ class DiscoverFragment : Fragment() {
         }
     }
 
+    private fun adjustQueryHintText(language: String, tabPosition: Int) {
+        if (tabPosition == 0) {
+            if (language == languageEnglishValue) {
+                discover_searchview.queryHint = getString(R.string.movie_search_view_query_hint_en)
+            } else {
+                discover_searchview.queryHint = getString(R.string.movie_search_view_query_hint_id)
+            }
+        } else {
+            if (language == languageEnglishValue) {
+                discover_searchview.queryHint = getString(R.string.tv_search_view_query_hint_en)
+            } else {
+                discover_searchview.queryHint = getString(R.string.tv_search_view_query_hint_id)
+            }
+        }
+    }
+
     private fun prepareSharedPreferences() {
         languageEnglishValue = getString(R.string.preferences_language_value_english)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         currentLanguage = sharedPreferences.getString(getString(R.string.preferences_language_key),
             getString(R.string.preferences_language_value_english))
-    }
-
-    private fun hideKeyboard(view: View, hasFocus: Boolean, context: Context) {
-        if (!hasFocus) {
-            val inputMethodManager =
-                context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-            inputMethodManager!!.hideSoftInputFromWindow(view.windowToken, 0)
-            Toast.makeText(context, view.toString() + "," + hasFocus.toString(), Toast.LENGTH_SHORT).show()
-        }
     }
 }
