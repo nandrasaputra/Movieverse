@@ -11,6 +11,7 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.tabs.TabLayout
 import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.DiscoverViewPagerPageAdapter
+import com.nandra.movieverse.util.Constant
 import kotlinx.android.synthetic.main.fragment_discover.*
 
 
@@ -45,7 +46,14 @@ class DiscoverFragment : Fragment() {
         })
         discover_fragment_viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(discover_fragment_tab_layout))
         discover_image_search_dummy.setOnClickListener {
-            findNavController().navigate(R.id.action_discoverFragment_to_searchFragment)
+            val tabPosition = discover_fragment_tab_layout.selectedTabPosition
+            val type : String = if (tabPosition == 0) {
+                Constant.MOVIE_FILM_TYPE
+            } else {
+                Constant.TV_FILM_TYPE
+            }
+            val action = DiscoverFragmentDirections.actionDiscoverFragmentToSearchFragment(type)
+            findNavController().navigate(action)
         }
         setTabItemTitle(currentLanguage!!)
         adjustQueryHintText(currentLanguage!!, discover_fragment_tab_layout.selectedTabPosition)

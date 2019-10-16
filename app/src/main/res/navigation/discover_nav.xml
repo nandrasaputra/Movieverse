@@ -33,5 +33,9 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.nandra.movieverse.ui.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+        <argument
+            android:name="type"
+            app:argType="string" />
+    </fragment>
 </navigation>
