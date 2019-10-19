@@ -7,6 +7,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.DataSource
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import com.nandra.movieverse.data.DiscoverMovieDataSource
 import com.nandra.movieverse.database.FavoriteMovie
 import com.nandra.movieverse.database.FavoriteTV
 import com.nandra.movieverse.network.Film
@@ -73,6 +77,27 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private val _listTVLive = MutableLiveData<ArrayList<Film>>()
     private val _listTrendingLive = MutableLiveData<ArrayList<Film>>()
     private val _listNowPlayingLive = MutableLiveData<List<Film>>()
+
+    var discoverLiveData: LiveData<PagedList<Film>>
+
+    init {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setPageSize(20)
+            .build()
+        discoverLiveData = initializedPagedListBuilder(config).build()
+    }
+
+    private fun initializedPagedListBuilder(config: PagedList.Config) : LivePagedListBuilder<Int, Film> {
+        val dataSourceFactory = object : DataSource.Factory<Int, Film>() {
+            override fun create(): DataSource<Int, Film> {
+                return DiscoverMovieDataSource(viewModelScope, repository)
+            }
+        }
+        return LivePagedListBuilder<Int, Film>(dataSourceFactory, config)
+    }
+
+    fun getDiscoverData(): LiveData<PagedList<Film>> = discoverLiveData
 
     val roomState = MutableLiveData<RoomState>().apply {
         this.value = RoomState.StandBy
@@ -188,7 +213,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                 detailJob!!.join()
             }
         }
-        detailJob = viewModelScope.launch {
+        detailJob = viewModelScope.launch(Dispatchers.IO) {
             detailState.postValue(Constant.STATE_LOADING)
             try {
                 val response = if (filmType == Constant.MOVIE_FILM_TYPE) {
@@ -231,7 +256,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun saveToFavorite(data: DetailResponse, filmType: String, genreIndonesia: String, overviewIndonesia: String) {
-        roomJob = viewModelScope.launch {
+        roomJob = viewModelScope.launch(Dispatchers.IO) {
             roomState.value = RoomState.Loading
             try {
                 if(filmType == Constant.MOVIE_FILM_TYPE) {
@@ -248,8 +273,8 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                         overviewIndonesia
                     )
                     repository.saveMovieToFavorite(movie)
-                    roomState.value = RoomState.Success
-                    roomState.value = RoomState.StandBy
+                    roomState.postValue(RoomState.Success)
+                    roomState.postValue(RoomState.StandBy)
                 } else {
                     val tv = FavoriteTV(
                         data.id.toString(),
@@ -264,12 +289,12 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                         overviewIndonesia
                     )
                     repository.saveTVToFavorite(tv)
-                    roomState.value = RoomState.Success
-                    roomState.value = RoomState.StandBy
+                    roomState.postValue(RoomState.Success)
+                    roomState.postValue(RoomState.StandBy)
                 }
             } catch (exp: Exception) {
-                roomState.value = RoomState.Failure
-                roomState.value = RoomState.StandBy
+                roomState.postValue(RoomState.Failure)
+                roomState.postValue(RoomState.StandBy)
             }
         }
     }

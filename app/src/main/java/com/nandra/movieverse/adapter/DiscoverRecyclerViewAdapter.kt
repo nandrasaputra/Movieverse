@@ -44,6 +44,11 @@ class DiscoverRecyclerViewAdapter(
                 .load(url + currentFilm.posterPath)
                 .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
                 .into(holder.itemView.item_grid_poster)
+        } else {
+            Glide.with(holder.itemView)
+                .load(R.drawable.img_back_portrait_default)
+                .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
+                .into(holder.itemView.item_grid_poster)
         }
         holder.itemView.setOnClickListener {
             val action = DiscoverFragmentDirections.actionDiscoverFragmentToDetailFragment(filmType).setId(currentFilm.id.toString())
@@ -57,6 +62,11 @@ class DiscoverRecyclerViewAdapter(
         if(!currentFilm.posterPath.isNullOrEmpty()) {
             Glide.with(holder.itemView)
                 .load(url + currentFilm.posterPath)
+                .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
+                .into(holder.itemView.item_grid_poster)
+        } else {
+            Glide.with(holder.itemView)
+                .load(R.drawable.img_back_portrait_default)
                 .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
                 .into(holder.itemView.item_grid_poster)
         }

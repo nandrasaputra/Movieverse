@@ -16,13 +16,15 @@ interface TMDBDiscoverApiService {
     @GET("movie")
     suspend fun getMovie(
         @Query("language") language: String,
-        @Query("sort_by") sortBy: String
+        @Query("sort_by") sortBy: String,
+        @Query("page") page: Int
     ) : Response<DiscoverResponse>
 
     @GET("tv")
     suspend fun getTVSeries(
         @Query("language") language: String,
-        @Query("sort_by") sortBy: String
+        @Query("sort_by") sortBy: String,
+        @Query("page") page: Int
     ) : Response<DiscoverResponse>
 
     companion object {

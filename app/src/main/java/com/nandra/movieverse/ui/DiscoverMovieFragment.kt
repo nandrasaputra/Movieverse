@@ -11,14 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.nandra.movieverse.R
-import com.nandra.movieverse.adapter.DiscoverRecyclerViewAdapter
+import com.nandra.movieverse.adapter.DiscoverPagedListAdapter
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_discover_movie.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 class DiscoverMovieFragment : Fragment() {
 
@@ -27,6 +23,8 @@ class DiscoverMovieFragment : Fragment() {
     private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
+
+    private val discoverMovieAdapter = DiscoverPagedListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_discover_movie, container, false)
@@ -43,8 +41,11 @@ class DiscoverMovieFragment : Fragment() {
         sharedViewModel.isError.observe(this, Observer {
             errorIndicator(it)
         })
-        sharedViewModel.listMovieLive.observe(this, Observer {
+        /*sharedViewModel.listMovieLive.observe(this, Observer {
             movie_recyclerview.swapAdapter(DiscoverRecyclerViewAdapter(it, Constant.MOVIE_FILM_TYPE), true)
+        })*/
+        sharedViewModel.getDiscoverData().observe(this, Observer {
+            discoverMovieAdapter.submitList(it)
         })
     }
 
@@ -52,7 +53,7 @@ class DiscoverMovieFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
         movie_recyclerview.apply {
-            hasFixedSize()
+            /*hasFixedSize()*/
             layoutManager = GridLayoutManager(context, 3)
         }
         attemptPrepareView()
@@ -96,7 +97,7 @@ class DiscoverMovieFragment : Fragment() {
     }
 
     private fun prepareMovieListView() {
-        val job = Job()
+        /*val job = Job()
         val scope = CoroutineScope(Dispatchers.Main + job)
         if (sharedViewModel.isDataHasLoaded)
             movie_recyclerview.swapAdapter(DiscoverRecyclerViewAdapter(sharedViewModel.listMovieLive.value!!, Constant.MOVIE_FILM_TYPE), true)
@@ -104,7 +105,8 @@ class DiscoverMovieFragment : Fragment() {
             scope.launch {
                 sharedViewModel.requestDiscoverData()
             }
-        }
+        }*/
+        movie_recyclerview.adapter = discoverMovieAdapter
     }
 
     private fun prepareSharedPreferences() {
