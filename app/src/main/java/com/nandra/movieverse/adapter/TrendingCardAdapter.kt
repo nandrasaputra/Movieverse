@@ -14,7 +14,7 @@ class TrendingCardAdapter(data: ArrayList<Film>) : CardSliderAdapter<Film>(data)
     override fun bindView(position: Int, itemContentView: View, item: Film?) {
         item?.run {
             if(item.backdropPath != null) {
-                val baseImageUrl = "https://image.tmdb.org/t/p/w500"
+                val baseImageUrl = "https://image.tmdb.org/t/p/w780"
                 Glide.with(itemContentView.context)
                     .load(baseImageUrl + item.backdropPath)
                     .into(itemContentView.item_home_trending_poster)

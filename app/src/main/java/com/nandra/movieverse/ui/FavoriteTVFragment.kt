@@ -25,7 +25,6 @@ class FavoriteTVFragment : Fragment(), SharedPreferences.OnSharedPreferenceChang
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
     private var tvList: List<FavoriteTV> = listOf()
-    private var isFavoriteListLoaded = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_favorite_tv, container, false)

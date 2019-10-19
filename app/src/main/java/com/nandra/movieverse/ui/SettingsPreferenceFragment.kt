@@ -6,7 +6,6 @@ import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.nandra.movieverse.R
-import kotlinx.android.synthetic.main.fragment_setting_preferences.*
 
 class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 

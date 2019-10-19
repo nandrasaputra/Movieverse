@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Movieverse</string>
 
-    <string name="toolbar_main_title">"Movieverse"</string>
     <string name="toolbar_detail_title">"Detail"</string>
     <string name="toolbar_setting_title">"Setting"</string>
     <string name="toolbar_favorite_title">"Favorite"</string>
@@ -89,5 +88,6 @@
 
     <string name="favorite_no_item_en">No Item, Just An Astronaut</string>
     <string name="favorite_no_item_id">Tidak Terdapat Data, Hanya Ada Seorang Astronot</string>
+    <string name="cd_toolbar">toolbar</string>
 
 </resources>

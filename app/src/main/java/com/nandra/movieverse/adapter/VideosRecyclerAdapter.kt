@@ -13,7 +13,7 @@ import com.nandra.movieverse.util.Constant
 import kotlinx.android.synthetic.main.item_detail_videos.view.*
 
 class VideosRecyclerAdapter(
-    var listVideo: List<VideoData>
+    private var listVideo: List<VideoData>
 ) : RecyclerView.Adapter<VideosRecyclerAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -28,7 +28,8 @@ class VideosRecyclerAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentVideo = listVideo[position]
         Glide.with(holder.itemView.context)
-            .load("https://img.youtube.com/vi/${currentVideo.key}/default.jpg")
+            .load("https://img.youtube.com/vi/${currentVideo.key}/hqdefault.jpg")
+            .fallback(R.drawable.img_back_landscape_default)
             .into(holder.itemView.detail_videos_thumbnail)
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, YoutubePlayerActivity::class.java).apply {

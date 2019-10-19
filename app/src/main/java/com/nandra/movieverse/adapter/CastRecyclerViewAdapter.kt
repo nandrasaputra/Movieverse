@@ -25,7 +25,7 @@ class CastRecyclerViewAdapter(private val castList: List<Cast>) : RecyclerView.A
         holder.itemView.item_detail_cast_name.text = currentCast.name
         holder.itemView.item_detail_cast_character.text = currentCast.character
         if (currentCast.profilePath != null){
-            val url = "https://image.tmdb.org/t/p/w92"
+            val url = "https://image.tmdb.org/t/p/w154"
             Glide.with(holder.itemView.context)
                 .load(url + currentCast.profilePath)
                 .into(holder.itemView.item_detail_cast_photo)

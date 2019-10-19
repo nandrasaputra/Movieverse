@@ -1,10 +1,7 @@
 package com.nandra.movieverse.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
@@ -14,7 +11,7 @@ import com.nandra.movieverse.util.Constant
 
 class YoutubePlayerActivity : YouTubeBaseActivity() {
 
-    lateinit var youTubePlayerView: YouTubePlayerView
+    private lateinit var youTubePlayerView: YouTubePlayerView
     lateinit var youTubePlayer: YouTubePlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {

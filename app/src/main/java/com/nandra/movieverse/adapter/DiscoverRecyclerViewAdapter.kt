@@ -39,7 +39,7 @@ class DiscoverRecyclerViewAdapter(
     private fun bindMovieViewProperties(holder: DiscoverViewHolder, currentFilm: Film) {
         holder.itemView.item_grid_title.text = currentFilm.title
         val url = "https://image.tmdb.org/t/p/w185"
-        if(currentFilm.posterPath != null) {
+        if(!currentFilm.posterPath.isNullOrEmpty()) {
             Glide.with(holder.itemView)
                 .load(url + currentFilm.posterPath)
                 .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
@@ -54,7 +54,7 @@ class DiscoverRecyclerViewAdapter(
     private fun bindTVShowViewProperties(holder: DiscoverViewHolder, currentFilm: Film) {
         holder.itemView.item_grid_title.text = currentFilm.tvName
         val url = "https://image.tmdb.org/t/p/w185"
-        if(currentFilm.posterPath != null) {
+        if(!currentFilm.posterPath.isNullOrEmpty()) {
             Glide.with(holder.itemView)
                 .load(url + currentFilm.posterPath)
                 .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail

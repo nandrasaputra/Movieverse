@@ -10,7 +10,7 @@ import com.nandra.movieverse.network.Backdrops
 import kotlinx.android.synthetic.main.item_detail_images.view.*
 
 class ImagesRecyclerViewAdapter(
-    var imageList: List<Backdrops>
+    private var imageList: List<Backdrops>
 ) : RecyclerView.Adapter<ImagesRecyclerViewAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_detail_images, parent, false)

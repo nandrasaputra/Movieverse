@@ -265,7 +265,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
                 detail_gallery_text.visibility = View.VISIBLE
                 data.images.backdrops.take(10)
             }
-            data.credits.cast.isNotEmpty() -> {
+            data.images.backdrops.isNotEmpty() -> {
                 detail_gallery_text.visibility = View.VISIBLE
                 data.images.backdrops
             }

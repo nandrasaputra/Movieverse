@@ -31,5 +31,7 @@ data class Film(
     @SerializedName("original_name")
     val tvOriginalName: String,
     @SerializedName("name")
-    val tvName: String
+    val tvName: String,
+    @SerializedName("first_air_date")
+    val tvAirDate: String
 )
