@@ -77,7 +77,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     private val movieDiscoverData = MutableLiveData<Listing<Film>>(repository.discoverMovieData(viewModelScope))
     val movieDiscoverPagingList = Transformations.switchMap(movieDiscoverData) {it.pagedList}
-    val networkState = Transformations.switchMap(movieDiscoverData) {it.networkState}
+    val movieNetworkState = Transformations.switchMap(movieDiscoverData) {it.networkState}
 
     private val config = PagedList.Config.Builder()
         .setEnablePlaceholders(false)
@@ -103,7 +103,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         discoverTVLiveData = discoverTVDataSourceFactory.build()
 
         /*movieNetworkState = Transformations.switchMap(movieSourceDataFactory.sourceLiveData) {
-            it.networkState
+            it.movieNetworkState
         }*/
 
         /*tvNetworkState = Transformations.switchMap(tvSourceDataFactory.sourceLiveData) {

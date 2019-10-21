@@ -43,12 +43,12 @@ class DiscoverMovieDataSource(
                     networkState.postValue(NetworkState.LOADED)
                 } else {
                     isInitialLoaded.postValue(false)
-                    networkState.postValue(NetworkState.error("Error Code: ${response.code()}"))
+                    networkState.postValue(NetworkState.FAILED)
                     retry = {loadInitial(params, callback)}
                 }
             } catch (exception: Exception) {
                 isInitialLoaded.postValue(false)
-                networkState.postValue(NetworkState.serverError("Server Error"))
+                networkState.postValue(NetworkState.FAILED)
                 retry = {loadInitial(params, callback)}
             }
         }
@@ -70,11 +70,11 @@ class DiscoverMovieDataSource(
                     networkState.postValue(NetworkState.LOADED)
                     callback.onResult(data, nextKey)
                 } else {
-                    networkState.postValue(NetworkState.error("Error Code: ${response.code()}"))
+                    networkState.postValue(NetworkState.FAILED)
                     retry = {loadAfter(params, callback)}
                 }
             } catch (exception: Exception) {
-                networkState.postValue(NetworkState.serverError("Server Error"))
+                networkState.postValue(NetworkState.SERVER_ERROR)
                 retry = {loadAfter(params, callback)}
             }
         }

@@ -9,12 +9,11 @@ enum class Status {
 
 @Suppress("DataClassPrivateConstructor")
 data class NetworkState private constructor(
-    val status: Status,
-    val msg: String? = null) {
+    val status: Status) {
     companion object {
         val LOADED = NetworkState(Status.SUCCESS)
         val LOADING = NetworkState(Status.RUNNING)
-        fun serverError(msg: String?) = NetworkState(Status.SERVER_ERROR, msg)
-        fun error(msg: String?) = NetworkState(Status.FAILED, msg)
+        val FAILED = NetworkState(Status.FAILED)
+        val SERVER_ERROR = NetworkState(Status.SERVER_ERROR)
     }
 }

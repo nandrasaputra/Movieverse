@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.nandra.movieverse.R
-import com.nandra.movieverse.adapter.DiscoverPagedListAdapter
+import com.nandra.movieverse.adapter.DiscoverAdapter2
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.util.NetworkState
 import com.nandra.movieverse.viewmodel.SharedViewModel
@@ -25,7 +25,7 @@ class DiscoverMovieFragment : Fragment() {
     private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
-    private val discoverMovieAdapter = DiscoverPagedListAdapter(Constant.MOVIE_FILM_TYPE)
+    private val discoverMovieAdapter = DiscoverAdapter2(Constant.MOVIE_FILM_TYPE) {}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_discover_movie, container, false)
@@ -45,8 +45,8 @@ class DiscoverMovieFragment : Fragment() {
         sharedViewModel.movieDiscoverPagingList.observe(this, Observer {
             discoverMovieAdapter.submitList(it)
         })
-        sharedViewModel.networkState.observe(this, Observer {
-            handleNetworkState(it)
+        sharedViewModel.movieNetworkState.observe(this, Observer {
+            discoverMovieAdapter.setNetworkState(it)
         })
     }
 
@@ -113,12 +113,13 @@ class DiscoverMovieFragment : Fragment() {
         when(state) {
             NetworkState.LOADING -> {discover_movie_progress_bar.visibility = View.VISIBLE}
             NetworkState.LOADED -> {discover_movie_progress_bar.visibility = View.GONE}
-            NetworkState.error("No Internet Connection") -> {
+            NetworkState.FAILED -> {
                 discover_movie_progress_bar.visibility = View.GONE
-                Toast.makeText(activity, "No Internet", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show()
             }
-            NetworkState.serverError("Server Error") -> {
+            NetworkState.SERVER_ERROR -> {
                 discover_movie_progress_bar.visibility = View.GONE
+                Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show()
             }
         }
     }
