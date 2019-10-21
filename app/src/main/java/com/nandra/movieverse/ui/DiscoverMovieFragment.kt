@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.DiscoverPagedListAdapter
 import com.nandra.movieverse.util.Constant
+import com.nandra.movieverse.util.NetworkState
 import com.nandra.movieverse.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_discover_movie.*
 
@@ -23,8 +25,7 @@ class DiscoverMovieFragment : Fragment() {
     private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
-
-    private val discoverMovieAdapter = DiscoverPagedListAdapter()
+    private val discoverMovieAdapter = DiscoverPagedListAdapter(Constant.MOVIE_FILM_TYPE)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_discover_movie, container, false)
@@ -41,11 +42,11 @@ class DiscoverMovieFragment : Fragment() {
         sharedViewModel.isError.observe(this, Observer {
             errorIndicator(it)
         })
-        /*sharedViewModel.listMovieLive.observe(this, Observer {
-            movie_recyclerview.swapAdapter(DiscoverRecyclerViewAdapter(it, Constant.MOVIE_FILM_TYPE), true)
-        })*/
-        sharedViewModel.getDiscoverData().observe(this, Observer {
+        sharedViewModel.movieDiscoverPagingList.observe(this, Observer {
             discoverMovieAdapter.submitList(it)
+        })
+        sharedViewModel.networkState.observe(this, Observer {
+            handleNetworkState(it)
         })
     }
 
@@ -53,10 +54,9 @@ class DiscoverMovieFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
         movie_recyclerview.apply {
-            /*hasFixedSize()*/
             layoutManager = GridLayoutManager(context, 3)
         }
-        attemptPrepareView()
+        movie_recyclerview.adapter = discoverMovieAdapter
     }
 
     private fun checkLoadingState(state: Boolean) {
@@ -106,7 +106,21 @@ class DiscoverMovieFragment : Fragment() {
                 sharedViewModel.requestDiscoverData()
             }
         }*/
-        movie_recyclerview.adapter = discoverMovieAdapter
+
+    }
+
+    private fun handleNetworkState(state: NetworkState) {
+        when(state) {
+            NetworkState.LOADING -> {discover_movie_progress_bar.visibility = View.VISIBLE}
+            NetworkState.LOADED -> {discover_movie_progress_bar.visibility = View.GONE}
+            NetworkState.error("No Internet Connection") -> {
+                discover_movie_progress_bar.visibility = View.GONE
+                Toast.makeText(activity, "No Internet", Toast.LENGTH_SHORT).show()
+            }
+            NetworkState.serverError("Server Error") -> {
+                discover_movie_progress_bar.visibility = View.GONE
+            }
+        }
     }
 
     private fun prepareSharedPreferences() {

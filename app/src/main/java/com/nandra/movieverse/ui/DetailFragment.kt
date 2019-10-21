@@ -117,16 +117,24 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
     private fun onRoomStateChange(state: SharedViewModel.RoomState?) {
         when (state) {
             SharedViewModel.RoomState.Success -> {
-                if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
+                if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE){
                     Toast.makeText(activity, "Added Into Favorite List", Toast.LENGTH_SHORT).show()
-                else
+                    sharedViewModel.roomState.value = SharedViewModel.RoomState.StandBy
+                }
+                else {
                     Toast.makeText(activity, "Berhasil Ditambahkan Ke List Favorit", Toast.LENGTH_SHORT).show()
+                    sharedViewModel.roomState.value = SharedViewModel.RoomState.StandBy
+                }
             }
             SharedViewModel.RoomState.Failure -> {
-                if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
+                if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE){
                     Toast.makeText(activity, "Failed To Add Into Favorite List", Toast.LENGTH_SHORT).show()
-                else
+                    sharedViewModel.roomState.value = SharedViewModel.RoomState.StandBy
+                }
+                else {
                     Toast.makeText(activity, "Gagal Menambahkan Ke List Favorit", Toast.LENGTH_SHORT).show()
+                    sharedViewModel.roomState.value = SharedViewModel.RoomState.StandBy
+                }
             }
         }
     }
@@ -143,8 +151,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
                     x -> x.id == data?.id.toString()
             }
         } else {
-            sharedViewModel.tvFavoriteList.value?.any { x -> x.id == data?.id.toString()
-            }
+            sharedViewModel.tvFavoriteList.value?.any { x -> x.id == data?.id.toString() }
         }
         if (state != null && state == true) {
             detail_image_heart.setImageResource(R.drawable.ic_heart_pink)

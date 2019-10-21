@@ -3,14 +3,11 @@ package com.nandra.movieverse.viewmodel
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import androidx.paging.DataSource
+import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.nandra.movieverse.data.DiscoverMovieDataSource
+import com.nandra.movieverse.data.DiscoverTVDataSourceFactory
+import com.nandra.movieverse.data.Listing
 import com.nandra.movieverse.database.FavoriteMovie
 import com.nandra.movieverse.database.FavoriteTV
 import com.nandra.movieverse.network.Film
@@ -78,29 +75,53 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private val _listTrendingLive = MutableLiveData<ArrayList<Film>>()
     private val _listNowPlayingLive = MutableLiveData<List<Film>>()
 
-    var discoverLiveData: LiveData<PagedList<Film>>
+    private val movieDiscoverData = MutableLiveData<Listing<Film>>(repository.discoverMovieData(viewModelScope))
+    val movieDiscoverPagingList = Transformations.switchMap(movieDiscoverData) {it.pagedList}
+    val networkState = Transformations.switchMap(movieDiscoverData) {it.networkState}
+
+    private val config = PagedList.Config.Builder()
+        .setEnablePlaceholders(false)
+        .setPageSize(20)
+        .build()
+
+    //private var discoverMovieLiveData: LiveData<PagedList<Film>>
+    private var discoverTVLiveData: LiveData<PagedList<Film>>
+
+
+    /*private var movieNetworkState: LiveData<NetworkState>
+    private var tvNetworkState: LiveData<NetworkState>*/
 
     init {
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setPageSize(20)
-            .build()
-        discoverLiveData = initializedPagedListBuilder(config).build()
+
+        //val movieSourceDataFactory = DiscoverMovieDataSourceFactory(viewModelScope, repository)
+        val tvSourceDataFactory = DiscoverTVDataSourceFactory(viewModelScope, repository)
+
+        //val discoverMovieDataSourceFactory = LivePagedListBuilder<Int, Film>(DiscoverMovieDataSourceFactory(viewModelScope, repository), config)
+        val discoverTVDataSourceFactory = LivePagedListBuilder<Int, Film>(DiscoverTVDataSourceFactory(viewModelScope, repository), config)
+
+        //discoverMovieLiveData = discoverMovieDataSourceFactory.build()
+        discoverTVLiveData = discoverTVDataSourceFactory.build()
+
+        /*movieNetworkState = Transformations.switchMap(movieSourceDataFactory.sourceLiveData) {
+            it.networkState
+        }*/
+
+        /*tvNetworkState = Transformations.switchMap(tvSourceDataFactory.sourceLiveData) {
+            it.ne
+        }*/
     }
 
-    private fun initializedPagedListBuilder(config: PagedList.Config) : LivePagedListBuilder<Int, Film> {
-        val dataSourceFactory = object : DataSource.Factory<Int, Film>() {
-            override fun create(): DataSource<Int, Film> {
-                return DiscoverMovieDataSource(viewModelScope, repository)
-            }
-        }
-        return LivePagedListBuilder<Int, Film>(dataSourceFactory, config)
-    }
+    //fun getDiscoverMovieData(): LiveData<PagedList<Film>> = discoverMovieLiveData
+    fun getDiscoverTVData(): LiveData<PagedList<Film>> = discoverTVLiveData
 
-    fun getDiscoverData(): LiveData<PagedList<Film>> = discoverLiveData
+    //fun getMovieNetworkState(): LiveData<NetworkState> = movieNetworkState
 
     val roomState = MutableLiveData<RoomState>().apply {
         this.value = RoomState.StandBy
+    }
+
+    fun retryLoadDiscoverMovie() {
+        movieDiscoverData.value?.retry?.invoke()
     }
 
     suspend fun requestDiscoverData() {
@@ -257,7 +278,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun saveToFavorite(data: DetailResponse, filmType: String, genreIndonesia: String, overviewIndonesia: String) {
         roomJob = viewModelScope.launch(Dispatchers.IO) {
-            roomState.value = RoomState.Loading
+            roomState.postValue(RoomState.Loading)
             try {
                 if(filmType == Constant.MOVIE_FILM_TYPE) {
                     val movie = FavoriteMovie(
@@ -274,7 +295,6 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                     )
                     repository.saveMovieToFavorite(movie)
                     roomState.postValue(RoomState.Success)
-                    roomState.postValue(RoomState.StandBy)
                 } else {
                     val tv = FavoriteTV(
                         data.id.toString(),
@@ -290,11 +310,9 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                     )
                     repository.saveTVToFavorite(tv)
                     roomState.postValue(RoomState.Success)
-                    roomState.postValue(RoomState.StandBy)
                 }
             } catch (exp: Exception) {
                 roomState.postValue(RoomState.Failure)
-                roomState.postValue(RoomState.StandBy)
             }
         }
     }
