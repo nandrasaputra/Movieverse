@@ -40,8 +40,8 @@ class DiscoverMovieDataSource(
                 if (response.isSuccessful) {
                     val data: MutableList<Film> = response.body()?.results!!.toMutableList()
                     callback.onResult(data, null, nextKey)
-                    isInitialLoaded.postValue(true)
                     networkState.postValue(NetworkState.LOADED)
+                    isInitialLoaded.postValue(true)
                 } else {
                     networkState.postValue(NetworkState.FAILED)
                     retry = {loadInitial(params, callback)}

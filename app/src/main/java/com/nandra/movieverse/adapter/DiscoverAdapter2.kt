@@ -26,7 +26,9 @@ class DiscoverAdapter2(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)) {
             R.layout.item_discover_recyclerview -> (holder as DiscoverViewHolder).bindView(getItem(position), type)
-            R.layout.item_network_state -> (holder as DiscoverNetworkStateViewHolder).bindToNetworkState(networkState)
+            R.layout.item_network_state -> {
+                (holder as DiscoverNetworkStateViewHolder).bindToNetworkState(networkState)
+            }
         }
     }
 

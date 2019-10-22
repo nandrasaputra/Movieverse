@@ -45,17 +45,17 @@ class DiscoverMovieFragment : Fragment() {
         })
         sharedViewModel.movieIsInitailLoaded.observe(this, Observer {
             /*if(!it) {
-                movie_recyclerview.visibility = View.GONE
+                discover_movie_cover.visibility = View.VISIBLE
             } else {
-                movie_recyclerview.visibility = View.VISIBLE
+                discover_movie_cover.visibility = View.GONE
             }*/
         })
+        discoverMovieAdapter = DiscoverAdapter2(Constant.MOVIE_FILM_TYPE) {sharedViewModel.retryLoadAllFailed()}
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
-        discoverMovieAdapter = DiscoverAdapter2(Constant.MOVIE_FILM_TYPE) {sharedViewModel.retryLoadAllFailed()}
         movie_recyclerview.apply {
             layoutManager = GridLayoutManager(context, 3)
         }
@@ -118,11 +118,14 @@ class DiscoverMovieFragment : Fragment() {
                 if(!sharedViewModel.movieIsInitailLoaded.value!!){
                     movie_error_back.visibility = View.GONE
                     discover_movie_progress_bar.visibility = View.VISIBLE
+                    discover_movie_cover.visibility = View.VISIBLE
                 }
             }
             NetworkState.LOADED -> {
-                if (sharedViewModel.movieIsInitailLoaded.value!!)
+                if (sharedViewModel.movieIsInitailLoaded.value!!){
                     discover_movie_progress_bar.visibility = View.GONE
+                    discover_movie_cover.visibility = View.GONE
+                }
             }
             NetworkState.FAILED -> {
                 discover_movie_progress_bar.visibility = View.GONE

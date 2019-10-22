@@ -21,6 +21,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/discover_movie_cover"
+        android:src="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <ProgressBar
         android:id="@+id/discover_movie_progress_bar"
         android:layout_width="wrap_content"
