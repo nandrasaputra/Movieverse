@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.tabs.TabLayout
 import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.DiscoverViewPagerPageAdapter
 import com.nandra.movieverse.util.Constant
+import com.nandra.movieverse.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_discover.*
 
 
@@ -21,9 +23,17 @@ class DiscoverFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private var currentLanguage: String? = ""
     private lateinit var languageEnglishValue : String
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_discover, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedViewModel = activity?.run {
+            ViewModelProvider(this)[SharedViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -57,6 +67,7 @@ class DiscoverFragment : Fragment() {
         }
         setTabItemTitle(currentLanguage!!)
         adjustQueryHintText(currentLanguage!!, discover_fragment_tab_layout.selectedTabPosition)
+        sharedViewModel.retryLoadAllFailed()
     }
 
     private fun setTabItemTitle(language: String) {

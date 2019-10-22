@@ -122,7 +122,9 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun retryLoadAllFailed() {
-        movieDiscoverData.value?.retry?.invoke()
+        if (isConnectedToInternet()) {
+            movieDiscoverData.value?.retry?.invoke()
+        }
     }
 
     suspend fun requestDiscoverData() {

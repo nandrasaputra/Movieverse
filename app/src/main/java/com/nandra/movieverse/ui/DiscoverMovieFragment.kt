@@ -60,6 +60,7 @@ class DiscoverMovieFragment : Fragment() {
             layoutManager = GridLayoutManager(context, 3)
         }
         movie_recyclerview.adapter = discoverMovieAdapter
+        checkErrorState()
     }
 
     private fun checkLoadingState(state: Boolean) {
@@ -151,6 +152,19 @@ class DiscoverMovieFragment : Fragment() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         currentLanguage = sharedPreferences.getString(preferenceLanguageKey,
             languageEnglishValue)!!
+    }
+
+    private fun checkErrorState() {
+        if (sharedViewModel.movieIsInitailLoaded.value != null && sharedViewModel.movieNetworkState.value != null) {
+            if (!sharedViewModel.movieIsInitailLoaded.value!! && (sharedViewModel.movieNetworkState.value!! == NetworkState.FAILED
+                        || sharedViewModel.movieNetworkState.value!! == NetworkState.SERVER_ERROR))
+            {
+                movie_error_back.visibility = View.VISIBLE
+                movie_error_button.setOnClickListener {
+                    sharedViewModel.retryLoadAllFailed()
+                }
+            }
+        }
     }
 
     private fun viewErrorLanguageAdjustment() {
