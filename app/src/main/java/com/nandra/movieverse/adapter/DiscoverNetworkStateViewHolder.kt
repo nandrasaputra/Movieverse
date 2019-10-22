@@ -16,6 +16,12 @@ class DiscoverNetworkStateViewHolder(
     private val progressBar: ProgressBar = view.findViewById(R.id.item_network_progress_bar)
     private val retryButton: Button = view.findViewById(R.id.item_network_button)
 
+    init {
+        retryButton.setOnClickListener {
+            retryCallback.invoke()
+        }
+    }
+
     fun bindToNetworkState(state: NetworkState?) {
         when(state) {
             NetworkState.LOADING -> {

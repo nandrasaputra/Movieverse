@@ -27,6 +27,7 @@ class DiscoverMovieDataSource(
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Film>) {
         scope.launch(Dispatchers.IO) {
+            isInitialLoaded.postValue(false)
             networkState.postValue(NetworkState.LOADING)
             try {
                 val response = api.getMovie("en-US", "popularity.desc", 1)
@@ -42,12 +43,10 @@ class DiscoverMovieDataSource(
                     isInitialLoaded.postValue(true)
                     networkState.postValue(NetworkState.LOADED)
                 } else {
-                    isInitialLoaded.postValue(false)
                     networkState.postValue(NetworkState.FAILED)
                     retry = {loadInitial(params, callback)}
                 }
             } catch (exception: Exception) {
-                isInitialLoaded.postValue(false)
                 networkState.postValue(NetworkState.FAILED)
                 retry = {loadInitial(params, callback)}
             }

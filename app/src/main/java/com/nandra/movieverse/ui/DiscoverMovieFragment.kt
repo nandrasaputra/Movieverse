@@ -25,7 +25,7 @@ class DiscoverMovieFragment : Fragment() {
     private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
-    private val discoverMovieAdapter = DiscoverAdapter2(Constant.MOVIE_FILM_TYPE) {}
+    private lateinit var discoverMovieAdapter: DiscoverAdapter2
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_discover_movie, container, false)
@@ -36,23 +36,26 @@ class DiscoverMovieFragment : Fragment() {
         sharedViewModel = activity?.run {
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
-        sharedViewModel.isLoading.observe(this, Observer {
-            checkLoadingState(it)
-        })
-        sharedViewModel.isError.observe(this, Observer {
-            errorIndicator(it)
-        })
         sharedViewModel.movieDiscoverPagingList.observe(this, Observer {
             discoverMovieAdapter.submitList(it)
         })
         sharedViewModel.movieNetworkState.observe(this, Observer {
             discoverMovieAdapter.setNetworkState(it)
+            handleNetworkState(it)
+        })
+        sharedViewModel.movieIsInitailLoaded.observe(this, Observer {
+            /*if(!it) {
+                movie_recyclerview.visibility = View.GONE
+            } else {
+                movie_recyclerview.visibility = View.VISIBLE
+            }*/
         })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
+        discoverMovieAdapter = DiscoverAdapter2(Constant.MOVIE_FILM_TYPE) {sharedViewModel.retryLoadAllFailed()}
         movie_recyclerview.apply {
             layoutManager = GridLayoutManager(context, 3)
         }
@@ -111,10 +114,25 @@ class DiscoverMovieFragment : Fragment() {
 
     private fun handleNetworkState(state: NetworkState) {
         when(state) {
-            NetworkState.LOADING -> {discover_movie_progress_bar.visibility = View.VISIBLE}
-            NetworkState.LOADED -> {discover_movie_progress_bar.visibility = View.GONE}
+            NetworkState.LOADING -> {
+                if(!sharedViewModel.movieIsInitailLoaded.value!!){
+                    movie_error_back.visibility = View.GONE
+                    discover_movie_progress_bar.visibility = View.VISIBLE
+                }
+            }
+            NetworkState.LOADED -> {
+                if (sharedViewModel.movieIsInitailLoaded.value!!)
+                    discover_movie_progress_bar.visibility = View.GONE
+            }
             NetworkState.FAILED -> {
                 discover_movie_progress_bar.visibility = View.GONE
+                if(!sharedViewModel.movieIsInitailLoaded.value!!) {
+                    movie_error_back.visibility = View.VISIBLE
+                    viewErrorLanguageAdjustment()
+                    movie_error_button.setOnClickListener {
+                        sharedViewModel.retryLoadAllFailed()
+                    }
+                }
                 Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show()
             }
             NetworkState.SERVER_ERROR -> {

@@ -104,7 +104,10 @@ class MyRepository(app: Application) {
             networkState = Transformations.switchMap(sourceFactory.sourceLiveData) {
                 it.networkState
             },
-            retry = {sourceFactory.sourceLiveData.value?.commitRetry()}
+            retry = {sourceFactory.sourceLiveData.value?.commitRetry()},
+            initialState = Transformations.switchMap(sourceFactory.sourceLiveData) {
+                it.isInitialLoaded
+            }
         )
     }
 }

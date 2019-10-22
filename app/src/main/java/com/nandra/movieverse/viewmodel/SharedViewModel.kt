@@ -78,6 +78,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private val movieDiscoverData = MutableLiveData<Listing<Film>>(repository.discoverMovieData(viewModelScope))
     val movieDiscoverPagingList = Transformations.switchMap(movieDiscoverData) {it.pagedList}
     val movieNetworkState = Transformations.switchMap(movieDiscoverData) {it.networkState}
+    val movieIsInitailLoaded = Transformations.switchMap(movieDiscoverData) {it.initialState}
 
     private val config = PagedList.Config.Builder()
         .setEnablePlaceholders(false)
@@ -120,7 +121,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         this.value = RoomState.StandBy
     }
 
-    fun retryLoadDiscoverMovie() {
+    fun retryLoadAllFailed() {
         movieDiscoverData.value?.retry?.invoke()
     }
 
