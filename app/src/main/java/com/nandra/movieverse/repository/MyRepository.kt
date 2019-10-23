@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.toLiveData
 import com.nandra.movieverse.data.DiscoverMovieDataSourceFactory
+import com.nandra.movieverse.data.DiscoverTVDataSourceFactory
 import com.nandra.movieverse.data.Listing
 import com.nandra.movieverse.database.FavoriteMovie
 import com.nandra.movieverse.database.FavoriteTV
@@ -97,6 +98,22 @@ class MyRepository(app: Application) {
 
     fun discoverMovieData(scope: CoroutineScope): Listing<Film> {
         val sourceFactory = DiscoverMovieDataSourceFactory(scope, discoverService)
+        val livePagedList = sourceFactory.toLiveData(pageSize = 30)
+
+        return Listing(
+            pagedList = livePagedList,
+            networkState = Transformations.switchMap(sourceFactory.sourceLiveData) {
+                it.networkState
+            },
+            retry = {sourceFactory.sourceLiveData.value?.commitRetry()},
+            initialState = Transformations.switchMap(sourceFactory.sourceLiveData) {
+                it.isInitialLoaded
+            }
+        )
+    }
+
+    fun discoverTVData(scope: CoroutineScope): Listing<Film> {
+        val sourceFactory = DiscoverTVDataSourceFactory(scope, discoverService)
         val livePagedList = sourceFactory.toLiveData(pageSize = 30)
 
         return Listing(

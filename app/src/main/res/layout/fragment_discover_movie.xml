@@ -2,63 +2,65 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/movie_recyclerview"
+        android:id="@+id/discover_movie_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingStart="4dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="4dp"
-        android:paddingBottom="8dp"
-        android:scrollbars="none"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="none" />
 
     <ImageView
-        android:visibility="gone"
         android:id="@+id/discover_movie_cover"
-        android:src="#FFFFFF"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:src="#FFFFFF"
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
 
     <ProgressBar
         android:id="@+id/discover_movie_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_marginTop="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:visibility="gone" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/movie_error_back"
+        android:id="@+id/discover_movie_error_back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPureWhite"
         android:visibility="gone">
         <ImageView
-            android:id="@+id/movie_error_image"
+            android:id="@+id/discover_movie_error_image"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/img_noconnection"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/movie_error_button"
+            app:layout_constraintBottom_toTopOf="@id/discover_movie_error_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/img_noconnection"
             android:contentDescription="@string/cd_error_image" />
         <TextView
-            android:id="@+id/movie_error_text"
+            android:id="@+id/discover_movie_error_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/movie_error_image"
+            app:layout_constraintTop_toBottomOf="@id/discover_movie_error_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/no_internet_connection_en"
@@ -66,14 +68,14 @@
             android:textSize="16sp"
             android:fontFamily="@font/lato_medium"/>
         <Button
-            android:id="@+id/movie_error_button"
+            android:id="@+id/discover_movie_error_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_try_again_en"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movie_error_image"/>
+            app:layout_constraintTop_toBottomOf="@id/discover_movie_error_image"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

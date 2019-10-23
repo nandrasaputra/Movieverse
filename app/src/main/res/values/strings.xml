@@ -89,5 +89,6 @@
     <string name="favorite_no_item_en">No Item, Just An Astronaut</string>
     <string name="favorite_no_item_id">Tidak Terdapat Data, Hanya Ada Seorang Astronot</string>
     <string name="cd_toolbar">toolbar</string>
+    <string name="cd_retry">retry</string>
 
 </resources>

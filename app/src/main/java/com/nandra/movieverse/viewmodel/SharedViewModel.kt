@@ -4,9 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.lifecycle.*
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
-import com.nandra.movieverse.data.DiscoverTVDataSourceFactory
 import com.nandra.movieverse.data.Listing
 import com.nandra.movieverse.database.FavoriteMovie
 import com.nandra.movieverse.database.FavoriteTV
@@ -23,13 +20,10 @@ import kotlinx.coroutines.launch
 class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     var currentLanguage: String = ""
-    var isDataHasLoaded: Boolean = false
     var isHomeDataHasLoaded: Boolean = false
-    private var discoverJob : Job? = null
     private var homeJob : Job? = null
     private var detailJob : Job? = null
     private var roomJob: Job? = null
-    private var searchJob : Job? = null
     private val repository = MyRepository(app)
     val isOnDetailFragment = MutableLiveData<Boolean>().apply {
         this.value = false
@@ -56,10 +50,6 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         get() = _isError
     val isHomeError: LiveData<Boolean>
         get() = _isHomeError
-    val listMovieLive: LiveData<ArrayList<Film>>
-        get() = _listMovieLive
-    val listTVLive: LiveData<ArrayList<Film>>
-        get() = _listTVLive
     val listTrendingLive: LiveData<ArrayList<Film>>
         get() = _listTrendingLive
     val listNowPlayingLive: LiveData<List<Film>>
@@ -68,54 +58,20 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private val _searchResult = MutableLiveData<ArrayList<Film>>()
     private val _isLoading = MutableLiveData<Boolean>()
     private val _isHomeLoading = MutableLiveData<Boolean>()
-    private val _listMovieLive = MutableLiveData<ArrayList<Film>>()
     private val _isError = MutableLiveData<Boolean>()
     private val _isHomeError = MutableLiveData<Boolean>()
-    private val _listTVLive = MutableLiveData<ArrayList<Film>>()
     private val _listTrendingLive = MutableLiveData<ArrayList<Film>>()
     private val _listNowPlayingLive = MutableLiveData<List<Film>>()
 
-    private val movieDiscoverData = MutableLiveData<Listing<Film>>(repository.discoverMovieData(viewModelScope))
-    val movieDiscoverPagingList = Transformations.switchMap(movieDiscoverData) {it.pagedList}
-    val movieNetworkState = Transformations.switchMap(movieDiscoverData) {it.networkState}
-    val movieIsInitailLoaded = Transformations.switchMap(movieDiscoverData) {it.initialState}
+    private val discoverMovieLiveData = MutableLiveData<Listing<Film>>(repository.discoverMovieData(viewModelScope))
+    val discoverMoviePagingListLiveData = Transformations.switchMap(discoverMovieLiveData) {it.pagedList}
+    val discoverMovieNetworkStateLiveData = Transformations.switchMap(discoverMovieLiveData) {it.networkState}
+    val discoverMovieIsInitialDataLoadedLiveData = Transformations.switchMap(discoverMovieLiveData) {it.initialState}
 
-    private val config = PagedList.Config.Builder()
-        .setEnablePlaceholders(false)
-        .setPageSize(20)
-        .build()
-
-    //private var discoverMovieLiveData: LiveData<PagedList<Film>>
-    private var discoverTVLiveData: LiveData<PagedList<Film>>
-
-
-    /*private var movieNetworkState: LiveData<NetworkState>
-    private var tvNetworkState: LiveData<NetworkState>*/
-
-    init {
-
-        //val movieSourceDataFactory = DiscoverMovieDataSourceFactory(viewModelScope, repository)
-        val tvSourceDataFactory = DiscoverTVDataSourceFactory(viewModelScope, repository)
-
-        //val discoverMovieDataSourceFactory = LivePagedListBuilder<Int, Film>(DiscoverMovieDataSourceFactory(viewModelScope, repository), config)
-        val discoverTVDataSourceFactory = LivePagedListBuilder<Int, Film>(DiscoverTVDataSourceFactory(viewModelScope, repository), config)
-
-        //discoverMovieLiveData = discoverMovieDataSourceFactory.build()
-        discoverTVLiveData = discoverTVDataSourceFactory.build()
-
-        /*movieNetworkState = Transformations.switchMap(movieSourceDataFactory.sourceLiveData) {
-            it.movieNetworkState
-        }*/
-
-        /*tvNetworkState = Transformations.switchMap(tvSourceDataFactory.sourceLiveData) {
-            it.ne
-        }*/
-    }
-
-    //fun getDiscoverMovieData(): LiveData<PagedList<Film>> = discoverMovieLiveData
-    fun getDiscoverTVData(): LiveData<PagedList<Film>> = discoverTVLiveData
-
-    //fun getMovieNetworkState(): LiveData<NetworkState> = movieNetworkState
+    private val discoverTVLiveData = MutableLiveData<Listing<Film>>(repository.discoverTVData(viewModelScope))
+    val discoverTVPagingListLiveData = Transformations.switchMap(discoverTVLiveData) {it.pagedList}
+    val discoverTVNetworkStateLiveData = Transformations.switchMap(discoverTVLiveData) {it.networkState}
+    val discoverTVIsInitialDataLoadedLiveData = Transformations.switchMap(discoverTVLiveData) {it.initialState}
 
     val roomState = MutableLiveData<RoomState>().apply {
         this.value = RoomState.StandBy
@@ -123,18 +79,8 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun retryLoadAllFailed() {
         if (isConnectedToInternet()) {
-            movieDiscoverData.value?.retry?.invoke()
-        }
-    }
-
-    suspend fun requestDiscoverData() {
-        if(discoverJob != null){
-            discoverJob?.join()
-        }
-        if (!isDataHasLoaded && isConnectedToInternet()) {
-            fetchDiscoverData()
-        } else if (!isDataHasLoaded && !isConnectedToInternet()) {
-            _isError.value = true
+            discoverMovieLiveData.value?.retry?.invoke()
+            discoverTVLiveData.value?.retry?.invoke()
         }
     }
 
@@ -173,36 +119,6 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
             }
         }
         homeJob?.join()
-    }
-
-    private suspend fun fetchDiscoverData() {
-        _isLoading.value = true
-        discoverJob = viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val movieResponse = repository.fetchDiscoverMovieResponse()
-                val tvShowResponse = repository.fetchDiscoverTVSeriesResponse()
-
-                if (movieResponse.isSuccessful && tvShowResponse.isSuccessful) {
-
-                    val listMovie = movieResponse.body()?.results as ArrayList
-                    val listTV = tvShowResponse.body()?.results as ArrayList
-
-                    _listMovieLive.postValue(listMovie)
-                    _listTVLive.postValue(listTV)
-
-                    isDataHasLoaded = true
-                    _isLoading.postValue(false)
-                    _isError.postValue(false)
-                } else {
-                    _isLoading.postValue(false)
-                    _isError.postValue(true)
-                }
-            } catch (exp: Exception) {
-                _isLoading.postValue(false)
-                _isError.postValue(true)
-            }
-        }
-        discoverJob?.join()
     }
 
     @Suppress("DEPRECATION")

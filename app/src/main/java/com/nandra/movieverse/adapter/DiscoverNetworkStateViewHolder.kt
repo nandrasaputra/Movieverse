@@ -3,18 +3,18 @@ package com.nandra.movieverse.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import com.nandra.movieverse.R
 import com.nandra.movieverse.util.NetworkState
 
 class DiscoverNetworkStateViewHolder(
-    private val view: View,
+    view: View,
     private val retryCallback:() -> Unit
 ) : RecyclerView.ViewHolder(view) {
     private val progressBar: ProgressBar = view.findViewById(R.id.item_network_progress_bar)
-    private val retryButton: Button = view.findViewById(R.id.item_network_button)
+    private val retryButton: ImageView = view.findViewById(R.id.item_retry)
 
     init {
         retryButton.setOnClickListener {
@@ -36,7 +36,7 @@ class DiscoverNetworkStateViewHolder(
                 progressBar.visibility = View.GONE
                 retryButton.visibility = View.VISIBLE
             }
-            NetworkState.SERVER_ERROR -> {
+            NetworkState.CANNOT_CONNECT -> {
                 progressBar.visibility = View.GONE
                 retryButton.visibility = View.VISIBLE
             }

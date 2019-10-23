@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.nandra.movieverse.ui.DiscoverMovieFragment
-import com.nandra.movieverse.ui.DiscoverTVShowFragment
+import com.nandra.movieverse.ui.DiscoverTVFragment
 
 class DiscoverViewPagerPageAdapter(
     fragmentManager: FragmentManager,
@@ -14,7 +14,7 @@ class DiscoverViewPagerPageAdapter(
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> DiscoverMovieFragment()
-            1 -> DiscoverTVShowFragment()
+            1 -> DiscoverTVFragment()
             else -> throw Exception()          //Throw Exception
         }
     }

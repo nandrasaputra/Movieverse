@@ -1,5 +1,6 @@
 package com.nandra.movieverse.ui
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,6 +26,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 
 class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -187,7 +189,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
     private fun prepareView(data: DetailResponse) {
         if(filmType == Constant.MOVIE_FILM_TYPE) {
             detail_text_movie_title.text = data.title
-            detail_text_release_date.text = data.releaseDate
+            detail_text_release_date.text = formatDate(data.releaseDate)
             val runtime = if( currentLanguage == languageEnglishValue)
                 "${data.runtime} Minutes"
             else
@@ -195,7 +197,7 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
             detail_text_runtime.text = runtime
         } else {
             detail_text_movie_title.text = data.tvTitle
-            detail_text_release_date.text = data.tvAirDate
+            detail_text_release_date.text = formatDate(data.tvAirDate)
             val totalEpisodes = if (currentLanguage == languageEnglishValue)
                 "${data.tvNumberOfEpisode} Episodes"
             else
@@ -307,6 +309,19 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         currentLanguage = sharedPreferences.getString(preferenceLanguageKey,
             languageEnglishValue)!!
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun formatDate(stringDate: String) : String {
+        val inFormat = SimpleDateFormat("yyyy-MM-dd")
+        val outFormat = SimpleDateFormat("dd-MM-yyyy")
+
+        return try {
+            val date = inFormat.parse(stringDate)
+            outFormat.format(date ?: "")
+        } catch (exp: Exception) {
+            ""
+        }
     }
 
     private fun handleState(state: Int) {

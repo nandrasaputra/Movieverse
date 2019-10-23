@@ -16,19 +16,19 @@ import com.nandra.movieverse.adapter.DiscoverAdapter2
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.util.NetworkState
 import com.nandra.movieverse.viewmodel.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_discover_movie.*
+import kotlinx.android.synthetic.main.fragment_discover_tv.*
 
-class DiscoverMovieFragment : Fragment() {
+class DiscoverTVFragment : Fragment() {
 
     private var currentLanguage: String = ""
     private lateinit var languageEnglishValue : String
     private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var discoverMovieAdapter: DiscoverAdapter2
+    private lateinit var discoverTVAdapter: DiscoverAdapter2
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_discover_movie, container, false)
+        return inflater.inflate(R.layout.fragment_discover_tv, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,58 +36,52 @@ class DiscoverMovieFragment : Fragment() {
         sharedViewModel = activity?.run {
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
-        sharedViewModel.discoverMoviePagingListLiveData.observe(this, Observer {
-            discoverMovieAdapter.submitList(it)
+        sharedViewModel.discoverTVPagingListLiveData.observe(this, Observer {
+            discoverTVAdapter.submitList(it)
         })
-        sharedViewModel.discoverMovieNetworkStateLiveData.observe(this, Observer {
-            discoverMovieAdapter.setNetworkState(it)
+        sharedViewModel.discoverTVNetworkStateLiveData.observe(this, Observer {
+            discoverTVAdapter.setNetworkState(it)
             handleNetworkState(it)
         })
-        sharedViewModel.discoverMovieIsInitialDataLoadedLiveData.observe(this, Observer {  })
-        discoverMovieAdapter = DiscoverAdapter2(Constant.MOVIE_FILM_TYPE) {sharedViewModel.retryLoadAllFailed()}
+        sharedViewModel.discoverTVIsInitialDataLoadedLiveData.observe(this, Observer {  })
+        discoverTVAdapter = DiscoverAdapter2(Constant.TV_FILM_TYPE) {sharedViewModel.retryLoadAllFailed()}
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
-        discover_movie_recyclerview.apply {
+        discover_tv_recyclerview.apply {
             layoutManager = GridLayoutManager(context, 3)
-            adapter = discoverMovieAdapter
+            adapter = discoverTVAdapter
         }
         checkErrorState()
         viewErrorLanguageAdjustment()
     }
 
-    override fun onResume() {
-        super.onResume()
-        sharedViewModel.detailState.value = Constant.STATE_NOSTATE
-        sharedViewModel.isOnDetailFragment.value = false
-    }
-
     private fun handleNetworkState(state: NetworkState) {
 
-        val isInitialDataLoaded = sharedViewModel.discoverMovieIsInitialDataLoadedLiveData.value ?: false
+        val isInitialDataLoaded = sharedViewModel.discoverTVIsInitialDataLoadedLiveData.value ?: false
 
         when(state) {
             NetworkState.LOADING -> {
                 if(!isInitialDataLoaded){
-                    discover_movie_error_back.visibility = View.GONE
-                    discover_movie_progress_bar.visibility = View.VISIBLE
-                    discover_movie_cover.visibility = View.VISIBLE
+                    discover_tv_error_back.visibility = View.GONE
+                    discover_tv_progress_bar.visibility = View.VISIBLE
+                    discover_tv_cover.visibility = View.VISIBLE
                 }
             }
             NetworkState.LOADED -> {
                 if (isInitialDataLoaded){
-                    discover_movie_progress_bar.visibility = View.GONE
-                    discover_movie_cover.visibility = View.GONE
+                    discover_tv_progress_bar.visibility = View.GONE
+                    discover_tv_cover.visibility = View.GONE
                 }
             }
             NetworkState.FAILED -> {
-                discover_movie_progress_bar.visibility = View.GONE
+                discover_tv_progress_bar.visibility = View.GONE
                 if(!isInitialDataLoaded) {
-                    discover_movie_error_back.visibility = View.VISIBLE
+                    discover_tv_error_back.visibility = View.VISIBLE
                     viewErrorLanguageAdjustment()
-                    discover_movie_error_button.setOnClickListener {
+                    discover_tv_error_button.setOnClickListener {
                         sharedViewModel.retryLoadAllFailed()
                     }
                 } else {
@@ -98,11 +92,11 @@ class DiscoverMovieFragment : Fragment() {
                 }
             }
             NetworkState.CANNOT_CONNECT -> {
-                discover_movie_progress_bar.visibility = View.GONE
+                discover_tv_progress_bar.visibility = View.GONE
                 if(!isInitialDataLoaded) {
-                    discover_movie_error_back.visibility = View.VISIBLE
+                    discover_tv_error_back.visibility = View.VISIBLE
                     viewErrorLanguageAdjustment()
-                    discover_movie_error_button.setOnClickListener {
+                    discover_tv_error_button.setOnClickListener {
                         sharedViewModel.retryLoadAllFailed()
                     }
                 } else {
@@ -123,13 +117,19 @@ class DiscoverMovieFragment : Fragment() {
             languageEnglishValue)!!
     }
 
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.detailState.value = Constant.STATE_NOSTATE
+        sharedViewModel.isOnDetailFragment.value = false
+    }
+
     private fun checkErrorState() {
-        if (sharedViewModel.discoverMovieIsInitialDataLoadedLiveData.value != null && sharedViewModel.discoverMovieNetworkStateLiveData.value != null) {
-            if (!sharedViewModel.discoverMovieIsInitialDataLoadedLiveData.value!! && (sharedViewModel.discoverMovieNetworkStateLiveData.value!! == NetworkState.FAILED
-                        || sharedViewModel.discoverMovieNetworkStateLiveData.value!! == NetworkState.CANNOT_CONNECT))
+        if (sharedViewModel.discoverTVIsInitialDataLoadedLiveData.value != null && sharedViewModel.discoverTVNetworkStateLiveData.value != null) {
+            if (!sharedViewModel.discoverTVIsInitialDataLoadedLiveData.value!! && (sharedViewModel.discoverTVNetworkStateLiveData.value!! == NetworkState.FAILED
+                        || sharedViewModel.discoverTVNetworkStateLiveData.value!! == NetworkState.CANNOT_CONNECT))
             {
-                discover_movie_error_back.visibility = View.VISIBLE
-                discover_movie_error_button.setOnClickListener {
+                discover_tv_error_back.visibility = View.VISIBLE
+                discover_tv_error_button.setOnClickListener {
                     sharedViewModel.retryLoadAllFailed()
                 }
             }
@@ -137,14 +137,13 @@ class DiscoverMovieFragment : Fragment() {
     }
 
     private fun viewErrorLanguageAdjustment() {
-        if (currentLanguage == languageEnglishValue){
-            discover_movie_error_button.text = getString(R.string.button_try_again_en)
-            discover_movie_error_text.text = getString(R.string.no_internet_connection_en)
+        if (currentLanguage == languageEnglishValue) {
+            discover_tv_error_button.text = getString(R.string.button_try_again_en)
+            discover_tv_error_text.text = getString(R.string.no_internet_connection_en)
         }
         else {
-            discover_movie_error_button.text = getString(R.string.button_try_again_id)
-            discover_movie_error_text.text = getString(R.string.no_internet_connection_id)
+            discover_tv_error_button.text = getString(R.string.button_try_again_id)
+            discover_tv_error_text.text = getString(R.string.no_internet_connection_id)
         }
-
     }
 }

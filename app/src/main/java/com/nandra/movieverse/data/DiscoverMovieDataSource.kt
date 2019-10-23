@@ -16,14 +16,8 @@ class DiscoverMovieDataSource(
 
     val networkState = MutableLiveData<NetworkState>()
     val isInitialLoaded = MutableLiveData<Boolean>()
-
     private var retry: (() -> Any)? = null
 
-    fun commitRetry() {
-        val previousRetry = retry
-        retry = null
-        previousRetry?.invoke()
-    }
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Film>) {
         scope.launch(Dispatchers.IO) {
@@ -47,7 +41,7 @@ class DiscoverMovieDataSource(
                     retry = {loadInitial(params, callback)}
                 }
             } catch (exception: Exception) {
-                networkState.postValue(NetworkState.FAILED)
+                networkState.postValue(NetworkState.CANNOT_CONNECT)
                 retry = {loadInitial(params, callback)}
             }
         }
@@ -73,7 +67,7 @@ class DiscoverMovieDataSource(
                     retry = {loadAfter(params, callback)}
                 }
             } catch (exception: Exception) {
-                networkState.postValue(NetworkState.SERVER_ERROR)
+                networkState.postValue(NetworkState.CANNOT_CONNECT)
                 retry = {loadAfter(params, callback)}
             }
         }
@@ -81,4 +75,9 @@ class DiscoverMovieDataSource(
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Film>) {}
 
+    fun commitRetry() {
+        val previousRetry = retry
+        retry = null
+        previousRetry?.invoke()
+    }
 }
