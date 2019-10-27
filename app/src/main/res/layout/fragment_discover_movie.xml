@@ -71,11 +71,11 @@
             android:id="@+id/discover_movie_error_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_try_again_en"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/discover_movie_error_image"/>
+            app:layout_constraintTop_toBottomOf="@id/discover_movie_error_image"
+            android:text="@string/button_try_again_en" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

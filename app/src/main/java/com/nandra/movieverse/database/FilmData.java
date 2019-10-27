@@ -1,4 +1,3 @@
 package com.nandra.movieverse.database;
 
-public class FilmData {
-}
+public class FilmData { }

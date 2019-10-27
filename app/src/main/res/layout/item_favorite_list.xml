@@ -67,13 +67,13 @@
             android:id="@+id/item_delete_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
+            app:fabSize="mini"
             android:src="@drawable/ic_delete"
-            android:elevation="3dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:elevation="3dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

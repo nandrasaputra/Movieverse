@@ -15,7 +15,7 @@ class FavoriteViewPagerPageAdapter(
         return when (position) {
             0 -> FavoriteMovieFragment()
             1 -> FavoriteTVFragment()
-            else -> throw Exception()          //Throw Exception
+            else -> throw Exception()
         }
     }
 

@@ -8,13 +8,13 @@
         android:id="@+id/item_home_trending_poster"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintDimensionRatio="H, 2:1"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         android:src="@drawable/img_backdrop"
         android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="H, 2:1"
         app:riv_corner_radius="16dp"
         android:contentDescription="@string/cd_trending_poster"/>
 
@@ -23,11 +23,11 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/gradient_16"
+        app:layout_constraintDimensionRatio="H, 5:1"
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
+        android:src="@drawable/gradient_16"
         android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="H, 5:1"
         android:contentDescription="@string/cd_trending_image"/>
 
     <TextView

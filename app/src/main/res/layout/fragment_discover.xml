@@ -2,9 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
@@ -33,24 +33,24 @@
                     android:id="@+id/discover_searchview"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:queryHint="@string/movie_search_view_query_hint_en"
                     android:elevation="3dp"
                     android:outlineProvider="background"
                     android:background="@color/colorVeryLightGray"
                     app:queryBackground="@android:color/transparent"
-                    app:iconifiedByDefault="false"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:iconifiedByDefault="false" />
 
                 <ImageView
                     android:id="@+id/discover_image_search_dummy"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:elevation="3dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:elevation="3dp"
                     tools:ignore="ContentDescription" />
 
                 <com.google.android.material.tabs.TabLayout

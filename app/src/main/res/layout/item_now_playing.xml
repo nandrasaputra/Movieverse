@@ -11,29 +11,32 @@
         android:id="@+id/item_now_playing_poster"
         android:layout_width="250dp"
         android:layout_height="0dp"
-        android:src="@drawable/img_back_portrait_default"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="H,2:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="H,2:3"
+        android:src="@drawable/img_back_portrait_default"
         app:riv_corner_radius="@dimen/discover_round_radius" />
 
     <ImageView
         android:id="@+id/item_now_playing_gradient"
         android:layout_width="250dp"
         android:layout_height="0dp"
-        android:src="@drawable/gradient"
         app:layout_constraintBottom_toBottomOf="@id/item_now_playing_poster"
-        app:layout_constraintDimensionRatio="H,2:1"
         app:layout_constraintEnd_toEndOf="@id/item_now_playing_poster"
         app:layout_constraintStart_toStartOf="@id/item_now_playing_poster"
+        android:src="@drawable/gradient"
+        app:layout_constraintDimensionRatio="H,2:1"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/item_now_playing_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/item_now_playing_poster"
+        app:layout_constraintEnd_toEndOf="@id/item_now_playing_poster"
+        app:layout_constraintStart_toStartOf="@id/item_now_playing_poster"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
@@ -41,8 +44,5 @@
         android:text="@string/main_title_mock"
         android:textAlignment="center"
         android:textColor="@color/colorPureWhite"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/item_now_playing_poster"
-        app:layout_constraintEnd_toEndOf="@id/item_now_playing_poster"
-        app:layout_constraintStart_toStartOf="@id/item_now_playing_poster" />
+        android:textSize="16sp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

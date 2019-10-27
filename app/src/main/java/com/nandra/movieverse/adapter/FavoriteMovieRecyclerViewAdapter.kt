@@ -40,7 +40,7 @@ class FavoriteMovieRecyclerViewAdapter(
         if(currentMovie.posterPath != null) {
             Glide.with(holder.itemView)
                 .load(url + currentMovie.posterPath)
-                .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
+                .apply(RequestOptions().override(200, 300))
                 .into(holder.itemView.item_image_movie_poster)
         }
         if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE) {

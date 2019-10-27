@@ -62,10 +62,10 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         detail_images_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         detail_videos_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         detail_cover.setOnClickListener {}      //Prevent Click Through
-        sharedViewModel.detailFilmTranslated.observe(this, Observer {
+        sharedViewModel.detailFilmTranslated.observe(viewLifecycleOwner, Observer {
             prepareView(sharedViewModel.detailFilm.value!!)
         })
-        sharedViewModel.roomState.observe(this, Observer {
+        sharedViewModel.roomState.observe(viewLifecycleOwner, Observer {
             onRoomStateChange(it)
         })
         if (!sharedViewModel.isOnDetailFragment.value!!) {
@@ -73,15 +73,15 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
         } else if(sharedViewModel.isOnDetailFragment.value!! && sharedViewModel.detailState.value == Constant.STATE_NO_CONNECTION) {
             attemptPrepareView()
         }
-        sharedViewModel.detailState.observe(this, Observer {
+        sharedViewModel.detailState.observe(viewLifecycleOwner, Observer {
             handleState(it)
         })
         if (filmType == Constant.MOVIE_FILM_TYPE) {
-            sharedViewModel.movieFavoriteList.observe(this, Observer {
+            sharedViewModel.movieFavoriteList.observe(viewLifecycleOwner, Observer {
                 checkFavoriteState()
             })
         } else {
-            sharedViewModel.tvFavoriteList.observe(this, Observer {
+            sharedViewModel.tvFavoriteList.observe(viewLifecycleOwner, Observer {
                 checkFavoriteState()
             })
         }

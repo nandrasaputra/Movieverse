@@ -35,12 +35,12 @@ class DiscoverViewHolder(private val view: View) : RecyclerView.ViewHolder(view)
         if(!film.posterPath.isNullOrEmpty()) {
             Glide.with(view)
                 .load(url + film.posterPath)
-                .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
+                .apply(RequestOptions().override(200, 300))
                 .into(itemGridPoster)
         } else {
             Glide.with(view)
                 .load(R.drawable.img_back_portrait_default)
-                .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
+                .apply(RequestOptions().override(200, 300))
                 .into(itemGridPoster)
         }
         view.setOnClickListener {
@@ -55,12 +55,12 @@ class DiscoverViewHolder(private val view: View) : RecyclerView.ViewHolder(view)
         if(!film.posterPath.isNullOrEmpty()) {
             Glide.with(view)
                 .load(url + film.posterPath)
-                .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
+                .apply(RequestOptions().override(200, 300))
                 .into(itemGridPoster)
         } else {
             Glide.with(view)
                 .load(R.drawable.img_back_portrait_default)
-                .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
+                .apply(RequestOptions().override(200, 300))
                 .into(itemGridPoster)
         }
         view.setOnClickListener {

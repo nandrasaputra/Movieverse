@@ -71,9 +71,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             intent = intent
         )
 
-        /*controller.observe(this, Observer { navController ->
-            setupActionBarWithNavController(navController)
-        })*/
         currentNavController = controller
     }
 

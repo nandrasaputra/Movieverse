@@ -50,5 +50,4 @@ class DiscoverNetworkStateViewHolder(
             return DiscoverNetworkStateViewHolder(view, retryCallback)
         }
     }
-
 }

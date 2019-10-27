@@ -33,14 +33,11 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     val isOnDetailFragment = MutableLiveData<Boolean>().apply {
         this.value = false
     }
-
     val detailState = MutableLiveData<Int>()
     val searchState = MutableLiveData<NetworkState>()
-
     val detailFilm: LiveData<DetailResponse>
         get() = _detailFilm
     private val _detailFilm = MutableLiveData<DetailResponse>()
-
     val detailFilmTranslated: LiveData<YandexResponse>
         get() = _detailFilmTranslated
     private val _detailFilmTranslated = MutableLiveData<YandexResponse>()
@@ -282,5 +279,4 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         object Success : RoomState()
         object Failure : RoomState()
     }
-
 }

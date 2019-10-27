@@ -15,7 +15,7 @@ class DiscoverViewPagerPageAdapter(
         return when (position) {
             0 -> DiscoverMovieFragment()
             1 -> DiscoverTVFragment()
-            else -> throw Exception()          //Throw Exception
+            else -> throw Exception()
         }
     }
 
