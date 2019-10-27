@@ -3,7 +3,6 @@ package com.nandra.movieverse.ui
 import android.app.Activity
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,10 +23,7 @@ import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.util.NetworkState
 import com.nandra.movieverse.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -90,8 +86,8 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextSubmit(query: String?): Boolean {
         searchJob?.run {
             viewLifecycleOwner.lifecycleScope.launch {
-                if(!this.isActive) {
-                    Log.d("DEBUG", this.isActive.toString())
+                if(this.isActive) {
+                    this.cancel()
                     sharedViewModel.attemptSearch(query?: "", type)
                 }
             }
@@ -107,7 +103,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
                 searchJob?.run {
                     if (this.isActive)
                         searchJob!!.cancel()
-                    sharedViewModel.attemptSearch("", type)
                 }
             }
         } else {
@@ -173,7 +168,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun handleNewData(data: List<Film>) {
         if (data.isEmpty() && sharedViewModel.isSearchDataLoaded) {
             if (currentLanguage == languageEnglishValue)
-                Toast.makeText(activity, "No Search Result", Toast.LENGTH_SHORT)
+                Toast.makeText(activity, "No Search Result", Toast.LENGTH_SHORT).show()
             else
                 Toast.makeText(activity, "Tidak Ada Hasil Pencarian", Toast.LENGTH_SHORT).show()
         }
@@ -193,10 +188,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
             NetworkState.FAILED -> {
                 search_progress_bar.visibility = View.GONE
                 search_veil.visibility = View.VISIBLE
-                if (currentLanguage == languageEnglishValue)
-                    Toast.makeText(activity, "Load Data Failed", Toast.LENGTH_SHORT).show()
-                else
-                    Toast.makeText(activity, "Gagal Memuat Data", Toast.LENGTH_SHORT).show()
             }
             NetworkState.CANNOT_CONNECT -> {
                 search_progress_bar.visibility = View.GONE

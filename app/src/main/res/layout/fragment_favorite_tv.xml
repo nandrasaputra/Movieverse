@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPureWhite">
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favorite_tv_recyclerview"
@@ -15,7 +14,8 @@
         android:paddingEnd="4dp"
         android:paddingStart="4dp"
         android:scrollbars="none"
-        android:clipToPadding="false"/>
+        android:clipToPadding="false"
+        android:background="@color/colorPureWhite"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/favorite_tv_no_item_back"

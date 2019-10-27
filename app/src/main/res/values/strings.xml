@@ -2,16 +2,11 @@
     <string name="app_name">Movieverse</string>
 
     <string name="toolbar_detail_title">"Detail"</string>
-    <string name="toolbar_setting_title">"Setting"</string>
-    <string name="toolbar_favorite_title">"Favorite"</string>
 
     <string name="main_title_mock">Movie Title</string>
     <string name="main_genre_mock">Genre, Genre, Genre</string>
     <string name="main_overview_mock">It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</string>
     <string name="main_rating_mock">00%</string>
-
-    <string name="main_menu_settings_title_en">"Settings"</string>
-    <string name="main_menu_settings_title_id">"Pengaturan"</string>
 
     <string name="cd_discover">"Discover"</string>
     <string name="cd_favorite">"Favorite"</string>

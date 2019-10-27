@@ -3,6 +3,7 @@ package com.nandra.movieverse.viewmodel
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
+import android.util.Log
 import androidx.lifecycle.*
 import com.nandra.movieverse.data.Listing
 import com.nandra.movieverse.database.FavoriteMovie
@@ -28,6 +29,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private var roomJob: Job? = null
     private var searchJob: Job? = null
     private var currentSearchKeyword = ""
+    private var currentSearchType = ""
     private val repository = MyRepository(app)
     val isOnDetailFragment = MutableLiveData<Boolean>().apply {
         this.value = false
@@ -97,7 +99,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun attemptSearch(keyword: String, type: String) {
-        if (keyword == currentSearchKeyword) {
+        if (keyword == currentSearchKeyword && type == currentSearchType) {
             if (isSearchDataLoaded) {
                 searchState.value = NetworkState.LOADED
             } else {
@@ -107,9 +109,10 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                     searchState.value = NetworkState.CANNOT_CONNECT
                 }
             }
-        } else if (keyword != currentSearchKeyword){
+        } else if (keyword != currentSearchKeyword || type != currentSearchType){
             if (isConnectedToInternet()) {
                 currentSearchKeyword = keyword
+                currentSearchType = type
                 fetchSearchData(keyword, type)
             } else {
                 searchState.value = NetworkState.CANNOT_CONNECT
@@ -128,19 +131,22 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                 }
 
                 if (response.isSuccessful) {
+                    Log.d("DEBUG", "SUKSES")
                     val searchResult = response.body()?.results
                     searchResult?.run {
                         _searchResultList.postValue(this)
-                        isSearchDataLoaded = true
                         searchState.postValue(NetworkState.LOADED)
+                        isSearchDataLoaded = true
                     }
                 } else {
-                    searchState.postValue(NetworkState.FAILED)
+                    Log.d("DEBUG", "GAGAL")
                     isSearchDataLoaded = false
+                    searchState.postValue(NetworkState.FAILED)
                 }
             } catch (exception: Exception) {
-                searchState.postValue(NetworkState.CANNOT_CONNECT)
+                Log.d("DEBUG", "EXP")
                 isSearchDataLoaded = false
+                searchState.postValue(NetworkState.CANNOT_CONNECT)
             }
         }
     }
