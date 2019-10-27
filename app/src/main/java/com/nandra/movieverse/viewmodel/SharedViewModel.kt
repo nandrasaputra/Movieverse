@@ -12,6 +12,7 @@ import com.nandra.movieverse.network.response.DetailResponse
 import com.nandra.movieverse.network.response.YandexResponse
 import com.nandra.movieverse.repository.MyRepository
 import com.nandra.movieverse.util.Constant
+import com.nandra.movieverse.util.NetworkState
 import com.nandra.movieverse.util.getStringGenre
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,15 +22,19 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     var currentLanguage: String = ""
     var isHomeDataHasLoaded: Boolean = false
+    var isSearchDataLoaded: Boolean = false
     private var homeJob : Job? = null
     private var detailJob : Job? = null
     private var roomJob: Job? = null
+    private var searchJob: Job? = null
+    private var currentSearchKeyword = ""
     private val repository = MyRepository(app)
     val isOnDetailFragment = MutableLiveData<Boolean>().apply {
         this.value = false
     }
 
     val detailState = MutableLiveData<Int>()
+    val searchState = MutableLiveData<NetworkState>()
 
     val detailFilm: LiveData<DetailResponse>
         get() = _detailFilm
@@ -42,23 +47,19 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     var movieFavoriteList = repository.getFavoriteMovieList()
     var tvFavoriteList = repository.getFavoriteTVList()
 
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
     val isHomeLoading: LiveData<Boolean>
         get() = _isHomeLoading
-    val isError: LiveData<Boolean>
-        get() = _isError
     val isHomeError: LiveData<Boolean>
         get() = _isHomeError
     val listTrendingLive: LiveData<ArrayList<Film>>
         get() = _listTrendingLive
     val listNowPlayingLive: LiveData<List<Film>>
         get() = _listNowPlayingLive
+    val searchResultList: LiveData<List<Film>>
+        get() = _searchResultList
 
-    private val _searchResult = MutableLiveData<ArrayList<Film>>()
-    private val _isLoading = MutableLiveData<Boolean>()
+    private val _searchResultList = MutableLiveData<List<Film>>()
     private val _isHomeLoading = MutableLiveData<Boolean>()
-    private val _isError = MutableLiveData<Boolean>()
     private val _isHomeError = MutableLiveData<Boolean>()
     private val _listTrendingLive = MutableLiveData<ArrayList<Film>>()
     private val _listNowPlayingLive = MutableLiveData<List<Film>>()
@@ -92,6 +93,55 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
             fetchHomeData()
         } else if (!isHomeDataHasLoaded && !isConnectedToInternet()) {
             _isHomeError.value = true
+        }
+    }
+
+    fun attemptSearch(keyword: String, type: String) {
+        if (keyword == currentSearchKeyword) {
+            if (isSearchDataLoaded) {
+                searchState.value = NetworkState.LOADED
+            } else {
+                if(isConnectedToInternet()) {
+                    fetchSearchData(keyword, type)
+                } else {
+                    searchState.value = NetworkState.CANNOT_CONNECT
+                }
+            }
+        } else if (keyword != currentSearchKeyword){
+            if (isConnectedToInternet()) {
+                currentSearchKeyword = keyword
+                fetchSearchData(keyword, type)
+            } else {
+                searchState.value = NetworkState.CANNOT_CONNECT
+            }
+        }
+    }
+
+    private fun fetchSearchData(keyword: String, type: String) {
+        searchJob = viewModelScope.launch {
+            searchState.postValue(NetworkState.LOADING)
+            try {
+                val response = if (type == Constant.MOVIE_FILM_TYPE) {
+                    repository.searchMovie(keyword, 1)
+                } else {
+                    repository.searchTV(keyword, 1)
+                }
+
+                if (response.isSuccessful) {
+                    val searchResult = response.body()?.results
+                    searchResult?.run {
+                        _searchResultList.postValue(this)
+                        isSearchDataLoaded = true
+                        searchState.postValue(NetworkState.LOADED)
+                    }
+                } else {
+                    searchState.postValue(NetworkState.FAILED)
+                    isSearchDataLoaded = false
+                }
+            } catch (exception: Exception) {
+                searchState.postValue(NetworkState.CANNOT_CONNECT)
+                isSearchDataLoaded = false
+            }
         }
     }
 
@@ -181,18 +231,6 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                 detailState.postValue(Constant.STATE_SERVER_ERROR)
             }
         }
-    }
-
-    suspend fun attemptSearch(query: String, type: String, page: Int = 1) {
-
-    }
-
-    private suspend fun searchMovie(query: String, page: Int) {
-
-    }
-
-    private suspend fun searchTV(query: String, page: Int) {
-
     }
 
     fun saveToFavorite(data: DetailResponse, filmType: String, genreIndonesia: String, overviewIndonesia: String) {

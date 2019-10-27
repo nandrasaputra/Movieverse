@@ -86,9 +86,12 @@
     <string name="home_trending_en">Now Trending</string>
     <string name="home_trending_id" tools:ignore="Typos">Sedang Populer</string>
 
-    <string name="favorite_no_item_en">No Item, Just An Astronaut</string>
-    <string name="favorite_no_item_id">Tidak Terdapat Data, Hanya Ada Seorang Astronot</string>
+    <string name="favorite_no_item_en">No Item</string>
+    <string name="favorite_no_item_id">Tidak Ada Item</string>
     <string name="cd_toolbar">toolbar</string>
     <string name="cd_retry">retry</string>
+
+    <string name="search_no_item_en">Start Search Something!</string>
+    <string name="search_no_item_id">Mulai Suatu Pencarian!</string>
 
 </resources>

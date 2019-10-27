@@ -55,16 +55,4 @@
         app:layout_constraintStart_toEndOf="@id/item_search_poster"
         app:layout_constraintTop_toBottomOf="@id/item_search_released_date" />
 
-    <TextView
-        android:id="@+id/item_search_vote_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="2dp"
-        android:fontFamily="@font/lato_medium"
-        android:textColor="@color/colorGray"
-        android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@id/item_search_rating"
-        app:layout_constraintStart_toEndOf="@id/item_search_poster"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

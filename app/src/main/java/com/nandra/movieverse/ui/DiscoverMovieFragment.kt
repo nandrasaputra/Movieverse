@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.nandra.movieverse.R
-import com.nandra.movieverse.adapter.DiscoverAdapter2
+import com.nandra.movieverse.adapter.DiscoverPagedListAdapter
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.util.NetworkState
 import com.nandra.movieverse.viewmodel.SharedViewModel
@@ -25,7 +25,7 @@ class DiscoverMovieFragment : Fragment() {
     private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var discoverMovieAdapter: DiscoverAdapter2
+    private lateinit var discoverMoviePagedListAdapter: DiscoverPagedListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_discover_movie, container, false)
@@ -37,14 +37,14 @@ class DiscoverMovieFragment : Fragment() {
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
         sharedViewModel.discoverMoviePagingListLiveData.observe(this, Observer {
-            discoverMovieAdapter.submitList(it)
+            discoverMoviePagedListAdapter.submitList(it)
         })
         sharedViewModel.discoverMovieNetworkStateLiveData.observe(this, Observer {
-            discoverMovieAdapter.setNetworkState(it)
+            discoverMoviePagedListAdapter.setNetworkState(it)
             handleNetworkState(it)
         })
         sharedViewModel.discoverMovieIsInitialDataLoadedLiveData.observe(this, Observer {  })
-        discoverMovieAdapter = DiscoverAdapter2(Constant.MOVIE_FILM_TYPE) {sharedViewModel.retryLoadAllFailed()}
+        discoverMoviePagedListAdapter = DiscoverPagedListAdapter(Constant.MOVIE_FILM_TYPE) {sharedViewModel.retryLoadAllFailed()}
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -52,10 +52,13 @@ class DiscoverMovieFragment : Fragment() {
         prepareSharedPreferences()
         discover_movie_recyclerview.apply {
             layoutManager = GridLayoutManager(context, 3)
-            adapter = discoverMovieAdapter
+            adapter = discoverMoviePagedListAdapter
         }
         checkErrorState()
         viewErrorLanguageAdjustment()
+        sharedViewModel.discoverMovieNetworkStateLiveData.value?.run {
+            handleNetworkState(this)
+        }
     }
 
     override fun onResume() {
@@ -147,4 +150,5 @@ class DiscoverMovieFragment : Fragment() {
         }
 
     }
+
 }

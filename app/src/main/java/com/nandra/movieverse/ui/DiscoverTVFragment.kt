@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.nandra.movieverse.R
-import com.nandra.movieverse.adapter.DiscoverAdapter2
+import com.nandra.movieverse.adapter.DiscoverPagedListAdapter
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.util.NetworkState
 import com.nandra.movieverse.viewmodel.SharedViewModel
@@ -25,7 +25,7 @@ class DiscoverTVFragment : Fragment() {
     private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var discoverTVAdapter: DiscoverAdapter2
+    private lateinit var discoverTVPagedListAdapter: DiscoverPagedListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_discover_tv, container, false)
@@ -37,14 +37,14 @@ class DiscoverTVFragment : Fragment() {
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
         sharedViewModel.discoverTVPagingListLiveData.observe(this, Observer {
-            discoverTVAdapter.submitList(it)
+            discoverTVPagedListAdapter.submitList(it)
         })
         sharedViewModel.discoverTVNetworkStateLiveData.observe(this, Observer {
-            discoverTVAdapter.setNetworkState(it)
+            discoverTVPagedListAdapter.setNetworkState(it)
             handleNetworkState(it)
         })
         sharedViewModel.discoverTVIsInitialDataLoadedLiveData.observe(this, Observer {  })
-        discoverTVAdapter = DiscoverAdapter2(Constant.TV_FILM_TYPE) {sharedViewModel.retryLoadAllFailed()}
+        discoverTVPagedListAdapter = DiscoverPagedListAdapter(Constant.TV_FILM_TYPE) {sharedViewModel.retryLoadAllFailed()}
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -52,10 +52,13 @@ class DiscoverTVFragment : Fragment() {
         prepareSharedPreferences()
         discover_tv_recyclerview.apply {
             layoutManager = GridLayoutManager(context, 3)
-            adapter = discoverTVAdapter
+            adapter = discoverTVPagedListAdapter
         }
         checkErrorState()
         viewErrorLanguageAdjustment()
+        sharedViewModel.discoverTVNetworkStateLiveData.value?.run {
+            handleNetworkState(this)
+        }
     }
 
     private fun handleNetworkState(state: NetworkState) {

@@ -1,57 +1,64 @@
 package com.nandra.movieverse.adapter
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.nandra.movieverse.R
 import com.nandra.movieverse.data.DiffUtilCallback
 import com.nandra.movieverse.network.Film
-import com.nandra.movieverse.ui.DiscoverFragmentDirections
-import com.nandra.movieverse.util.Constant
-import kotlinx.android.synthetic.main.item_discover_recyclerview.view.*
+import com.nandra.movieverse.util.NetworkState
 
 class DiscoverPagedListAdapter(
-    private val type: String
-) : PagedListAdapter<Film, DiscoverPagedListAdapter.MyViewHolder>(DiffUtilCallback(type)) {
+    private val type: String,
+    private val retryCallback:() -> Unit
+) : PagedListAdapter<Film, RecyclerView.ViewHolder>(DiffUtilCallback(type)) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_discover_recyclerview, parent, false)
-        return MyViewHolder(view)
-    }
+    private var networkState: NetworkState? = null
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        getItem(position)?.let {
-            bindMovieViewProperties(holder, it)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when(viewType) {
+            R.layout.item_discover_recyclerview -> DiscoverViewHolder.create(parent)
+            R.layout.item_network_state -> DiscoverNetworkStateViewHolder.create(parent, retryCallback)
+            else ->throw IllegalArgumentException("Unknown View Type $viewType")
         }
     }
 
-    private fun bindMovieViewProperties(holder: MyViewHolder, currentFilm: Film) {
-        if(type == Constant.MOVIE_FILM_TYPE)
-            holder.itemView.item_grid_title.text = currentFilm.title
-        else
-            holder.itemView.item_grid_title.text = currentFilm.tvName
-        val url = "https://image.tmdb.org/t/p/w185"
-        if(currentFilm.posterPath != null) {
-            Glide.with(holder.itemView)
-                .load(url + currentFilm.posterPath)
-                .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
-                .into(holder.itemView.item_grid_poster)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(getItemViewType(position)) {
+            R.layout.item_discover_recyclerview -> (holder as DiscoverViewHolder).bindView(getItem(position), type)
+            R.layout.item_network_state -> {
+                (holder as DiscoverNetworkStateViewHolder).bindToNetworkState(networkState)
+            }
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if(hasExtraRow() && position == itemCount - 1) {
+            R.layout.item_network_state
         } else {
-            Glide.with(holder.itemView)
-                .load(R.drawable.img_back_portrait_default)
-                .apply(RequestOptions().override(200, 300))     //Optimizing Image Loading For Thumbnail
-                .into(holder.itemView.item_grid_poster)
-        }
-        holder.itemView.setOnClickListener {
-            val action = DiscoverFragmentDirections.actionDiscoverFragmentToDetailFragment(type).setId(currentFilm.id.toString())
-            holder.itemView.findNavController().navigate(action)
+            R.layout.item_discover_recyclerview
         }
     }
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    override fun getItemCount(): Int {
+        return super.getItemCount() + if (hasExtraRow()) 1 else 0
+    }
+
+    private fun hasExtraRow() = networkState != null && networkState != NetworkState.LOADED
+
+    fun setNetworkState(newNetworkState: NetworkState?) {
+        val previousState = this.networkState
+        val hadExtraRow = hasExtraRow()
+        this.networkState = newNetworkState
+        val hasExtraRow = hasExtraRow()
+        if (hadExtraRow != hasExtraRow) {
+            if (hadExtraRow) {
+                notifyItemRemoved(super.getItemCount())
+            } else {
+                notifyItemInserted(super.getItemCount())
+            }
+        } else if (hasExtraRow && previousState != newNetworkState) {
+            notifyItemChanged(itemCount - 1)
+        }
+    }
 }

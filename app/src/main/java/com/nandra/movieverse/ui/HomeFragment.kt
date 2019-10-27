@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.nandra.movieverse.R
 import com.nandra.movieverse.adapter.NowPlayingRecyclerViewAdapter
@@ -16,9 +17,6 @@ import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.viewmodel.SharedViewModel
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
@@ -86,14 +84,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun prepareHomeView() {
-        val job = Job()
-        val scope = CoroutineScope(Dispatchers.Main + job)
         if (sharedViewModel.isHomeDataHasLoaded){
             home_trending_card_slider.adapter = TrendingCardAdapter(sharedViewModel.listTrendingLive.value!!)
             home_now_playing_card_slider.adapter = NowPlayingRecyclerViewAdapter(sharedViewModel.listNowPlayingLive.value!!)
         }
         else {
-            scope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 sharedViewModel.requestHomeData()
             }
         }

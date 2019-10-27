@@ -36,14 +36,6 @@ class MyRepository(app: Application) {
         TMDBSearchApiService(interceptor)
     private val database = MovieverseDatabase.getInstance(app)
 
-    suspend fun fetchDiscoverMovieResponse(page: Int = 1) : Response<DiscoverResponse> {
-        return discoverService.getMovie("en-US", "popularity.desc", page)
-    }
-
-    suspend fun fetchDiscoverTVSeriesResponse(page: Int = 1) : Response<DiscoverResponse> {
-        return discoverService.getTVSeries("en-US", "popularity.desc", page)
-    }
-
     suspend fun fetchMovieDetailResponse(id: String, parameter: String = "videos,credits,images") : Response<DetailResponse> {
         return detailService.getMovieDetail(id, parameter)
     }
