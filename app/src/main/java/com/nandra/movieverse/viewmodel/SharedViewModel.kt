@@ -3,7 +3,6 @@ package com.nandra.movieverse.viewmodel
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.util.Log
 import androidx.lifecycle.*
 import com.nandra.movieverse.data.Listing
 import com.nandra.movieverse.database.FavoriteMovie
@@ -131,7 +130,6 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                 }
 
                 if (response.isSuccessful) {
-                    Log.d("DEBUG", "SUKSES")
                     val searchResult = response.body()?.results
                     searchResult?.run {
                         _searchResultList.postValue(this)
@@ -139,12 +137,10 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                         isSearchDataLoaded = true
                     }
                 } else {
-                    Log.d("DEBUG", "GAGAL")
                     isSearchDataLoaded = false
                     searchState.postValue(NetworkState.FAILED)
                 }
             } catch (exception: Exception) {
-                Log.d("DEBUG", "EXP")
                 isSearchDataLoaded = false
                 searchState.postValue(NetworkState.CANNOT_CONNECT)
             }
