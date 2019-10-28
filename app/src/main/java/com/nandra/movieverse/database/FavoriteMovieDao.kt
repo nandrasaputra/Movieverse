@@ -1,5 +1,6 @@
 package com.nandra.movieverse.database
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
@@ -7,6 +8,9 @@ import androidx.room.*
 interface FavoriteMovieDao {
     @Query("SELECT * FROM favorite_movie")
     fun getFavoriteMovieList() : LiveData<List<FavoriteMovie>>
+
+    @Query("SELECT * FROM favorite_movie")
+    fun getFavoriteMovieListCursor() : Cursor
 
     @Query("SELECT * FROM favorite_movie WHERE id = :movieId")
     suspend fun getFavoriteMovie(movieId: String) : FavoriteMovie?

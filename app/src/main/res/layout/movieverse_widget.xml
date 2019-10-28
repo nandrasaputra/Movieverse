@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/widget_margin"
+    android:background="@color/colorPureWhite">
+
+    <RelativeLayout
+        android:id="@+id/widget_header_holder"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:layout_centerHorizontal="true"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_logo"
+            android:layout_centerHorizontal="true"
+            tools:ignore="ContentDescription" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/widget_button_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/widget_header_holder"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/widget_button_movie"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/film_type_movie"
+            tools:ignore="ButtonStyle" />
+        <Button
+            android:id="@+id/widget_button_tv"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="TV Series"
+            tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
+    <StackView
+        android:id="@+id/widget_stack_view"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:layout_margin="8dp"
+        android:layout_below="@id/widget_button_holder"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:loopViews="true"/>
+
+</RelativeLayout>

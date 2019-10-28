@@ -18,4 +18,6 @@
     <dimen name="detail_text_overview_size">15sp</dimen>
 
     <dimen name="discover_round_radius">16dp</dimen>
+
+    <dimen name="widget_margin">8dp</dimen>
 </resources>

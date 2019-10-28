@@ -19,10 +19,10 @@
     <string name="title_favorite_id">"Favorit"</string>
     <string name="title_setting_id">"Pengaturan"</string>
 
-    <string name = "main_tab_1_title_en">"Movie"</string>
-    <string name = "main_tab_1_title_id">"Film"</string>
-    <string name = "main_tab_2_title_en">"TV Series"</string>
-    <string name = "main_tab_2_title_id">"Serial TV"</string>
+    <string name="main_tab_1_title_en">"Movie"</string>
+    <string name="main_tab_1_title_id">"Film"</string>
+    <string name="main_tab_2_title_en">"TV Series"</string>
+    <string name="main_tab_2_title_id">"Serial TV"</string>
 
     <string name="preferences_language_title_en">"Language"</string>
     <string name="preferences_language_title_id">"Bahasa"</string>
