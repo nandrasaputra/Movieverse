@@ -12,7 +12,6 @@ class MovieverseContentProvider : ContentProvider() {
     init {
         uriMatcher.addURI(AUTHORITY, "movie", MOVIE)
         uriMatcher.addURI(AUTHORITY, "tv", TV)
-
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
@@ -60,7 +59,7 @@ class MovieverseContentProvider : ContentProvider() {
     }
 
     companion object {
-        const val AUTHORITY = "com.nandra.movieverse.contentprovider.favorite"
+        const val AUTHORITY = "com.nandra.movieverse.provider"
         const val MOVIE = 1
         const val TV = 2
         val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)

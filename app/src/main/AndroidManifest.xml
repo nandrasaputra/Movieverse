@@ -34,9 +34,10 @@
         <activity android:name=".ui.YoutubePlayerActivity" />
 
         <provider
-            android:authorities="com.nandra.movieverse.contentprovider.favorite"
+            android:authorities="com.nandra.movieverse.provider"
             android:name=".contentprovider.MovieverseContentProvider"
-            android:readPermission="com.nandra.movieverse.READ_DATABASE"/>
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>
