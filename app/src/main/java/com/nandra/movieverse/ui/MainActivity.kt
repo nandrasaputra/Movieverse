@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.nandra.movieverse.R
+import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.util.setupWithNavController
 import com.nandra.movieverse.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -75,8 +76,16 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        currentLanguage = sharedPreferences?.getString(key, languageEnglishValue)
-        setBottomNavigationLabel(currentLanguage!!)
+        when (key) {
+            Constant.PREFERENCE_KEY_LANGUAGE -> {
+                currentLanguage = sharedPreferences?.getString(key, languageEnglishValue)
+                setBottomNavigationLabel(currentLanguage!!)
+            }
+            Constant.PREFERENCE_KEY_TODAY_RELEASES -> {
+            }
+            Constant.PREFERENCE_KEY_REMINDER -> {
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

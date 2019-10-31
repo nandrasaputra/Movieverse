@@ -24,13 +24,17 @@
     <string name="main_tab_2_title_en">"TV Series"</string>
     <string name="main_tab_2_title_id">"Serial TV"</string>
 
+    <string name="preferences_language_key">"language"</string>
     <string name="preferences_language_title_en">"Language"</string>
     <string name="preferences_language_title_id">"Bahasa"</string>
-    <string name="preferences_language_key">"language"</string>
     <string name="preferences_language_value_bahasaindonesia">"id-ID"</string>
     <string name="preferences_language_value_english">"en-US"</string>
     <string name="preferences_language_listpreferences_negative_text_en">"Cancel"</string>
     <string name="preferences_language_listpreferences_negative_text_id">"Batal"</string>
+
+    <string name="preferences_today_releases_key">"today"</string>
+
+    <string name="preferences_daily_reminder_key">"daily"</string>
 
     <string name="film_type_movie">"movie"</string>
     <string name="button_try_again_en">"Try Again"</string>
@@ -88,5 +92,6 @@
 
     <string name="search_no_item_en">Start Search Something!</string>
     <string name="search_no_item_id">Mulai Suatu Pencarian!</string>
+    <string name="settings">Settings</string>
 
 </resources>

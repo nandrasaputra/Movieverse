@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:key="@string/preferences_language_key"
-        android:title="@string/preferences_language_title_en"
-        android:entries="@array/language_option"
-        android:entryValues="@array/language_option_values"
-        android:icon="@drawable/ic_translate_black_24dp"
-        android:summary="%s"
-        android:defaultValue="@string/preferences_language_value_english" />
+    <PreferenceCategory
+        android:key="preference_category_general"
+        android:title="General"
+        android:icon="@drawable/ic_translate_black_24dp">
+        <ListPreference
+            android:key="@string/preferences_language_key"
+            android:title="@string/preferences_language_title_en"
+            android:entries="@array/language_option"
+            android:entryValues="@array/language_option_values"
+            android:summary="%s"
+            android:defaultValue="@string/preferences_language_value_english" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Notification"
+        android:key="preference_category_notification"
+        android:icon="@drawable/ic_notification">
+        <SwitchPreference
+            android:key="@string/preferences_daily_reminder_key"
+            android:title="Daily Reminder"
+            android:summary="Send a notification to return to the app"
+            android:defaultValue="false"/>
+        <SwitchPreference
+            android:key="@string/preferences_today_releases_key"
+            android:title="Today Releases Reminder"
+            android:summary="Send a today releases notification"
+            android:defaultValue="false"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

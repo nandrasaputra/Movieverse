@@ -9,6 +9,7 @@ object Constant {
     const val TV_FILM_TYPE = "tv"
     const val MOVIE_FILM_TYPE = "movie"
     const val LANGUAGE_ENGLISH_VALUE = "en-US"
+    const val LANGUAGE_INDONESIA_VALUE = "id-ID"
     const val EXTRA_YOUTUBE_KEY = "extra_key"
 
     const val STATE_NO_CONNECTION = 1
@@ -16,4 +17,16 @@ object Constant {
     const val STATE_SUCCESS = 3
     const val STATE_LOADING = 4
     const val STATE_NOSTATE = 5
+
+    const val PREFERENCE_KEY_LANGUAGE = "language"
+    const val PREFERENCE_KEY_TODAY_RELEASES = "today"
+    const val PREFERENCE_KEY_REMINDER = "daily"
+
+    const val NOTIFICATION_REMINDER_REQUEST_CODE = 101
+    const val NOTIFICATION_TODAY_RELEASE_REQUEST_CODE = 102
+    const val NOTIFICATION_REMINDER_ID = 111
+    const val NOTIFICATION_DAILY_RELEASE_ID = 112
+    const val NOTIFICATION_EXTRA_LANGUAGE = "language"
+    const val NOTIFICATION_CHANNEL_ID = "general_notification"
+    const val NOTIFICATION_CHANNEL_NAME = "Movieverse General Notification"
 }

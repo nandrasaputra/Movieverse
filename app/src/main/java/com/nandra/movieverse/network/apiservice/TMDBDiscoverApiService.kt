@@ -27,6 +27,12 @@ interface TMDBDiscoverApiService {
         @Query("page") page: Int
     ) : Response<DiscoverResponse>
 
+    @GET("movie")
+    suspend fun getSpecifiedDateReleaseMovie(
+        @Query("primary_release_date.gte") dateGte: String,
+        @Query("primary_release_date.lte") dateLte: String
+    ) : Response<DiscoverResponse>
+
     companion object {
         operator fun invoke(connectivityInterceptor: ConnectivityInterceptor) : TMDBDiscoverApiService {
             val requestInterceptor = Interceptor { chain ->
