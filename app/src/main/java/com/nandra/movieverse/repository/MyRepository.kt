@@ -88,6 +88,10 @@ class MyRepository(app: Application) {
         return searchService.searchTV(query, page)
     }
 
+    suspend fun todayReleases(date: String) : Response<DiscoverResponse> {
+        return discoverService.getSpecifiedDateReleaseMovie(date, date)
+    }
+
     fun discoverMovieData(scope: CoroutineScope): Listing<Film> {
         val sourceFactory = DiscoverMovieDataSourceFactory(scope, discoverService)
         val livePagedList = sourceFactory.toLiveData(pageSize = 30)

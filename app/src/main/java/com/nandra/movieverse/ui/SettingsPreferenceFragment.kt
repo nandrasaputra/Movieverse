@@ -19,11 +19,11 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
     private var currentLanguage: String? = ""
     private var isRemainderNotificationEnabled: Boolean? = false
     private var isTodayReleaseNotificationEnabled: Boolean? = false
-    lateinit var listPreference : ListPreference
-    lateinit var generalPreferenceCategory: PreferenceCategory
-    lateinit var notificationPreferenceCategory: PreferenceCategory
-    lateinit var dailySwitchPreference: SwitchPreference
-    lateinit var todayReleaseSwitchPreference: SwitchPreference
+    private lateinit var listPreference : ListPreference
+    private lateinit var generalPreferenceCategory: PreferenceCategory
+    private lateinit var notificationPreferenceCategory: PreferenceCategory
+    private lateinit var dailySwitchPreference: SwitchPreference
+    private lateinit var todayReleaseSwitchPreference: SwitchPreference
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var languageEnglishValue : String
 
@@ -87,7 +87,7 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
                 title = "Today Releases Reminder"
                 summary = "Send a today releases notification"
             }
-            setting_text.text = "Settings"
+            setting_text.text = getString(R.string.settings_en)
         } else {
             listPreference.apply{
                 negativeButtonText = getString(R.string.preferences_language_listpreferences_negative_text_id)
@@ -103,7 +103,7 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
                 title = "Pengingat Terbit Harian"
                 summary = "Kirim notifikasi harian film yang dirilis"
             }
-            setting_text.text = "Pengaturan"
+            setting_text.text = getString(R.string.settings_id)
         }
     }
 

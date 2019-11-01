@@ -4,7 +4,7 @@
     <PreferenceCategory
         android:key="preference_category_general"
         android:title="General"
-        android:icon="@drawable/ic_translate_black_24dp">
+        android:icon="@drawable/ic_mixer">
         <ListPreference
             android:key="@string/preferences_language_key"
             android:title="@string/preferences_language_title_en"

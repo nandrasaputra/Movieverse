@@ -20,7 +20,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:textColor="@color/colorBlueDarker"
-        android:text="@string/settings"
+        android:text="@string/settings_en"
         android:textSize="18sp"
         android:fontFamily="@font/lato_bold"/>
 

@@ -92,6 +92,7 @@
 
     <string name="search_no_item_en">Start Search Something!</string>
     <string name="search_no_item_id">Mulai Suatu Pencarian!</string>
-    <string name="settings">Settings</string>
+    <string name="settings_en">Settings</string>
+    <string name="settings_id">Pengaturan</string>
 
 </resources>
