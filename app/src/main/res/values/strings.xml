@@ -94,5 +94,6 @@
     <string name="search_no_item_id">Mulai Suatu Pencarian!</string>
     <string name="settings_en">Settings</string>
     <string name="settings_id">Pengaturan</string>
+    <string name="widget_no_data">No Data</string>
 
 </resources>

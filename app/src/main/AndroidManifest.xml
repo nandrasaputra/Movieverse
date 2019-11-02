@@ -12,15 +12,6 @@
         android:roundIcon="@mipmap/ic_movieverse_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver android:name=".widget.MovieverseWidget">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/movieverse_widget_info" />
-        </receiver>
 
         <activity
             android:name=".ui.MainActivity"
@@ -42,6 +33,18 @@
 
         <receiver android:name=".broadcastreceiver.ReminderAlarmReceiver" />
         <receiver android:name=".broadcastreceiver.TodayReleaseAlarmReceiver" />
+        <receiver android:name=".widget.MovieverseWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/movieverse_widget_info" />
+        </receiver>
+
+        <service android:name=".widget.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
