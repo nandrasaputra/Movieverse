@@ -6,9 +6,9 @@ Library such as Navigation, Room, ViewModel, Paging and LiveData. This app also 
 
 ## Preview
 <p float="left">
-  <img src="docs/movieverse_home.jpg" height="600" />
-  <img src="docs/movieverse_discover.jpg" height="600" />
-  <img src="docs/movieverse_gif_demo.gif" height="600" />
+  <img src="docs/movieverse_home.jpg" height="550" />
+  <img src="docs/movieverse_discover.jpg" height="550" />
+  <img src="docs/movieverse_gif_demo.gif" height="550" />
 </p>
 
 ## Prerequisites
@@ -84,6 +84,9 @@ android {
 ## Author
 
 Nandra Saputra - <a href='https://www.instagram.com/nandrasptr/'>@nandrasptr</a> on Instagram
+
+## APK File
+This app require Android 5.0 - Lolipop or higher to run, <a href='http://www.bit.ly/movieverse'>Download Link</a>
 
 ## License
 
