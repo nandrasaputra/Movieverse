@@ -84,3 +84,7 @@ android {
 ## Author
 
 Nandra Saputra - <a href='https://www.instagram.com/nandrasptr/'>@nandrasptr</a> on Instagram
+
+## License
+
+Apache 2.0. See the <a href='https://github.com/nandrasaputra/Movieverse/blob/master/LICENSE'>LICENSE</a> file for details.
