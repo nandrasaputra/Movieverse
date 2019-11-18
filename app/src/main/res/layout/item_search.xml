@@ -12,10 +12,11 @@
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/item_search_poster"
         android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:riv_corner_radius="16dp"
+        app:layout_constraintDimensionRatio="W, 3:2"
         android:scaleType="centerCrop"
         android:src="@drawable/img_back_portrait_default"/>
 
