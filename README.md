@@ -89,7 +89,7 @@ Nandra Saputra
 * <a href='https://www.linkedin.com/in/nandra-saputra-b90b78157/'>LinkedIn</a> Account
 
 ## Download Application - APK File
-This app require Android 5.0 - Lolipop or higher to run, <a href='http://www.bit.ly/movieverse'>Download Link</a>
+This app require Android 5.0 - Lolipop or higher to run, <a href='http://www.bit.ly/MovieverseNandra'>Download Link</a>
 
 ## License
 
