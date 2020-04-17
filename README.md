@@ -72,6 +72,7 @@ android {
 ## Built With
 
 <pre>
+<a href='https://developer.android.com/jetpack'>Android Jetpack</a> - Room, Navigation, Paging, LiveData etc.
 <a href='https://github.com/google/gson'>Gson</a> - A Java serialization/deserialization library to convert Java Objects into JSON and back.
 <a href='https://github.com/bumptech/glide'>Glide</a> - An image loading and caching library for Android focused on smooth scrolling.
 <a href='https://github.com/vinc3m1/RoundedImageView'>RoundedImageView</a> - A fast ImageView that supports rounded corners, ovals, and circles.
