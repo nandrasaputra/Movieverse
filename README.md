@@ -2,7 +2,7 @@
 
 # Movieverse
 Movieverse is a movie catalogue Android app, written in Kotlin and using Android <a href='https://developer.android.com/jetpack'>Jetpack</a>
-Library such as Navigation, Room, ViewModel, Paging and LiveData. This app also using Kotlin <a href='https://github.com/Kotlin/kotlinx.coroutines'>Coroutine</a> to perform asyncronous operation and using <a href='https://square.github.io/retrofit/'>Retrofit</a> to communicate to REST API. This app is developed in order to complete <a href='https://www.dicoding.com/academies/14'>Menjadi Android Developer Expert</a>, a <a href='https://www.dicoding.com/'>Dicoding</a> picodiploma course.
+Library such as Navigation, Room, ViewModel, Paging and LiveData. This app also using Kotlin <a href='https://github.com/Kotlin/kotlinx.coroutines'>Coroutine</a> to perform asyncronous operation and using <a href='https://square.github.io/retrofit/'>Retrofit</a> to communicate to REST API. This app is developed to submit <a href='https://www.dicoding.com/academies/14'>Menjadi Android Developer Expert</a> final project, a <a href='https://www.dicoding.com/'>Dicoding</a> picodiploma course.
 
 ## Preview
 <p float="left">
