@@ -398,13 +398,4 @@
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
-
-    <ProgressBar
-        android:id="@+id/detail_loading_indicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/detail_fragment_toolbar"
-        android:indeterminate="true"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

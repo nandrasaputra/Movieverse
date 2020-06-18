@@ -327,19 +327,16 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
     private fun handleState(state: Int) {
         when(state){
             Constant.STATE_NO_CONNECTION -> {
-                detail_loading_indicator.visibility = View.GONE
                 detail_shimmer.stopShimmer()
                 detail_shimmer.visibility = View.GONE
                 Toast.makeText(activity, "No Internet Connection", Toast.LENGTH_SHORT).show()
             }
             Constant.STATE_SERVER_ERROR -> {
-                detail_loading_indicator.visibility = View.GONE
                 detail_shimmer.stopShimmer()
                 detail_shimmer.visibility = View.GONE
                 Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show()
             }
             Constant.STATE_SUCCESS -> {
-                detail_loading_indicator.visibility = View.GONE
                 detail_shimmer.stopShimmer()
                 detail_shimmer.visibility = View.GONE
                 detail_cover.visibility = View.GONE
@@ -348,7 +345,6 @@ class DetailFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeLis
                 detail_cover.visibility = View.VISIBLE
                 detail_shimmer.visibility = View.VISIBLE
                 detail_shimmer.startShimmer()
-                detail_loading_indicator.visibility = View.VISIBLE
             }
         }
     }

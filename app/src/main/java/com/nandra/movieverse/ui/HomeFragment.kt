@@ -98,12 +98,10 @@ class HomeFragment : Fragment() {
     private fun checkLoadingState(state: Boolean) {
         if (state) {
             home_error_back.visibility = View.GONE
-            home_progress_bar.visibility = View.VISIBLE
             home_cover.visibility = View.VISIBLE
             home_shimmer.visibility = View.VISIBLE
             home_shimmer.startShimmer()
         } else {
-            home_progress_bar.visibility = View.GONE
             home_shimmer.stopShimmer()
             home_shimmer.visibility = View.GONE
             home_cover.visibility = View.GONE
