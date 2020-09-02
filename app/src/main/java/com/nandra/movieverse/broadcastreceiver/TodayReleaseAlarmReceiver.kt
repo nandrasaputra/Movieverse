@@ -28,29 +28,20 @@ class TodayReleaseAlarmReceiver : BroadcastReceiver() {
         val notificationJob = Job()
         val scope = CoroutineScope(Dispatchers.IO + notificationJob)
         val repository = MyRepository(context!!.applicationContext as Application)
-        val language = intent?.getStringExtra(Constant.NOTIFICATION_EXTRA_LANGUAGE)!!
-        val titleText = generateNotificationTitle(language)
+        val titleText = generateNotificationTitle()
         scope.launch {
             try {
                 val response = repository.todayReleases(getTodayDate())
                 if (response.isSuccessful) {
                     val data = response.body()!!.results
                     val totalResult = response.body()!!.totalResults
-                    val contentText = generateNotificationContent(data, totalResult, language)
+                    val contentText = generateNotificationContent(data, totalResult)
                     prepareNotification(context, titleText, contentText)
                 } else {
-                    if (language == Constant.LANGUAGE_ENGLISH_VALUE) {
-                        prepareNotification(context, titleText, "Failed to retrive today release data")
-                    } else {
-                        prepareNotification(context, titleText, "Gagal mendapatkan data rilis hari ini")
-                    }
+                    prepareNotification(context, titleText, "Failed to retrive today release data")
                 }
             } catch (exception: Exception) {
-                if (language == Constant.LANGUAGE_ENGLISH_VALUE) {
-                    prepareNotification(context, titleText, "Failed to connect to server")
-                } else {
-                    prepareNotification(context, titleText, "Gagal terhubung ke server")
-                }
+                prepareNotification(context, titleText, "Failed to connect to server")
             }
         }
     }
@@ -80,12 +71,8 @@ class TodayReleaseAlarmReceiver : BroadcastReceiver() {
         notificationManager.notify(Constant.NOTIFICATION_DAILY_RELEASE_ID, notificationCompatBuilder.build())
     }
 
-    private fun generateNotificationTitle(language: String) : String {
-        return if (language == Constant.LANGUAGE_ENGLISH_VALUE) {
-            "Movieverse: Today Releases"
-        } else {
-            "Movieverse: Rilis Hari Ini"
-        }
+    private fun generateNotificationTitle() : String {
+        return "Movieverse: Today Releases"
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -94,43 +81,23 @@ class TodayReleaseAlarmReceiver : BroadcastReceiver() {
         return SimpleDateFormat("yyyy-MM-dd").format(todayDate)
     }
 
-    private fun generateNotificationContent(list: List<Film>, totalResult: Int, language: String) : String {
+    private fun generateNotificationContent(list: List<Film>, totalResult: Int) : String {
         return when {
             totalResult == 1 -> {
-                return if (language == Constant.LANGUAGE_ENGLISH_VALUE) {
-                    "No movie release today"
-                } else {
-                    "Tidak ada film yang rilis hari ini"
-                }
+                return "No movie release today"
             }
             totalResult == 1 -> {
-                return if (language == Constant.LANGUAGE_ENGLISH_VALUE) {
-                    list[0].title + " release today"
-                } else {
-                    list[0].title + " rilis hari ini"
-                }
+                return list[0].title + " release today"
             }
             totalResult == 2 -> {
-                return if (language == Constant.LANGUAGE_ENGLISH_VALUE) {
-                    list[0].title + " & " + list[1].title + " release today"
-                } else {
-                    list[0].title + " & " + list[1].title + " rilis hari ini"
-                }
+                return list[0].title + " & " + list[1].title + " release today"
             }
             totalResult == 3 -> {
-                return if (language == Constant.LANGUAGE_ENGLISH_VALUE) {
-                    list[0].title + ", " + list[1].title + " & " + list[2].title + " release today"
-                } else {
-                    list[0].title + ", " + list[1].title + " & " + list[2].title + " rilis hari ini"
-                }
+                return list[0].title + ", " + list[1].title + " & " + list[2].title + " release today"
             }
             totalResult > 3 -> {
                 val filmLeft = list.size - 3
-                return if (language == Constant.LANGUAGE_ENGLISH_VALUE) {
-                    list[0].title + ", " + list[1].title + ", " + list[2].title + " & " + filmLeft + " other film, release today"
-                } else {
-                    list[0].title + ", " + list[1].title + ", " + list[2].title + " & " + filmLeft + " film lainnya, rilis hari ini"
-                }
+                return list[0].title + ", " + list[1].title + ", " + list[2].title + " & " + filmLeft + " other film, release today"
             }
             else -> {""}
         }

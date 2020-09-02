@@ -9,7 +9,6 @@ import com.nandra.movieverse.database.FavoriteMovie
 import com.nandra.movieverse.database.FavoriteTV
 import com.nandra.movieverse.network.Film
 import com.nandra.movieverse.network.response.DetailResponse
-import com.nandra.movieverse.network.response.YandexResponse
 import com.nandra.movieverse.repository.MyRepository
 import com.nandra.movieverse.util.Constant
 import com.nandra.movieverse.util.NetworkState
@@ -20,7 +19,6 @@ import kotlinx.coroutines.launch
 
 class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
-    var currentLanguage: String = ""
     var isHomeDataHasLoaded: Boolean = false
     var isSearchDataLoaded: Boolean = false
     private var homeJob : Job? = null
@@ -38,9 +36,6 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     val detailFilm: LiveData<DetailResponse>
         get() = _detailFilm
     private val _detailFilm = MutableLiveData<DetailResponse>()
-    val detailFilmTranslated: LiveData<YandexResponse>
-        get() = _detailFilmTranslated
-    private val _detailFilmTranslated = MutableLiveData<YandexResponse>()
 
     var movieFavoriteList = repository.getFavoriteMovieList()
     var tvFavoriteList = repository.getFavoriteTVList()
@@ -62,12 +57,12 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private val _listTrendingLive = MutableLiveData<ArrayList<Film>>()
     private val _listNowPlayingLive = MutableLiveData<List<Film>>()
 
-    private val discoverMovieLiveData = MutableLiveData<Listing<Film>>(repository.discoverMovieData(viewModelScope))
+    private val discoverMovieLiveData = MutableLiveData(repository.discoverMovieData(viewModelScope))
     val discoverMoviePagingListLiveData = Transformations.switchMap(discoverMovieLiveData) {it.pagedList}
     val discoverMovieNetworkStateLiveData = Transformations.switchMap(discoverMovieLiveData) {it.networkState}
     val discoverMovieIsInitialDataLoadedLiveData = Transformations.switchMap(discoverMovieLiveData) {it.initialState}
 
-    private val discoverTVLiveData = MutableLiveData<Listing<Film>>(repository.discoverTVData(viewModelScope))
+    private val discoverTVLiveData = MutableLiveData(repository.discoverTVData(viewModelScope))
     val discoverTVPagingListLiveData = Transformations.switchMap(discoverTVLiveData) {it.pagedList}
     val discoverTVNetworkStateLiveData = Transformations.switchMap(discoverTVLiveData) {it.networkState}
     val discoverTVIsInitialDataLoadedLiveData = Transformations.switchMap(discoverTVLiveData) {it.initialState}
@@ -213,15 +208,8 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
                 if (response.isSuccessful) {
                     val film = response.body()
-                    val translateResponse = repository.translateText(listOf(film!!.overview, film.genres.getStringGenre()))
-                    if (translateResponse.isSuccessful) {
-                        val translatedFilm = translateResponse.body()
-                        _detailFilm.postValue(film)
-                        _detailFilmTranslated.postValue(translatedFilm)
-                        detailState.postValue(Constant.STATE_SUCCESS)
-                    } else {
-                        detailState.postValue(Constant.STATE_SERVER_ERROR)
-                    }
+                    _detailFilm.postValue(film)
+                    detailState.postValue(Constant.STATE_SUCCESS)
                 } else {
                     detailState.postValue(Constant.STATE_SERVER_ERROR)
                 }
@@ -232,7 +220,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun saveToFavorite(data: DetailResponse, filmType: String, genreIndonesia: String, overviewIndonesia: String) {
+    fun saveToFavorite(data: DetailResponse, filmType: String) {
         roomJob = viewModelScope.launch(Dispatchers.IO) {
             roomState.postValue(RoomState.Loading)
             try {
@@ -245,9 +233,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                         data.voteAverage.toString(),
                         filmType,
                         data.genres.getStringGenre(),
-                        genreIndonesia,
-                        data.overview,
-                        overviewIndonesia
+                        data.overview
                     )
                     repository.saveMovieToFavorite(movie)
                     roomState.postValue(RoomState.Success)
@@ -260,9 +246,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
                         data.voteAverage.toString(),
                         filmType,
                         data.genres.getStringGenre(),
-                        genreIndonesia,
-                        data.overview,
-                        overviewIndonesia
+                        data.overview
                     )
                     repository.saveTVToFavorite(tv)
                     roomState.postValue(RoomState.Success)

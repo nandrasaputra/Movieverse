@@ -16,8 +16,6 @@ class FavoriteFragment : Fragment() {
 
     private lateinit var favoriteViewPagerAdapter: FavoriteViewPagerPageAdapter
     private lateinit var sharedPreferences: SharedPreferences
-    private var currentLanguage: String? = ""
-    private lateinit var languageEnglishValue : String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_favorite, container, false)
@@ -40,24 +38,16 @@ class FavoriteFragment : Fragment() {
             }
         })
         favorite_fragment_viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(favorite_fragment_tab_layout))
-        setTabItemTitle(currentLanguage!!)
+        setTabItemTitle()
     }
 
-    private fun setTabItemTitle(language: String) {
-        if (language == languageEnglishValue) {
-            favorite_fragment_tab_layout.getTabAt(0)?.text = getString(R.string.main_tab_1_title_en)
-            favorite_fragment_tab_layout.getTabAt(1)?.text = getString(R.string.main_tab_2_title_en)
-        } else {
-            favorite_fragment_tab_layout.getTabAt(0)?.text = getString(R.string.main_tab_1_title_id)
-            favorite_fragment_tab_layout.getTabAt(1)?.text = getString(R.string.main_tab_2_title_id)
-        }
+    private fun setTabItemTitle() {
+        favorite_fragment_tab_layout.getTabAt(0)?.text = getString(R.string.main_tab_1_title_en)
+        favorite_fragment_tab_layout.getTabAt(1)?.text = getString(R.string.main_tab_2_title_en)
     }
 
     private fun prepareSharedPreferences() {
-        languageEnglishValue = getString(R.string.preferences_language_value_english)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        currentLanguage = sharedPreferences.getString(getString(R.string.preferences_language_key),
-            getString(R.string.preferences_language_value_english))
     }
 
 

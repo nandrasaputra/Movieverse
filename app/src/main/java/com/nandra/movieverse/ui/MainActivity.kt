@@ -20,9 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private var currentNavController: LiveData<NavController>? = null
-    private var currentLanguage: String? = ""
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var languageEnglishValue : String
     private lateinit var viewModel: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,26 +31,19 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             setupBottomNavigationBar()
         }
         prepareSharedPreferences()
-        setBottomNavigationLabel(currentLanguage!!)
+        setBottomNavigationLabel()
         viewModel = ViewModelProvider(this)[SharedViewModel::class.java]
-        viewModel.isOnDetailFragment.observe(this, Observer {
+        viewModel.isOnDetailFragment.observe(this) {
             handleBottomNavigationAppearance(it)
-        })
+        }
     }
 
-    private fun setBottomNavigationLabel(language: String) {
+    private fun setBottomNavigationLabel() {
         val menu = main_activity_bottom_navigation.menu
-        if (language == languageEnglishValue) {
-            menu[0].title = getString(R.string.title_home_en)
-            menu[1].title = getString(R.string.title_discover_en)
-            menu[2].title = getString(R.string.title_favorite_en)
-            menu[3].title = getString(R.string.title_setting_en)
-        } else {
-            menu[0].title = getString(R.string.title_home_id)
-            menu[1].title = getString(R.string.title_discover_id)
-            menu[2].title = getString(R.string.title_favorite_id)
-            menu[3].title = getString(R.string.title_setting_id)
-        }
+        menu[0].title = getString(R.string.title_home_en)
+        menu[1].title = getString(R.string.title_discover_en)
+        menu[2].title = getString(R.string.title_favorite_en)
+        menu[3].title = getString(R.string.title_setting_en)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -77,10 +68,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            Constant.PREFERENCE_KEY_LANGUAGE -> {
-                currentLanguage = sharedPreferences?.getString(key, languageEnglishValue)
-                setBottomNavigationLabel(currentLanguage!!)
-            }
             Constant.PREFERENCE_KEY_TODAY_RELEASES -> {
             }
             Constant.PREFERENCE_KEY_REMINDER -> {
@@ -93,11 +80,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     private fun prepareSharedPreferences() {
-        languageEnglishValue = getString(R.string.preferences_language_value_english)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-        currentLanguage = sharedPreferences.getString(getString(R.string.preferences_language_key),
-            getString(R.string.preferences_language_value_english))
     }
 
     private fun handleBottomNavigationAppearance(value: Boolean) {

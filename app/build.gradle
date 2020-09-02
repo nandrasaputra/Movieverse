@@ -13,8 +13,8 @@ def apiProperties = new Properties()
 apiProperties.load(new FileInputStream(apiPropertiesFile))
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 30
+    buildToolsVersion "29.0.3"
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
@@ -25,12 +25,11 @@ android {
     defaultConfig {
         applicationId 'com.nandra.movieverse'
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "TMDB_API_KEY", apiProperties["TMDB_API_KEY"])
-        buildConfigField("String", "YANDEX_API_KEY", apiProperties["YANDEX_API_KEY"])
         buildConfigField("String", "GOOGLE_YOUTUBE_API", apiProperties["GOOGLE_YOUTUBE_API"])
     }
     buildTypes {
@@ -53,7 +52,6 @@ dependencies {
     def lifecycleVersion = "2.2.0-rc01"
     def navVersion = "2.2.0-rc01"
     def coroutinesVersion = "1.1.1"
-    def gsonVersion = "2.8.5"
     def room_version = "2.2.1"
     def shimmer_version = "0.4.0"
     def paging_version = "2.1.0"
@@ -83,9 +81,6 @@ dependencies {
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-
-    //Gson
-    implementation "com.google.code.gson:gson:$gsonVersion"
 
     //ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"

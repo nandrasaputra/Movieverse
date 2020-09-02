@@ -15,7 +15,6 @@ import com.nandra.movieverse.network.Film
 import com.nandra.movieverse.network.apiservice.*
 import com.nandra.movieverse.network.response.DetailResponse
 import com.nandra.movieverse.network.response.DiscoverResponse
-import com.nandra.movieverse.network.response.YandexResponse
 import kotlinx.coroutines.CoroutineScope
 import retrofit2.Response
 
@@ -26,8 +25,6 @@ class MyRepository(app: Application) {
         TMDBDiscoverApiService(interceptor)
     private val detailService =
         TMDBDetailApiService(interceptor)
-    private val yandexService =
-        YandexTranslationApiService(interceptor)
     private val trendingService =
         TMDBTrendingApiService(interceptor)
     private val nowPlayingService =
@@ -42,10 +39,6 @@ class MyRepository(app: Application) {
 
     suspend fun fetchTVDetailResponse(id: String, parameter: String = "videos,credits,images") : Response<DetailResponse> {
         return detailService.getTVDetail(id, parameter)
-    }
-
-    suspend fun translateText(text: List<String>) : Response<YandexResponse> {
-        return yandexService.translateText("en-id", text)
     }
 
     suspend fun saveMovieToFavorite(movie: FavoriteMovie) {

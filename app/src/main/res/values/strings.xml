@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Movieverse</string>
 
     <string name="toolbar_detail_title">"Detail"</string>
@@ -15,22 +15,14 @@
     <string name="title_discover_en">"Discover"</string>
     <string name="title_favorite_en">"Favorite"</string>
     <string name="title_setting_en">"Setting"</string>
-    <string name="title_discover_id">"Jelajah"</string>
-    <string name="title_favorite_id">"Favorit"</string>
-    <string name="title_setting_id">"Pengaturan"</string>
 
     <string name="main_tab_1_title_en">"Movie"</string>
-    <string name="main_tab_1_title_id">"Film"</string>
     <string name="main_tab_2_title_en">"TV Series"</string>
-    <string name="main_tab_2_title_id">"Serial TV"</string>
 
     <string name="preferences_language_key">"language"</string>
     <string name="preferences_language_title_en">"Language"</string>
-    <string name="preferences_language_title_id">"Bahasa"</string>
-    <string name="preferences_language_value_bahasaindonesia">"id-ID"</string>
     <string name="preferences_language_value_english">"en-US"</string>
     <string name="preferences_language_listpreferences_negative_text_en">"Cancel"</string>
-    <string name="preferences_language_listpreferences_negative_text_id">"Batal"</string>
 
     <string name="preferences_today_releases_key">"today"</string>
 
@@ -38,62 +30,44 @@
 
     <string name="film_type_movie">"movie"</string>
     <string name="button_try_again_en">"Try Again"</string>
-    <string name="button_try_again_id">"Coba Lagi"</string>
 
-    <string name="overview_not_available_id">"Ikhtisar Tidak Tersedia"</string>
     <string name="overview_not_available_en">"Overview Not Available"</string>
     <string name="detail_backdrop_cd">backdrop</string>
 
     <string name="favorite_text_add_to_favorite_en">"Add To Favorite"</string>
-    <string name="favorite_text_add_to_favorite_id">"Tambahkan Ke Favorit"</string>
     <string name="favorite_text_remove_to_favorite_en">"Remove From Favorite"</string>
-    <string name="favorite_text_remove_to_favorite_id">"Hapus Dari Favorit"</string>
 
     <string name="removed_from_favorite_en">Removed From Favorite</string>
-    <string name="removed_from_favorite_id">Dihapuskan Dari Favorit</string>
     <string name="detail_rating_mock">10 / 10</string>
     <string name="detail_vote_count_mock">From 1089 Votes</string>
     <string name="detail_add_to_fav_mock">"Add To\nFavorite"</string>
     <string name="detail_cast_en">Cast</string>
-    <string name="detail_cast_id">Pemeran</string>
     <string name="detail_overview_en">Overview</string>
-    <string name="detail_overview_id">Ikhtisar</string>
     <string name="detail_gallery_en">Gallery</string>
-    <string name="detail_gallery_id">Galeri</string>
     <string name="detail_videos_en">Videos</string>
-    <string name="detail_videos_id">Video</string>
     <string name="cd_images">images</string>
     <string name="video_thumbnail">video_thumbnail</string>
     <string name="heart_icon_picture">heath_icon</string>
     <string name="cd_home">Home</string>
     <string name="title_home_en">Home</string>
-    <string name="title_home_id">Utama</string>
     <string name="cd_trending_image">trending_image</string>
     <string name="cd_trending_poster">trending_poster</string>
     <string name="cd_error_image">error_image</string>
     <string name="cd_no_internet_connection">No Internet Connection</string>
     <string name="no_internet_connection_en">No Internet Connection</string>
-    <string name="no_internet_connection_id">Tidak Ada Koneksi Internet</string>
 
     <string name="movie_search_view_query_hint_en">Search In Movie</string>
-    <string name="movie_search_view_query_hint_id">Cari Didalam Film</string>
     <string name="tv_search_view_query_hint_en">Search In TV</string>
-    <string name="tv_search_view_query_hint_id">Cari Didalam Serial TV</string>
 
     <string name="home_now_playing_en">On Cinema</string>
-    <string name="home_now_playing_id">Sedang Tayang Di Bioskop</string>
     <string name="home_trending_en">Now Trending</string>
-    <string name="home_trending_id" tools:ignore="Typos">Sedang Populer</string>
 
     <string name="favorite_no_item_en">No Item</string>
-    <string name="favorite_no_item_id">Tidak Ada Item</string>
     <string name="cd_toolbar">toolbar</string>
     <string name="cd_retry">retry</string>
 
     <string name="search_no_item_en">Start Search Something!</string>
-    <string name="search_no_item_id">Mulai Suatu Pencarian!</string>
     <string name="settings_en">Settings</string>
-    <string name="settings_id">Pengaturan</string>
     <string name="widget_no_data">No Data</string>
 
 </resources>

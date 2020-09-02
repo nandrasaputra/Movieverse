@@ -12,7 +12,5 @@ data class FavoriteTV (
     val rating: String,
     val filmType: String,
     val genreEnglish: String,
-    val genreIndonesia: String,
-    val overviewEnglish: String,
-    val overviewIndonesia: String
+    val overviewEnglish: String
 ) : FilmData()

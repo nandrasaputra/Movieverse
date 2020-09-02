@@ -19,9 +19,6 @@ import kotlinx.android.synthetic.main.fragment_favorite_movie.*
 
 class FavoriteMovieFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener, FavoriteMovieRecyclerViewAdapter.IFavoriteMovieRecyclerViewAdapterCallback {
 
-    private var currentLanguage: String = ""
-    private lateinit var languageEnglishValue : String
-    private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
     private var listMovie: List<FavoriteMovie> = listOf()
@@ -41,15 +38,15 @@ class FavoriteMovieFragment : Fragment(), SharedPreferences.OnSharedPreferenceCh
         sharedViewModel = activity?.run {
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
-        sharedViewModel.movieFavoriteList.observe(this, Observer {
+        sharedViewModel.movieFavoriteList.observe(this) {
             listMovie = it
             handleFavoriteMovieListChanged(it)
-        })
+        }
     }
 
     private fun attemptPrepareView() {
         checkFavoriteListItem(sharedViewModel.movieFavoriteList.value)
-        favorite_movie_recyclerview.swapAdapter(FavoriteMovieRecyclerViewAdapter(listMovie, currentLanguage, this), true)
+        favorite_movie_recyclerview.swapAdapter(FavoriteMovieRecyclerViewAdapter(listMovie, this), true)
     }
 
     private fun checkFavoriteListItem(data: List<FavoriteMovie>?) {
@@ -57,10 +54,7 @@ class FavoriteMovieFragment : Fragment(), SharedPreferences.OnSharedPreferenceCh
             data == null -> favorite_movie_no_item_back.visibility = View.GONE
             data.isEmpty() -> {
                 favorite_movie_no_item_back.visibility = View.VISIBLE
-                if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
-                    favorite_movie_no_item_text.text = getString(R.string.favorite_no_item_en)
-                else
-                    favorite_movie_no_item_text.text = getString(R.string.favorite_no_item_id)
+                favorite_movie_no_item_text.text = getString(R.string.favorite_no_item_en)
             }
             else -> favorite_movie_no_item_back.visibility = View.GONE
         }
@@ -68,7 +62,7 @@ class FavoriteMovieFragment : Fragment(), SharedPreferences.OnSharedPreferenceCh
 
     private fun handleFavoriteMovieListChanged(data: List<FavoriteMovie>) {
         checkFavoriteListItem(data)
-        favorite_movie_recyclerview.swapAdapter(FavoriteMovieRecyclerViewAdapter(data, currentLanguage, this), true)
+        favorite_movie_recyclerview.swapAdapter(FavoriteMovieRecyclerViewAdapter(data, this), true)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -79,16 +73,11 @@ class FavoriteMovieFragment : Fragment(), SharedPreferences.OnSharedPreferenceCh
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        currentLanguage = sharedPreferences?.getString(key, languageEnglishValue)!!
         attemptPrepareView()
     }
 
     private fun prepareSharedPreferences() {
-        preferenceLanguageKey = getString(R.string.preferences_language_key)
-        languageEnglishValue = getString(R.string.preferences_language_value_english)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        currentLanguage = sharedPreferences.getString(preferenceLanguageKey,
-            languageEnglishValue)!!
     }
 
     override fun onAdapterDeleteButtonPressed(position: Int) {

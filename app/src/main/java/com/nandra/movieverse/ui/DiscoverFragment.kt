@@ -21,8 +21,6 @@ class DiscoverFragment : Fragment() {
 
     private lateinit var discoverViewPagerPageAdapter: DiscoverViewPagerPageAdapter
     private lateinit var sharedPreferences: SharedPreferences
-    private var currentLanguage: String? = ""
-    private lateinit var languageEnglishValue : String
     private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,7 +48,7 @@ class DiscoverFragment : Fragment() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                adjustQueryHintText(currentLanguage!!, tab?.position!!)
+                adjustQueryHintText(tab?.position!!)
                 discover_fragment_viewpager.currentItem = tab.position
             }
         })
@@ -65,41 +63,25 @@ class DiscoverFragment : Fragment() {
             val action = DiscoverFragmentDirections.actionDiscoverFragmentToSearchFragment(type)
             findNavController().navigate(action)
         }
-        setTabItemTitle(currentLanguage!!)
-        adjustQueryHintText(currentLanguage!!, discover_fragment_tab_layout.selectedTabPosition)
+        setTabItemTitle()
+        adjustQueryHintText(discover_fragment_tab_layout.selectedTabPosition)
         sharedViewModel.retryLoadAllFailed()
     }
 
-    private fun setTabItemTitle(language: String) {
-        if (language == languageEnglishValue) {
-            discover_fragment_tab_layout.getTabAt(0)?.text = getString(R.string.main_tab_1_title_en)
-            discover_fragment_tab_layout.getTabAt(1)?.text = getString(R.string.main_tab_2_title_en)
-        } else {
-            discover_fragment_tab_layout.getTabAt(0)?.text = getString(R.string.main_tab_1_title_id)
-            discover_fragment_tab_layout.getTabAt(1)?.text = getString(R.string.main_tab_2_title_id)
-        }
+    private fun setTabItemTitle() {
+        discover_fragment_tab_layout.getTabAt(0)?.text = getString(R.string.main_tab_1_title_en)
+        discover_fragment_tab_layout.getTabAt(1)?.text = getString(R.string.main_tab_2_title_en)
     }
 
-    private fun adjustQueryHintText(language: String, tabPosition: Int) {
+    private fun adjustQueryHintText(tabPosition: Int) {
         if (tabPosition == 0) {
-            if (language == languageEnglishValue) {
-                discover_searchview.queryHint = getString(R.string.movie_search_view_query_hint_en)
-            } else {
-                discover_searchview.queryHint = getString(R.string.movie_search_view_query_hint_id)
-            }
+            discover_searchview.queryHint = getString(R.string.movie_search_view_query_hint_en)
         } else {
-            if (language == languageEnglishValue) {
-                discover_searchview.queryHint = getString(R.string.tv_search_view_query_hint_en)
-            } else {
-                discover_searchview.queryHint = getString(R.string.tv_search_view_query_hint_id)
-            }
+            discover_searchview.queryHint = getString(R.string.tv_search_view_query_hint_en)
         }
     }
 
     private fun prepareSharedPreferences() {
-        languageEnglishValue = getString(R.string.preferences_language_value_english)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        currentLanguage = sharedPreferences.getString(getString(R.string.preferences_language_key),
-            getString(R.string.preferences_language_value_english))
     }
 }

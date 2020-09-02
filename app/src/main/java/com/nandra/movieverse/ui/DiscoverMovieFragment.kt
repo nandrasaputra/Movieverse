@@ -20,9 +20,6 @@ import kotlinx.android.synthetic.main.fragment_discover_movie.*
 
 class DiscoverMovieFragment : Fragment() {
 
-    private var currentLanguage: String = ""
-    private lateinit var languageEnglishValue : String
-    private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var discoverMoviePagedListAdapter: DiscoverPagedListAdapter
@@ -36,14 +33,12 @@ class DiscoverMovieFragment : Fragment() {
         sharedViewModel = activity?.run {
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
-        sharedViewModel.discoverMoviePagingListLiveData.observe(this, Observer {
-            discoverMoviePagedListAdapter.submitList(it)
-        })
-        sharedViewModel.discoverMovieNetworkStateLiveData.observe(this, Observer {
+        sharedViewModel.discoverMoviePagingListLiveData.observe(this) { discoverMoviePagedListAdapter.submitList(it) }
+        sharedViewModel.discoverMovieNetworkStateLiveData.observe(this) {
             discoverMoviePagedListAdapter.setNetworkState(it)
             handleNetworkState(it)
-        })
-        sharedViewModel.discoverMovieIsInitialDataLoadedLiveData.observe(this, Observer {  })
+        }
+        sharedViewModel.discoverMovieIsInitialDataLoadedLiveData.observe(this) {  }
         discoverMoviePagedListAdapter = DiscoverPagedListAdapter(Constant.MOVIE_FILM_TYPE) {sharedViewModel.retryLoadAllFailed()}
     }
 
@@ -94,10 +89,7 @@ class DiscoverMovieFragment : Fragment() {
                         sharedViewModel.retryLoadAllFailed()
                     }
                 } else {
-                    if (currentLanguage == languageEnglishValue)
-                        Toast.makeText(activity, "Cannot Get Data From Server", Toast.LENGTH_SHORT).show()
-                    else
-                        Toast.makeText(activity, "Data Tidak Bisa Diambil Dari Server", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Cannot Get Data From Server", Toast.LENGTH_SHORT).show()
                 }
             }
             NetworkState.CANNOT_CONNECT -> {
@@ -109,21 +101,14 @@ class DiscoverMovieFragment : Fragment() {
                         sharedViewModel.retryLoadAllFailed()
                     }
                 } else {
-                    if (currentLanguage == languageEnglishValue)
-                        Toast.makeText(activity, "Cannot Connect To Server", Toast.LENGTH_SHORT).show()
-                    else
-                        Toast.makeText(activity, "Tidak Dapat Terhubung Ke Server", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Cannot Connect To Server", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
     private fun prepareSharedPreferences() {
-        preferenceLanguageKey = getString(R.string.preferences_language_key)
-        languageEnglishValue = getString(R.string.preferences_language_value_english)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        currentLanguage = sharedPreferences.getString(preferenceLanguageKey,
-            languageEnglishValue)!!
     }
 
     private fun checkErrorState() {
@@ -140,15 +125,8 @@ class DiscoverMovieFragment : Fragment() {
     }
 
     private fun viewErrorLanguageAdjustment() {
-        if (currentLanguage == languageEnglishValue){
-            discover_movie_error_button.text = getString(R.string.button_try_again_en)
-            discover_movie_error_text.text = getString(R.string.no_internet_connection_en)
-        }
-        else {
-            discover_movie_error_button.text = getString(R.string.button_try_again_id)
-            discover_movie_error_text.text = getString(R.string.no_internet_connection_id)
-        }
-
+        discover_movie_error_button.text = getString(R.string.button_try_again_en)
+        discover_movie_error_text.text = getString(R.string.no_internet_connection_en)
     }
 
 }

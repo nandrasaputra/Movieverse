@@ -22,9 +22,6 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
-    private var currentLanguage: String = ""
-    private lateinit var languageEnglishValue : String
-    private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -33,18 +30,18 @@ class HomeFragment : Fragment() {
         sharedViewModel = activity?.run {
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
-        sharedViewModel.listTrendingLive.observe(this, Observer {
+        sharedViewModel.listTrendingLive.observe(this) {
             home_trending_card_slider.adapter = TrendingCardAdapter(it)
-        })
-        sharedViewModel.listNowPlayingLive.observe(this, Observer {
+        }
+        sharedViewModel.listNowPlayingLive.observe(this) {
             home_now_playing_card_slider.adapter = NowPlayingRecyclerViewAdapter(it)
-        })
-        sharedViewModel.isHomeError.observe(this, Observer {
+        }
+        sharedViewModel.isHomeError.observe(this) {
             handleError(it)
-        })
-        sharedViewModel.isHomeLoading.observe(this, Observer {
+        }
+        sharedViewModel.isHomeLoading.observe(this) {
             checkLoadingState(it)
-        })
+        }
     }
 
     override fun onResume() {
@@ -67,11 +64,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun prepareSharedPreferences() {
-        preferenceLanguageKey = getString(R.string.preferences_language_key)
-        languageEnglishValue = getString(R.string.preferences_language_value_english)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        currentLanguage = sharedPreferences.getString(preferenceLanguageKey,
-            languageEnglishValue)!!
     }
 
     private fun attemptPrepareView() {
@@ -121,14 +114,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun viewLanguageAdjustment() {
-        if (currentLanguage == languageEnglishValue){
-            home_error_button.text = getString(R.string.button_try_again_en)
-            home_error_text.text = getString(R.string.no_internet_connection_en)
-        }
-        else {
-            home_error_button.text = getString(R.string.button_try_again_id)
-            home_error_text.text = getString(R.string.no_internet_connection_id)
-        }
+        home_error_button.text = getString(R.string.button_try_again_en)
+        home_error_text.text = getString(R.string.no_internet_connection_en)
     }
     
     private fun setupNowPlaying() {
@@ -136,13 +123,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun languageAdjustment() {
-        if (currentLanguage == languageEnglishValue) {
-            home_now_playing_text.text = resources.getString(R.string.home_now_playing_en)
-            home_now_trending_text.text = resources.getString(R.string.home_trending_en)
-        }
-        else {
-            home_now_playing_text.text = resources.getString(R.string.home_now_playing_id)
-            home_now_trending_text.text = resources.getString(R.string.home_trending_id)
-        }
+        home_now_playing_text.text = resources.getString(R.string.home_now_playing_en)
+        home_now_trending_text.text = resources.getString(R.string.home_trending_en)
     }
 }

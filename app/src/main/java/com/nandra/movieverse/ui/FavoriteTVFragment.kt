@@ -35,10 +35,10 @@ class FavoriteTVFragment : Fragment(), SharedPreferences.OnSharedPreferenceChang
         sharedViewModel = activity?.run {
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
-        sharedViewModel.tvFavoriteList.observe(this, Observer {
+        sharedViewModel.tvFavoriteList.observe(this) {
             tvList = it
             handleFavoriteTVListChanged(it)
-        })
+        }
     }
 
     override fun onResume() {
@@ -49,7 +49,7 @@ class FavoriteTVFragment : Fragment(), SharedPreferences.OnSharedPreferenceChang
 
     private fun attemptPrepareView() {
         checkFavoriteListItem(sharedViewModel.tvFavoriteList.value)
-        favorite_tv_recyclerview.swapAdapter(FavoriteTVRecyclerViewAdapter(tvList, currentLanguage, this), true)
+        favorite_tv_recyclerview.swapAdapter(FavoriteTVRecyclerViewAdapter(tvList, this), true)
     }
 
     private fun checkFavoriteListItem(data: List<FavoriteTV>?) {
@@ -57,10 +57,7 @@ class FavoriteTVFragment : Fragment(), SharedPreferences.OnSharedPreferenceChang
             data == null -> favorite_tv_no_item_back.visibility = View.GONE
             data.isEmpty() -> {
                 favorite_tv_no_item_back.visibility = View.VISIBLE
-                if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE)
-                    favorite_tv_no_item_text.text = getString(R.string.favorite_no_item_en)
-                else
-                    favorite_tv_no_item_text.text = getString(R.string.favorite_no_item_id)
+                favorite_tv_no_item_text.text = getString(R.string.favorite_no_item_en)
             }
             else -> favorite_tv_no_item_back.visibility = View.GONE
         }
@@ -68,7 +65,7 @@ class FavoriteTVFragment : Fragment(), SharedPreferences.OnSharedPreferenceChang
 
     private fun handleFavoriteTVListChanged(tv: List<FavoriteTV>) {
         checkFavoriteListItem(tv)
-        favorite_tv_recyclerview.swapAdapter(FavoriteTVRecyclerViewAdapter(tv, currentLanguage, this), true)
+        favorite_tv_recyclerview.swapAdapter(FavoriteTVRecyclerViewAdapter(tv, this), true)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

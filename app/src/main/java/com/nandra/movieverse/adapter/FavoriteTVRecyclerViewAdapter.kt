@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.item_favorite_list.view.*
 
 class FavoriteTVRecyclerViewAdapter(
     private var dataList : List<FavoriteTV>,
-    private var currentLanguage : String,
     private val callback: IFavoriteTVRecyclerViewAdapterCallback
 ) : RecyclerView.Adapter<FavoriteTVRecyclerViewAdapter.MyViewHolder>() {
 
@@ -43,23 +42,13 @@ class FavoriteTVRecyclerViewAdapter(
                 .apply(RequestOptions().override(200, 300))
                 .into(holder.itemView.item_image_movie_poster)
         }
-        if(currentLanguage == Constant.LANGUAGE_ENGLISH_VALUE){
-            if(currentMovie.overviewEnglish == ""){
-                val text = holder.itemView.context.getString(R.string.overview_not_available_en)
-                holder.itemView.item_text_movie_overview.text = text
-            } else {
-                holder.itemView.item_text_movie_overview.text = currentMovie.overviewEnglish
-            }
-            holder.itemView.item_text_movie_genre.text = currentMovie.genreEnglish
+        if(currentMovie.overviewEnglish == ""){
+            val text = holder.itemView.context.getString(R.string.overview_not_available_en)
+            holder.itemView.item_text_movie_overview.text = text
         } else {
-            if(currentMovie.overviewIndonesia == ""){
-                val text = holder.itemView.context.getString(R.string.overview_not_available_id)
-                holder.itemView.item_text_movie_overview.text = text
-            } else {
-                holder.itemView.item_text_movie_overview.text = currentMovie.overviewIndonesia
-            }
-            holder.itemView.item_text_movie_genre.text = currentMovie.genreIndonesia
+            holder.itemView.item_text_movie_overview.text = currentMovie.overviewEnglish
         }
+        holder.itemView.item_text_movie_genre.text = currentMovie.genreEnglish
         holder.itemView.item_delete_fab.setOnClickListener {
             callback.onAdapterDeleteButtonPressed(holder.adapterPosition)
         }

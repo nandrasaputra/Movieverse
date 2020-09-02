@@ -11,7 +11,6 @@ import com.nandra.movieverse.R
 import com.nandra.movieverse.broadcastreceiver.ReminderAlarmReceiver
 import com.nandra.movieverse.broadcastreceiver.TodayReleaseAlarmReceiver
 import com.nandra.movieverse.util.Constant
-import kotlinx.android.synthetic.main.fragment_setting_preferences.*
 import java.util.*
 
 class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -19,8 +18,6 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
     private var currentLanguage: String? = ""
     private var isRemainderNotificationEnabled: Boolean? = false
     private var isTodayReleaseNotificationEnabled: Boolean? = false
-    private lateinit var listPreference : ListPreference
-    private lateinit var generalPreferenceCategory: PreferenceCategory
     private lateinit var notificationPreferenceCategory: PreferenceCategory
     private lateinit var dailySwitchPreference: SwitchPreference
     private lateinit var todayReleaseSwitchPreference: SwitchPreference
@@ -33,13 +30,10 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        listPreference = findPreference(getString(R.string.preferences_language_key))!!
-        generalPreferenceCategory = findPreference("preference_category_general")!!
         notificationPreferenceCategory = findPreference("preference_category_notification")!!
         dailySwitchPreference = findPreference("daily")!!
         todayReleaseSwitchPreference = findPreference("today")!!
         prepareSharedPreferences()
-        changePreferenceAttribute(currentLanguage!!)
     }
 
     override fun onDestroy() {
@@ -50,16 +44,6 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            Constant.PREFERENCE_KEY_LANGUAGE -> {
-                currentLanguage = sharedPreferences?.getString(key, languageEnglishValue)
-                if (isTodayReleaseNotificationEnabled!!) {
-                    setTodayReleaseNotification(isTodayReleaseNotificationEnabled!!, currentLanguage!!)
-                }
-                if (isRemainderNotificationEnabled!!) {
-                    setRemainderNotification(isRemainderNotificationEnabled!!, currentLanguage!!)
-                }
-                changePreferenceAttribute(currentLanguage!!)
-            }
             Constant.PREFERENCE_KEY_TODAY_RELEASES -> {
                 isTodayReleaseNotificationEnabled = sharedPreferences?.getBoolean(key, false)
                 setTodayReleaseNotification(isTodayReleaseNotificationEnabled!!, currentLanguage!!)
@@ -68,42 +52,6 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
                 isRemainderNotificationEnabled = sharedPreferences?.getBoolean(key, false)
                 setRemainderNotification(isRemainderNotificationEnabled!!, currentLanguage!!)
             }
-        }
-    }
-
-    private fun changePreferenceAttribute(language: String) {
-        if (language == languageEnglishValue) {
-            listPreference.run{
-                negativeButtonText = getString(R.string.preferences_language_listpreferences_negative_text_en)
-                title = getString(R.string.preferences_language_title_en)
-            }
-            generalPreferenceCategory.title = "General"
-            notificationPreferenceCategory.title = "Notification"
-            dailySwitchPreference.apply {
-                title = "Daily Reminder"
-                summary = "Send a notification to return to the app"
-            }
-            todayReleaseSwitchPreference.apply {
-                title = "Today Releases Reminder"
-                summary = "Send a today releases notification"
-            }
-            setting_text.text = getString(R.string.settings_en)
-        } else {
-            listPreference.apply{
-                negativeButtonText = getString(R.string.preferences_language_listpreferences_negative_text_id)
-                title = getString(R.string.preferences_language_title_id)
-            }
-            generalPreferenceCategory.title = "Umum"
-            notificationPreferenceCategory.title = "Notifikasi"
-            dailySwitchPreference.apply {
-                title = "Pengingat Harian"
-                summary = "Kirim notifikasi untuk kembali ke aplikasi"
-            }
-            todayReleaseSwitchPreference.apply {
-                title = "Pengingat Terbit Harian"
-                summary = "Kirim notifikasi harian film yang dirilis"
-            }
-            setting_text.text = getString(R.string.settings_id)
         }
     }
 
@@ -118,11 +66,6 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
             startupTime += 24 * 60 * 60 * 1000
         }
         val intent = Intent(activity?.applicationContext, TodayReleaseAlarmReceiver::class.java)
-        if (language == Constant.LANGUAGE_ENGLISH_VALUE) {
-            intent.putExtra(Constant.NOTIFICATION_EXTRA_LANGUAGE, Constant.LANGUAGE_ENGLISH_VALUE)
-        } else {
-            intent.putExtra(Constant.NOTIFICATION_EXTRA_LANGUAGE, Constant.LANGUAGE_INDONESIA_VALUE)
-        }
         val pendingIntent = PendingIntent.getBroadcast(activity?.applicationContext, Constant.NOTIFICATION_TODAY_RELEASE_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = activity?.getSystemService(ALARM_SERVICE) as AlarmManager
         if (state) {
@@ -143,11 +86,6 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences
             startupTime += 24 * 60 * 60 * 1000
         }
         val intent = Intent(activity?.applicationContext, ReminderAlarmReceiver::class.java)
-        if (language == Constant.LANGUAGE_ENGLISH_VALUE) {
-            intent.putExtra(Constant.NOTIFICATION_EXTRA_LANGUAGE, Constant.LANGUAGE_ENGLISH_VALUE)
-        } else {
-            intent.putExtra(Constant.NOTIFICATION_EXTRA_LANGUAGE, Constant.LANGUAGE_INDONESIA_VALUE)
-        }
         val pendingIntent = PendingIntent.getBroadcast(activity?.applicationContext, Constant.NOTIFICATION_REMINDER_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = activity?.getSystemService(ALARM_SERVICE) as AlarmManager
         if (state) {

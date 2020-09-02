@@ -28,9 +28,6 @@ import kotlinx.coroutines.*
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
-    private var currentLanguage: String = ""
-    private lateinit var languageEnglishValue : String
-    private lateinit var preferenceLanguageKey : String
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var sharedViewModel: SharedViewModel
     private var type = ""
@@ -41,12 +38,12 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         sharedViewModel = activity?.run {
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
-        sharedViewModel.searchResultList.observe(this, Observer {
+        sharedViewModel.searchResultList.observe(this) {
             handleNewData(it)
-        })
-        sharedViewModel.searchState.observe(this, Observer {
+        }
+        sharedViewModel.searchState.observe(this) {
             handleNetworkState(it)
-        })
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,7 +54,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         super.onActivityCreated(savedInstanceState)
         prepareSharedPreferences()
         type = SearchFragmentArgs.fromBundle(arguments!!).type
-        adjustQueryHintText(currentLanguage, type)
+        adjustQueryHintText(type)
         search_toolbar.apply {
             navigationIcon = activity?.getDrawable(R.drawable.ic_arrow_back_white_24dp)
             setNavigationOnClickListener {
@@ -127,28 +124,16 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         checkLastSearch()
     }
 
-    private fun adjustQueryHintText(language: String, type: String) {
+    private fun adjustQueryHintText(type: String) {
         if (type == Constant.MOVIE_FILM_TYPE) {
-            if (language == languageEnglishValue) {
-                search_searchview.queryHint = getString(R.string.movie_search_view_query_hint_en)
-            } else {
-                search_searchview.queryHint = getString(R.string.movie_search_view_query_hint_id)
-            }
+            search_searchview.queryHint = getString(R.string.movie_search_view_query_hint_en)
         } else {
-            if (language == languageEnglishValue) {
-                search_searchview.queryHint = getString(R.string.tv_search_view_query_hint_en)
-            } else {
-                search_searchview.queryHint = getString(R.string.tv_search_view_query_hint_id)
-            }
+            search_searchview.queryHint = getString(R.string.tv_search_view_query_hint_en)
         }
     }
 
     private fun prepareSharedPreferences() {
-        preferenceLanguageKey = getString(R.string.preferences_language_key)
-        languageEnglishValue = getString(R.string.preferences_language_value_english)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        currentLanguage = sharedPreferences.getString(preferenceLanguageKey,
-            languageEnglishValue)!!
     }
 
     private fun hideKeyboard(view: View) : Boolean {
@@ -167,10 +152,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun handleNewData(data: List<Film>) {
         if (data.isEmpty() && sharedViewModel.isSearchDataLoaded) {
-            if (currentLanguage == languageEnglishValue)
-                Toast.makeText(activity, "No Search Result", Toast.LENGTH_SHORT).show()
-            else
-                Toast.makeText(activity, "Tidak Ada Hasil Pencarian", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "No Search Result", Toast.LENGTH_SHORT).show()
         }
         search_recycler_view.swapAdapter(SearchRecyclerViewAdapter(data, type), true)
     }
@@ -192,10 +174,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
             NetworkState.CANNOT_CONNECT -> {
                 search_progress_bar.visibility = View.GONE
                 search_veil.visibility = View.VISIBLE
-                if (currentLanguage == languageEnglishValue)
-                    Toast.makeText(activity, "Cannot Connect To Server", Toast.LENGTH_SHORT).show()
-                else
-                    Toast.makeText(activity, "Tidak Dapat Terhubung Ke Server", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Cannot Connect To Server", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -222,10 +201,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun adjustSearchLanguage() {
-        if (currentLanguage == languageEnglishValue) {
-            search_hint_text?.text = getString(R.string.search_no_item_en)
-        } else {
-            search_hint_text?.text = getString(R.string.search_no_item_id)
-        }
+        search_hint_text?.text = getString(R.string.search_no_item_en)
     }
 }

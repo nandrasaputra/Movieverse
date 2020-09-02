@@ -16,7 +16,6 @@ import com.nandra.movieverse.util.Constant
 class ReminderAlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        val language = intent?.getStringExtra(Constant.NOTIFICATION_EXTRA_LANGUAGE)!!
         val notificationManager = context?.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val activityIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -25,9 +24,9 @@ class ReminderAlarmReceiver : BroadcastReceiver() {
         val notificationCompatBuilder = NotificationCompat.Builder(context, Constant.NOTIFICATION_CHANNEL_ID)
             .setContentIntent(pendingIntent)
             .setSmallIcon(R.drawable.ic_astronaut)
-            .setContentTitle(generateNotificationTitle(language))
-            .setContentText(generateNotificationContent(language))
-            .setStyle(NotificationCompat.BigTextStyle().bigText(generateNotificationContent(language)))
+            .setContentTitle(generateNotificationTitle())
+            .setContentText(generateNotificationContent())
+            .setStyle(NotificationCompat.BigTextStyle().bigText(generateNotificationContent()))
             .setAutoCancel(true)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -39,19 +38,11 @@ class ReminderAlarmReceiver : BroadcastReceiver() {
         notificationManager.notify(Constant.NOTIFICATION_REMINDER_ID, notificationCompatBuilder.build())
     }
 
-    private fun generateNotificationTitle(language: String) : String {
-        return if (language == Constant.LANGUAGE_ENGLISH_VALUE) {
-            "Movieverse: We Miss You :("
-        } else {
-            "Movieverse: Kami Merindukan Anda :("
-        }
+    private fun generateNotificationTitle() : String {
+        return "Movieverse: We Miss You :("
     }
 
-    private fun generateNotificationContent(language: String) : String {
-        return if (language == Constant.LANGUAGE_ENGLISH_VALUE) {
-            "Check trending movie now on Movieverse app"
-        } else {
-            "Cek film terbaru yang lagi trending di aplikasi Movieverse"
-        }
+    private fun generateNotificationContent() : String {
+        return "Check trending movie now on Movieverse app"
     }
 }

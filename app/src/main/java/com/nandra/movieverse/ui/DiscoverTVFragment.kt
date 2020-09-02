@@ -20,9 +20,6 @@ import kotlinx.android.synthetic.main.fragment_discover_tv.*
 
 class DiscoverTVFragment : Fragment() {
 
-    private var currentLanguage: String = ""
-    private lateinit var languageEnglishValue : String
-    private lateinit var preferenceLanguageKey : String
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var discoverTVPagedListAdapter: DiscoverPagedListAdapter
@@ -36,14 +33,12 @@ class DiscoverTVFragment : Fragment() {
         sharedViewModel = activity?.run {
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
-        sharedViewModel.discoverTVPagingListLiveData.observe(this, Observer {
-            discoverTVPagedListAdapter.submitList(it)
-        })
-        sharedViewModel.discoverTVNetworkStateLiveData.observe(this, Observer {
+        sharedViewModel.discoverTVPagingListLiveData.observe(this) { discoverTVPagedListAdapter.submitList(it) }
+        sharedViewModel.discoverTVNetworkStateLiveData.observe(this) {
             discoverTVPagedListAdapter.setNetworkState(it)
             handleNetworkState(it)
-        })
-        sharedViewModel.discoverTVIsInitialDataLoadedLiveData.observe(this, Observer {  })
+        }
+        sharedViewModel.discoverTVIsInitialDataLoadedLiveData.observe(this) {  }
         discoverTVPagedListAdapter = DiscoverPagedListAdapter(Constant.TV_FILM_TYPE) {sharedViewModel.retryLoadAllFailed()}
     }
 
@@ -88,10 +83,7 @@ class DiscoverTVFragment : Fragment() {
                         sharedViewModel.retryLoadAllFailed()
                     }
                 } else {
-                    if (currentLanguage == languageEnglishValue)
-                        Toast.makeText(activity, "Cannot Get Data From Server", Toast.LENGTH_SHORT).show()
-                    else
-                        Toast.makeText(activity, "Data Tidak Bisa Diambil Dari Server", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Cannot Get Data From Server", Toast.LENGTH_SHORT).show()
                 }
             }
             NetworkState.CANNOT_CONNECT -> {
@@ -103,21 +95,14 @@ class DiscoverTVFragment : Fragment() {
                         sharedViewModel.retryLoadAllFailed()
                     }
                 } else {
-                    if (currentLanguage == languageEnglishValue)
-                        Toast.makeText(activity, "Cannot Connect To Server", Toast.LENGTH_SHORT).show()
-                    else
-                        Toast.makeText(activity, "Tidak Dapat Terhubung Ke Server", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Cannot Connect To Server", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
     private fun prepareSharedPreferences() {
-        preferenceLanguageKey = getString(R.string.preferences_language_key)
-        languageEnglishValue = getString(R.string.preferences_language_value_english)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        currentLanguage = sharedPreferences.getString(preferenceLanguageKey,
-            languageEnglishValue)!!
     }
 
     override fun onResume() {
@@ -140,13 +125,7 @@ class DiscoverTVFragment : Fragment() {
     }
 
     private fun viewErrorLanguageAdjustment() {
-        if (currentLanguage == languageEnglishValue) {
-            discover_tv_error_button.text = getString(R.string.button_try_again_en)
-            discover_tv_error_text.text = getString(R.string.no_internet_connection_en)
-        }
-        else {
-            discover_tv_error_button.text = getString(R.string.button_try_again_id)
-            discover_tv_error_text.text = getString(R.string.no_internet_connection_id)
-        }
+        discover_tv_error_button.text = getString(R.string.button_try_again_en)
+        discover_tv_error_text.text = getString(R.string.no_internet_connection_en)
     }
 }
