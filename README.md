@@ -13,7 +13,7 @@ Library such as Navigation, Room, ViewModel, Paging and LiveData. This app also 
 
 ## Prerequisites
 
-In order to make app works, you need <a href='https://developers.google.com/youtube/v3/getting-started'>Youtube API</a>, <a href='https://tech.yandex.com/translate/'>Yandex API</a> and <a href='https://www.themoviedb.org/documentation/api'>TheMovieDatabase API</a> Key. 
+In order to make app works, you need <a href='https://developers.google.com/youtube/v3/getting-started'>Youtube API</a> and <a href='https://www.themoviedb.org/documentation/api'>TheMovieDatabase API</a> Key. 
 
 In your build.gradle(app) :
 
@@ -29,7 +29,6 @@ android {
 	defaultConfig {
 		...
 		buildConfigField("String", "TMDB_API_KEY", apiProperties["TMDB_API_KEY"])
-		buildConfigField("String", "YANDEX_API_KEY", apiProperties["YANDEX_API_KEY"])
 		buildConfigField("String", "GOOGLE_YOUTUBE_API", apiProperties["GOOGLE_YOUTUBE_API"])
 		...
 	}
@@ -45,7 +44,6 @@ android {
 	defaultConfig {
 		...
 		buildConfigField("String", "TMDB_API_KEY", "\"YOUR_TMDB_API_KEY\"")
-		buildConfigField("String", "YANDEX_API_KEY", "\"YOUR_YANDEX_API_KEY\"")
 		buildConfigField("String", "GOOGLE_YOUTUBE_API", "\"YOUR_YOUTUBE_API_KEY\"")
 		...
 	}
@@ -61,7 +59,6 @@ android {
 	defaultConfig {
 		...
 		buildConfigField("String", "TMDB_API_KEY", "\"123456789\"")
-		buildConfigField("String", "YANDEX_API_KEY", "\"ABCDEFG\"")
 		buildConfigField("String", "GOOGLE_YOUTUBE_API", "\"123ABC\"")
 		...
 	}
