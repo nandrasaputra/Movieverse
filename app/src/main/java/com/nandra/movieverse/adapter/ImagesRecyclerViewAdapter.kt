@@ -6,27 +6,32 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nandra.movieverse.R
-import com.nandra.movieverse.network.Backdrops
 import kotlinx.android.synthetic.main.item_detail_images.view.*
 
-class ImagesRecyclerViewAdapter(
-    private var imageList: List<Backdrops>
-) : RecyclerView.Adapter<ImagesRecyclerViewAdapter.MyViewHolder>() {
+class ImagesRecyclerViewAdapter : RecyclerView.Adapter<ImagesRecyclerViewAdapter.MyViewHolder>() {
+
+    private var imagePathList: List<String> = listOf()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_detail_images, parent, false)
         return MyViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return imageList.size
+        return imagePathList.size
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentImage = imageList[position]
+        val currentImagePath = imagePathList[position]
         val url = "https://image.tmdb.org/t/p/w342/"
         Glide.with(holder.itemView.context)
-            .load(url + currentImage.filepath)
+            .load(url + currentImagePath)
             .into(holder.itemView.detail_image_image)
+    }
+
+    fun submitList(newList: List<String>) {
+        imagePathList = newList
+        notifyDataSetChanged()
     }
 
     class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view)

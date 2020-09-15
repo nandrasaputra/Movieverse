@@ -1,94 +1,78 @@
 package com.nandra.movieverse.ui
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.preference.PreferenceManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.navigation.NavDestination
 import com.nandra.movieverse.R
-import com.nandra.movieverse.util.Constant
+import com.nandra.movieverse.util.setVisibilityGone
+import com.nandra.movieverse.util.setVisibilityVisible
 import com.nandra.movieverse.util.setupWithNavController
-import com.nandra.movieverse.viewmodel.SharedViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
-
-    private var currentNavController: LiveData<NavController>? = null
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var viewModel: SharedViewModel
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (savedInstanceState == null) {
-            setupBottomNavigationBar()
-        }
-        prepareSharedPreferences()
-        setBottomNavigationLabel()
-        viewModel = ViewModelProvider(this)[SharedViewModel::class.java]
-        viewModel.isOnDetailFragment.observe(this) {
-            handleBottomNavigationAppearance(it)
-        }
-    }
 
-    private fun setBottomNavigationLabel() {
-        val menu = main_activity_bottom_navigation.menu
-        menu[0].title = getString(R.string.title_home_en)
-        menu[1].title = getString(R.string.title_discover_en)
-        menu[2].title = getString(R.string.title_favorite_en)
-        menu[3].title = getString(R.string.title_setting_en)
+        if (savedInstanceState == null) {
+            setupBottomNavigationView()
+        }
+
+        checkApiKeys()
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        setupBottomNavigationBar()
+        setupBottomNavigationView()
     }
 
-    private fun setupBottomNavigationBar() {
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.main_activity_bottom_navigation)
-
-        val navGraphIds = listOf(R.navigation.home_nav, R.navigation.discover_nav, R.navigation.favorite_nav, R.navigation.settings_nav)
-
-        val controller = bottomNavigationView.setupWithNavController(
-            navGraphIds = navGraphIds,
-            fragmentManager = supportFragmentManager,
-            containerId = R.id.main_fragment_host_container,
-            intent = intent
-        )
-
-        currentNavController = controller
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        when (key) {
-            Constant.PREFERENCE_KEY_TODAY_RELEASES -> {
-            }
-            Constant.PREFERENCE_KEY_REMINDER -> {
-            }
+    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+        when(destination.id) {
+            R.id.detailFragmentInHome, R.id.detailFragmentInFavorite, R.id.detailFragmentInDiscover, R.id.searchFragment -> {showBottomNavBar(false) }
+            else -> {showBottomNavBar(true)}
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return currentNavController?.value?.navigateUp() ?: false
+    private fun setupBottomNavigationView() {
+        val navGraphIds = listOf(R.navigation.home_nav,R.navigation.discover_nav, R.navigation.favorite_nav, R.navigation.about_nav)
+
+        val controller = main_activity_bottom_navigation.setupWithNavController(
+            navGraphIds = navGraphIds,
+            fragmentManager = supportFragmentManager,
+            containerId = R.id.main_activity_nav_host,
+            intent = intent
+        )
+
+        controller.observe(this) {
+            addOnDestinationChangedListener(it)
+        }
     }
 
-    private fun prepareSharedPreferences() {
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+    private fun addOnDestinationChangedListener(navController: NavController) {
+        navController.removeOnDestinationChangedListener(this)
+        navController.addOnDestinationChangedListener(this)
     }
 
-    private fun handleBottomNavigationAppearance(value: Boolean) {
-        if(value) {
-            main_activity_bottom_navigation.visibility = View.GONE
+    private fun showBottomNavBar(show: Boolean) {
+        if (show) {
+            main_activity_bottom_navigation.setVisibilityVisible()
         } else {
-            main_activity_bottom_navigation.visibility = View.VISIBLE
+            main_activity_bottom_navigation.setVisibilityGone()
+        }
+    }
+
+    private fun checkApiKeys() {
+        val youtubeApiKey = getString(R.string.GOOGLE_YOUTUBE_API)
+        val tmdbApiKey = getString(R.string.TMDB_API_KEY)
+
+        if (youtubeApiKey.isEmpty() || tmdbApiKey.isEmpty()) {
+            Toast.makeText(this, "Some API Key Is Missing, Please Put It On api.properties", Toast.LENGTH_LONG).show()
         }
     }
 

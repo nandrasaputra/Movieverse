@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/whitePure</color>
+    <color name="colorPrimaryDark">@color/greenLight</color>
+    <color name="colorAccent">@color/pinkFuchsia</color>
+    <color name="colorSurfacePrimary">#121212</color>
+    <color name="colorSurfaceSecondary">#292626</color>
+
+    <color name="colorPrimaryOnSurfacePrimary">@color/greenLight</color>
+    <color name="colorSecondaryOnSurfacePrimary">#E3E3E3</color>
+    <color name="colorTertiaryOnSurfacePrimary">#B3B3B3</color>
+
+    <color name="colorPrimaryOnSurfaceSecondary">@color/greenLight</color>
+    <color name="colorSecondaryOnSurfaceSecondary">#E3E3E3</color>
+    <color name="colorTertiaryOnSurfaceSecondary">#B3B3B3</color>
+
+    <color name="colorShadowGray">#414141</color>
+    <color name="colorPureWhite">#FFFFFF</color>
+    <color name="colorBlueDarker">#076896</color>
+    <color name="blackPure">#08191B</color>
+
+    <color name="placeholderColorOne">#C9C9C9</color>
+    <color name="placeholderColorTwo">#ACACAC</color>
+
+    <color name="colorGray">#747474</color>
+    <color name="colorPaleGreen">#0E2E33</color>
+    <color name="colorVeryLightGray">#F5F5F5</color>
+
+    <color name="greenDark">@color/colorPaleGreen</color>
+    <color name="greenLight">#009688</color>
+    <color name="pinkFuchsia">#D81B60</color>
+    <color name="whitePure">#FFFFFF</color>
+
+    <color name="iconColor">@color/whitePure</color>
+    <color name="fabIconColor">@color/whitePure</color>
+</resources>

@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">@color/colorPaleGreen</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimaryDark">@color/greenLight</color>
+    <color name="colorAccent">@color/pinkFuchsia</color>
+    <color name="colorSurfacePrimary">@color/whitePure</color>
+    <color name="colorSurfaceSecondary">#F3F3F3</color>
+
+    <color name="colorPrimaryOnSurfacePrimary">@color/colorBlueDarker</color>
+    <color name="colorSecondaryOnSurfacePrimary">#101010</color>
+    <color name="colorTertiaryOnSurfacePrimary">@color/colorGray</color>
+
+    <color name="colorPrimaryOnSurfaceSecondary">@color/colorBlueDarker</color>
+    <color name="colorSecondaryOnSurfaceSecondary">@color/blackMedium</color>
+    <color name="colorTertiaryOnSurfaceSecondary">@color/colorShadowGray</color>
 
     <color name="colorShadowGray">#414141</color>
     <color name="colorPureWhite">#FFFFFF</color>
     <color name="colorBlueDarker">#076896</color>
-    <color name="statusBarColor">#08191B</color>
+    <color name="blackPure">#08191B</color>
+
+    <color name="blackMedium">#191919</color>
 
     <color name="placeholderColorOne">#C9C9C9</color>
     <color name="placeholderColorTwo">#ACACAC</color>
@@ -15,4 +27,12 @@
     <color name="colorGray">#747474</color>
     <color name="colorPaleGreen">#0E2E33</color>
     <color name="colorVeryLightGray">#F5F5F5</color>
+
+    <color name="greenDark">@color/colorPaleGreen</color>
+    <color name="greenLight">#009688</color>
+    <color name="pinkFuchsia">#D81B60</color>
+    <color name="whitePure">#FFFFFF</color>
+
+    <color name="iconColor">@color/blackPure</color>
+    <color name="fabIconColor">@color/whitePure</color>
 </resources>

@@ -6,21 +6,43 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="preferenceTheme">@style/AppPreferenceTheme</item>
-        <item name="android:statusBarColor">@color/statusBarColor</item>
+        <item name="android:statusBarColor">@color/greenDark</item>
+        <item name="colorSurface">@color/colorSurfacePrimary</item>
+        <item name="snackbarButtonStyle">@style/Movieverse.Snackbar.Button</item>
+    </style>
+
+    <style name="Movieverse.BottomNavStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <!-- Change active icon/text label color -->
+        <item name="colorPrimary">@color/colorBlueDarker</item>
     </style>
 
     <style name="SplashScreenTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
-    <!-- Custom Preference Theme -->
-    <style name="AppPreferenceTheme" parent="@style/PreferenceThemeOverlay.v14.Material">
-        <item name="preferenceFragmentCompatStyle">@style/AppPreferenceFragmentCompatStyle</item>
+    <style name="Movieverse.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.FloatingActionButton</item>
     </style>
-    <!-- Custom Style for PreferenceFragmentCompat -->
-    <style name="AppPreferenceFragmentCompatStyle" parent="@style/PreferenceFragment.Material">
-        <item name="android:layout">@layout/fragment_setting_preferences</item>
+
+    <style name="ThemeOverlay.App.FloatingActionButton" parent="">
+        <item name="colorSecondary">@color/pinkFuchsia</item>
+        <item name="colorOnSecondary">@color/fabIconColor</item>
+    </style>
+
+    <style name="Movieverse.TabLayout" parent="ThemeOverlay.MaterialComponents">
+
+    </style>
+
+    <style name="Movieverse.SearchView" parent="ThemeOverlay.AppCompat">
+        <item name="android:background">@color/whitePure</item>
+    </style>
+
+    <style name="Movieverse.Snackbar.Button" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/whitePure</item>
     </style>
 
 </resources>

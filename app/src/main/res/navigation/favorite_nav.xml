@@ -4,27 +4,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/favorite"
-    app:startDestination="@id/favoriteFragment"
-    tools:ignore="UnusedNavigation">
+    tools:ignore="UnusedNavigation"
+    app:startDestination="@id/favoriteFragment">
 
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.nandra.movieverse.ui.FavoriteFragment"
+        android:name="com.nandra.movieverse.ui.favorite.FavoriteFragment"
         android:label="FavoriteFragment" >
         <action
-            android:id="@+id/action_favoriteFragment_to_detailFragmentFavorite"
-            app:destination="@id/detailFragmentFavorite" />
+            android:id="@+id/action_favoriteFragment_to_detailFragmentInFavorite"
+            app:destination="@id/detailFragmentInFavorite" />
     </fragment>
     <fragment
-        android:id="@+id/detailFragmentFavorite"
-        android:name="com.nandra.movieverse.ui.DetailFragment"
-        android:label="DetailFragmentFavorite">
+        android:id="@+id/detailFragmentInFavorite"
+        android:name="com.nandra.movieverse.ui.detail.DetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="mediaType"
+            app:argType="string" />
         <argument
             android:name="id"
-            app:argType="string"
-            android:defaultValue="0" />
-        <argument
-            android:name="filmType"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
+
+
 </navigation>

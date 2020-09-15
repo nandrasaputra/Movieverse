@@ -4,41 +4,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/discover"
-    app:startDestination="@id/discoverFragment"
-    tools:ignore="UnusedNavigation">
+    tools:ignore="UnusedNavigation"
+    app:startDestination="@id/discoverFragment">
 
     <fragment
         android:id="@+id/discoverFragment"
-        android:name="com.nandra.movieverse.ui.DiscoverFragment"
+        android:name="com.nandra.movieverse.ui.discover.DiscoverFragment"
         android:label="DiscoverFragment" >
         <action
-            android:id="@+id/action_discoverFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            android:id="@+id/action_discoverFragment_to_detailFragmentInDiscover"
+            app:destination="@id/detailFragmentInDiscover" />
         <action
             android:id="@+id/action_discoverFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
     </fragment>
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.nandra.movieverse.ui.DetailFragment"
-        android:label="DetailFragment" >
+        android:id="@+id/detailFragmentInDiscover"
+        android:name="com.nandra.movieverse.ui.detail.DetailFragment"
+        android:label="DetailFragment">
+        <argument
+            android:name="mediaType"
+            app:argType="string" />
         <argument
             android:name="id"
-            app:argType="string"
-            android:defaultValue="0" />
-        <argument
-            android:name="filmType"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.nandra.movieverse.ui.SearchFragment"
-        android:label="SearchFragment" >
+        android:name="com.nandra.movieverse.ui.search.SearchFragment"
+        android:label="SearchFragment">
         <argument
-            android:name="type"
+            android:name="mediaType"
             app:argType="string" />
         <action
-            android:id="@+id/action_searchFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            android:id="@+id/action_searchFragment_to_detailFragmentInDiscover"
+            app:destination="@id/detailFragmentInDiscover" />
     </fragment>
+
 </navigation>

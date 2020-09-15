@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Label ordering must match values -->
+    <array name="pref_theme_option_labels">
+        <item>@string/pref_theme_label_day_mode</item>
+        <item>@string/pref_theme_label_dark_mode</item>
+        <item>@string/pref_theme_label_auto</item>
+    </array>
+
+    <array name="pref_theme_option_values">
+        <item>@string/pref_theme_day_mode_value</item>
+        <item>@string/pref_theme_dark_mode_value</item>
+        <item>@string/pref_theme_auto_value</item>
+    </array>
+</resources>

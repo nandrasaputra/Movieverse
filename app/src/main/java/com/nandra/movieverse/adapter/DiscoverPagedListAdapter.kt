@@ -3,15 +3,16 @@ package com.nandra.movieverse.adapter
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.endiar.movieverse.core.domain.model.FilmGist
+import com.endiar.movieverse.core.utils.NetworkState
 import com.nandra.movieverse.R
-import com.nandra.movieverse.data.DiffUtilCallback
-import com.nandra.movieverse.network.Film
-import com.nandra.movieverse.util.NetworkState
+import com.nandra.movieverse.util.DiscoverPagedListDiffUtilCallback
+import com.nandra.movieverse.util.FilmType
 
 class DiscoverPagedListAdapter(
-    private val type: String,
+    private val type: FilmType,
     private val retryCallback:() -> Unit
-) : PagedListAdapter<Film, RecyclerView.ViewHolder>(DiffUtilCallback(type)) {
+) : PagedListAdapter<FilmGist, RecyclerView.ViewHolder>(DiscoverPagedListDiffUtilCallback(type)) {
 
     private var networkState: NetworkState? = null
 

@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.endiar.movieverse.core.utils.Constant
 import com.nandra.movieverse.R
-import com.nandra.movieverse.network.VideoData
 import com.nandra.movieverse.ui.YoutubePlayerActivity
-import com.nandra.movieverse.util.Constant
 import kotlinx.android.synthetic.main.item_detail_videos.view.*
 
-class VideosRecyclerAdapter(
-    private var listVideo: List<VideoData>
-) : RecyclerView.Adapter<VideosRecyclerAdapter.MyViewHolder>() {
+class VideosRecyclerAdapter : RecyclerView.Adapter<VideosRecyclerAdapter.MyViewHolder>() {
+
+    private var listVideoKey: List<String> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_detail_videos, parent, false)
@@ -22,21 +21,26 @@ class VideosRecyclerAdapter(
     }
 
     override fun getItemCount(): Int {
-        return listVideo.size
+        return listVideoKey.size
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentVideo = listVideo[position]
+        val currentKey = listVideoKey[position]
         Glide.with(holder.itemView.context)
-            .load("https://img.youtube.com/vi/${currentVideo.key}/hqdefault.jpg")
+            .load("https://img.youtube.com/vi/${currentKey}/hqdefault.jpg")
             .fallback(R.drawable.img_back_landscape_default)
             .into(holder.itemView.detail_videos_thumbnail)
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, YoutubePlayerActivity::class.java).apply {
-                putExtra(Constant.EXTRA_YOUTUBE_KEY, currentVideo.key)
+                putExtra(Constant.EXTRA_YOUTUBE_KEY, currentKey)
             }
             holder.itemView.context.startActivity(intent)
         }
+    }
+
+    fun submitList(newList: List<String>) {
+        listVideoKey = newList
+        notifyDataSetChanged()
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)

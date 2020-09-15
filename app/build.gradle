@@ -1,16 +1,10 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
-
 apply plugin: "androidx.navigation.safeargs"
-
-def apiPropertiesFile = rootProject.file("api.properties")
-def apiProperties = new Properties()
-apiProperties.load(new FileInputStream(apiPropertiesFile))
+apply plugin: 'dagger.hilt.android.plugin'
+apply from: '../shared_dependencies.gradle'
 
 android {
     compileSdkVersion 30
@@ -19,18 +13,13 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
     defaultConfig {
         applicationId 'com.nandra.movieverse'
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName '2.0.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "TMDB_API_KEY", apiProperties["TMDB_API_KEY"])
-        buildConfigField("String", "GOOGLE_YOUTUBE_API", apiProperties["GOOGLE_YOUTUBE_API"])
     }
     buildTypes {
         release {
@@ -38,79 +27,50 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    androidExtensions {
-        experimental = true
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 }
 
 dependencies {
-    def glideVersion = "4.9.0"
-    def roundImageViewVersion = "2.3.0"
-    def recyclerViewVersion = "1.0.0"
-    def preferenceVersion = "1.1.0"
-    def retrofitVersion = "2.6.1"
-    def lifecycleVersion = "2.2.0-rc01"
-    def navVersion = "2.2.0-rc01"
-    def coroutinesVersion = "1.1.1"
-    def room_version = "2.2.1"
-    def shimmer_version = "0.4.0"
-    def paging_version = "2.1.0"
+    implementation project(":core")
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'com.google.android.material:material:1.2.1'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //Glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
-
     //Rounded ImageView
     implementation "com.makeramen:roundedimageview:$roundImageViewVersion"
-
     //RecyclerView
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-
     //Preference
     implementation "androidx.preference:preference:$preferenceVersion"
-
-    //Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-
     //ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
-    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
-
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
-
-    //Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
-
-    //Room
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-
     //Facebook Shimmer
     implementation "com.facebook.shimmer:shimmer:$shimmer_version"
-
     //YoutubeAndroidPlayer
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
-
     //CardSlider
     implementation "com.github.IslamKhSh:CardSlider:0.4"
-
     //DiscreteScrollView
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
-
-    //PagingLibrary
-    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+    // Lottie
+    implementation "com.airbnb.android:lottie:$lottie_version"
+    // ViewPager2
+    implementation "androidx.viewpager2:viewpager2:$view_pager2_version"
 }

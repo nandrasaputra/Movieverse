@@ -1,25 +1,23 @@
 package com.nandra.movieverse.adapter
 
-import android.app.Activity
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.endiar.movieverse.core.domain.model.FilmSearch
 import com.nandra.movieverse.R
-import com.nandra.movieverse.adapter.SearchRecyclerViewAdapter.SearchViewHolder
-import com.nandra.movieverse.network.Film
-import com.nandra.movieverse.ui.SearchFragmentDirections
-import com.nandra.movieverse.util.Constant
+import com.nandra.movieverse.ui.search.SearchFragmentDirections
+import com.nandra.movieverse.util.FilmType
 import kotlinx.android.synthetic.main.item_search.view.*
 
 class SearchRecyclerViewAdapter(
-    private val searchResult: List<Film>,
-    private val type: String
-) : RecyclerView.Adapter<SearchViewHolder>() {
+    private val filmType: FilmType
+) : RecyclerView.Adapter<SearchRecyclerViewAdapter.SearchViewHolder>() {
+
+    private var searchResult: List<FilmSearch> = listOf()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_search, parent, false)
         return SearchViewHolder(view)
@@ -31,58 +29,59 @@ class SearchRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         val currentFilm = searchResult[position]
-        if(type == Constant.MOVIE_FILM_TYPE) {
-            bindMovieViewProperties(holder, currentFilm)
-        } else {
-            bindTVViewProperties(holder, currentFilm)
+        when(filmType) {
+            is FilmType.FilmTypeMovie -> {
+                bindMovieViewProperties(holder, currentFilm)
+            }
+            is FilmType.FilmTypeTV -> {
+                bindTVViewProperties(holder, currentFilm)
+            }
         }
     }
 
-    private fun bindMovieViewProperties(holder: SearchViewHolder, currentFilm: Film) {
-        if (!currentFilm.posterPath.isNullOrEmpty()) {
+    private fun bindMovieViewProperties(holder: SearchViewHolder, currentFilm: FilmSearch) {
+        if (currentFilm.posterImagePath.isNotEmpty()) {
             val url = "https://image.tmdb.org/t/p/w185"
             Glide.with(holder.itemView)
-                .load(url + currentFilm.posterPath)
+                .load(url + currentFilm.posterImagePath)
                 .into(holder.itemView.item_search_poster)
         }
         holder.itemView.apply {
             val rating = "${currentFilm.voteAverage} / 10"
-            item_search_title.text = currentFilm.title
+            item_search_title.text = currentFilm.movieTitle
             item_search_rating.text = rating
             item_search_released_date.text = currentFilm.releaseDate
         }
         holder.itemView.setOnClickListener {
-            hideKeyboard(holder.itemView, holder.itemView.context)
-            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(type).setId(currentFilm.id.toString())
+            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragmentInDiscover(filmType.typeValue, currentFilm.id)
             holder.itemView.findNavController().navigate(action)
         }
     }
 
-    private fun bindTVViewProperties(holder: SearchViewHolder, currentFilm: Film) {
-        if (!currentFilm.posterPath.isNullOrEmpty()) {
+    private fun bindTVViewProperties(holder: SearchViewHolder, currentFilm: FilmSearch) {
+        if (currentFilm.posterImagePath.isNotEmpty()) {
             val url = "https://image.tmdb.org/t/p/w185"
             Glide.with(holder.itemView)
-                .load(url + currentFilm.posterPath)
+                .load(url + currentFilm.posterImagePath)
                 .into(holder.itemView.item_search_poster)
         }
         holder.itemView.apply {
             val rating = "${currentFilm.voteAverage} / 10"
-            item_search_title.text = currentFilm.tvName
+            item_search_title.text = currentFilm.tvTitle
             item_search_rating.text = rating
-            item_search_released_date.text = currentFilm.tvAirDate
+            item_search_released_date.text = currentFilm.firstAirDate
         }
         holder.itemView.setOnClickListener {
-            hideKeyboard(holder.itemView, holder.itemView.context)
-            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(type).setId(currentFilm.id.toString())
+            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragmentInDiscover(filmType.typeValue, currentFilm.id)
             holder.itemView.findNavController().navigate(action)
         }
     }
 
-    private fun hideKeyboard(view: View, context: Context) : Boolean {
-        val inputMethodManager =
-            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-        inputMethodManager!!.hideSoftInputFromWindow(view.windowToken, 0)
-        return false
+    fun submitList(newList: List<FilmSearch>?) {
+        newList?.let {
+            searchResult = it
+            notifyDataSetChanged()
+        }
     }
 
     class SearchViewHolder(view: View) : RecyclerView.ViewHolder(view)

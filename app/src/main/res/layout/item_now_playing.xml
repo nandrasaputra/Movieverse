@@ -41,7 +41,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
         android:fontFamily="@font/lato_medium"
-        android:text="@string/main_title_mock"
+        android:text="@string/main_title_sample"
         android:textAlignment="center"
         android:textColor="@color/colorPureWhite"
         android:textSize="16sp" />

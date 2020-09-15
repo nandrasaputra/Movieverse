@@ -3,42 +3,38 @@ package com.nandra.movieverse.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
+import com.endiar.movieverse.core.utils.NetworkState
+import com.endiar.movieverse.core.utils.Status
 import com.nandra.movieverse.R
-import com.nandra.movieverse.util.NetworkState
+import kotlinx.android.synthetic.main.item_network_state.view.*
 
 class DiscoverNetworkStateViewHolder(
     view: View,
     private val retryCallback:() -> Unit
 ) : RecyclerView.ViewHolder(view) {
-    private val progressBar: ProgressBar = view.findViewById(R.id.item_network_progress_bar)
-    private val retryButton: ImageView = view.findViewById(R.id.item_retry)
 
     init {
-        retryButton.setOnClickListener {
+        itemView.item_retry.setOnClickListener {
             retryCallback.invoke()
         }
     }
 
     fun bindToNetworkState(state: NetworkState?) {
-        when(state) {
-            NetworkState.LOADING -> {
-                retryButton.visibility = View.GONE
-                progressBar.visibility = View.VISIBLE
-            }
-            NetworkState.LOADED -> {
-                retryButton.visibility = View.GONE
-                progressBar.visibility = View.GONE
-            }
-            NetworkState.FAILED -> {
-                progressBar.visibility = View.GONE
-                retryButton.visibility = View.VISIBLE
-            }
-            NetworkState.CANNOT_CONNECT -> {
-                progressBar.visibility = View.GONE
-                retryButton.visibility = View.VISIBLE
+        itemView.apply {
+            when(state?.status) {
+                Status.RUNNING -> {
+                    item_retry.visibility = View.GONE
+                    item_network_progress_bar.visibility = View.VISIBLE
+                }
+                Status.SUCCESS -> {
+                    item_retry.visibility = View.GONE
+                    item_network_progress_bar.visibility = View.GONE
+                }
+                Status.FAILED -> {
+                    item_retry.visibility = View.VISIBLE
+                    item_network_progress_bar.visibility = View.GONE
+                }
             }
         }
     }

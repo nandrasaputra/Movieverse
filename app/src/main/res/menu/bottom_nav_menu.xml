@@ -17,8 +17,8 @@
         android:contentDescription="@string/cd_favorite"
         android:title="@string/title_favorite_en" />
     <item
-        android:id="@+id/setting"
-        android:icon="@drawable/ic_settings_white_24dp"
-        android:contentDescription="@string/cd_setting"
-        android:title="@string/title_setting_en" />
+        android:id="@+id/about"
+        android:icon="@drawable/ic_about"
+        android:contentDescription="@string/cd_about"
+        android:title="@string/title_about_en" />
 </menu>

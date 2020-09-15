@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:title="Notification"
-        android:key="preference_category_notification"
-        android:icon="@drawable/ic_notification">
-        <SwitchPreference
-            android:key="@string/preferences_daily_reminder_key"
-            android:title="Daily Reminder"
-            android:summary="Send a notification to return to the app"
-            android:defaultValue="false"/>
-        <SwitchPreference
-            android:key="@string/preferences_today_releases_key"
-            android:title="Today Releases Reminder"
-            android:summary="Send a today releases notification"
-            android:defaultValue="false"/>
-    </PreferenceCategory>
+    <ListPreference
+        android:key="@string/preferences_theme_key"
+        android:title="App Theme"
+        android:icon="@drawable/ic_paint"
+        android:summary="%s"
+        android:entryValues="@array/pref_theme_option_values"
+        android:entries="@array/pref_theme_option_labels"
+        android:defaultValue="@string/pref_theme_day_mode_value"/>
 
 </PreferenceScreen>

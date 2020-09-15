@@ -1,23 +1,6 @@
 package com.nandra.movieverse.repository
 
-import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import androidx.paging.toLiveData
-import com.nandra.movieverse.data.DiscoverMovieDataSourceFactory
-import com.nandra.movieverse.data.DiscoverTVDataSourceFactory
-import com.nandra.movieverse.data.Listing
-import com.nandra.movieverse.database.FavoriteMovie
-import com.nandra.movieverse.database.FavoriteTV
-import com.nandra.movieverse.database.MovieverseDatabase
-import com.nandra.movieverse.network.ConnectivityInterceptor
-import com.nandra.movieverse.network.Film
-import com.nandra.movieverse.network.apiservice.*
-import com.nandra.movieverse.network.response.DetailResponse
-import com.nandra.movieverse.network.response.DiscoverResponse
-import kotlinx.coroutines.CoroutineScope
-import retrofit2.Response
-
+/*
 class MyRepository(app: Application) {
 
     private val interceptor = ConnectivityInterceptor(app)
@@ -116,4 +99,4 @@ class MyRepository(app: Application) {
             }
         )
     }
-}
+}*/
