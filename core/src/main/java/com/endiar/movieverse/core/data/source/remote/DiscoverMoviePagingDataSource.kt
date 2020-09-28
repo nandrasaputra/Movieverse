@@ -35,11 +35,11 @@ class DiscoverMoviePagingDataSource(
                 networkState.postValue(NetworkState.LOADED)
                 initialLoad.postValue(NetworkState.LOADED)
                 callback.onResult(data, null, nextKey)
-            } catch (ioException: Exception) {
+            } catch (exception: Exception) {
                 retry = {
                     loadInitial(params, callback)
                 }
-                val error = NetworkState.error(ioException.message ?: "unknown error")
+                val error = NetworkState.error(exception.message ?: "unknown error")
                 networkState.postValue(error)
                 initialLoad.postValue(error)
             }
@@ -59,11 +59,11 @@ class DiscoverMoviePagingDataSource(
                 val data = mapFilmGistResponseToListFilmGist(response)
                 networkState.postValue(NetworkState.LOADED)
                 callback.onResult(data, nextKey)
-            } catch (ioException: Exception) {
+            } catch (exception: Exception) {
                 retry = {
                     loadAfter(params, callback)
                 }
-                val error = NetworkState.error(ioException.message ?: "unknown error")
+                val error = NetworkState.error(exception.message ?: "unknown error")
                 networkState.postValue(error)
             }
         }

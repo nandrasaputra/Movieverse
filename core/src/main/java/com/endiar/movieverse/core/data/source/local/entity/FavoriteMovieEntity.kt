@@ -13,4 +13,4 @@ data class FavoriteMovieEntity (
     val filmType: String,
     val genre: String,
     val overview: String
-) : Film
+)

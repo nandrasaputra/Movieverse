@@ -1,6 +1,5 @@
 package com.endiar.movieverse.core.data.source.remote
 
-import android.annotation.SuppressLint
 import com.endiar.movieverse.core.data.source.remote.network.ApiResponse
 import com.endiar.movieverse.core.data.source.remote.network.TMDBApiService
 import com.endiar.movieverse.core.data.source.remote.response.FilmDetailResponse
@@ -13,7 +12,6 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val tmdbApiService: TMDBApiService) {
 
-    @SuppressLint("CheckResult")
     fun getAllWeekTrending() : Flow<ApiResponse<FilmGistResponse>> {
         return flow {
             try {
@@ -29,7 +27,6 @@ class RemoteDataSource @Inject constructor(private val tmdbApiService: TMDBApiSe
         }.flowOn(Dispatchers.IO)
     }
 
-    @SuppressLint("CheckResult")
     fun getNowPlaying() : Flow<ApiResponse<FilmGistResponse>> {
         return flow {
             try {
