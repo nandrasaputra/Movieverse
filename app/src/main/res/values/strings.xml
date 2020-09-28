@@ -1,35 +1,23 @@
 <resources>
     <string name="app_name">Movieverse</string>
 
-    <string name="toolbar_detail_title">"Detail"</string>
-
-    <string name="main_title_mock">Movie Title</string>
-    <string name="main_genre_mock">Genre, Genre, Genre</string>
-    <string name="main_overview_mock">It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</string>
-    <string name="main_rating_mock">00%</string>
+    <string name="main_title_sample">Movie Title</string>
+    <string name="main_genre_sample">Genre, Genre, Genre</string>
+    <string name="main_overview_sample">It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</string>
+    <string name="main_rating_sample">00%</string>
 
     <string name="cd_discover">"Discover"</string>
     <string name="cd_favorite">"Favorite"</string>
-    <string name="cd_setting">"Setting"</string>
+    <string name="cd_about">"About"</string>
 
     <string name="title_discover_en">"Discover"</string>
     <string name="title_favorite_en">"Favorite"</string>
-    <string name="title_setting_en">"Setting"</string>
+    <string name="title_about_en">"About"</string>
 
     <string name="main_tab_1_title_en">"Movie"</string>
     <string name="main_tab_2_title_en">"TV Series"</string>
 
-    <string name="preferences_language_key">"language"</string>
-    <string name="preferences_language_title_en">"Language"</string>
-    <string name="preferences_language_value_english">"en-US"</string>
-    <string name="preferences_language_listpreferences_negative_text_en">"Cancel"</string>
-
-    <string name="preferences_today_releases_key">"today"</string>
-
-    <string name="preferences_daily_reminder_key">"daily"</string>
-
-    <string name="film_type_movie">"movie"</string>
-    <string name="button_try_again_en">"Try Again"</string>
+    <string name="preferences_theme_key">"theme"</string>
 
     <string name="overview_not_available_en">"Overview Not Available"</string>
     <string name="detail_backdrop_cd">backdrop</string>
@@ -37,7 +25,6 @@
     <string name="favorite_text_add_to_favorite_en">"Add To Favorite"</string>
     <string name="favorite_text_remove_to_favorite_en">"Remove From Favorite"</string>
 
-    <string name="removed_from_favorite_en">Removed From Favorite</string>
     <string name="detail_rating_mock">10 / 10</string>
     <string name="detail_vote_count_mock">From 1089 Votes</string>
     <string name="detail_add_to_fav_mock">"Add To\nFavorite"</string>
@@ -53,11 +40,8 @@
     <string name="cd_trending_image">trending_image</string>
     <string name="cd_trending_poster">trending_poster</string>
     <string name="cd_error_image">error_image</string>
-    <string name="cd_no_internet_connection">No Internet Connection</string>
-    <string name="no_internet_connection_en">No Internet Connection</string>
 
     <string name="movie_search_view_query_hint_en">Search In Movie</string>
-    <string name="tv_search_view_query_hint_en">Search In TV</string>
 
     <string name="home_now_playing_en">On Cinema</string>
     <string name="home_trending_en">Now Trending</string>
@@ -67,7 +51,19 @@
     <string name="cd_retry">retry</string>
 
     <string name="search_no_item_en">Start Search Something!</string>
-    <string name="settings_en">Settings</string>
-    <string name="widget_no_data">No Data</string>
+    <string name="fragment_discover_toolbar_title_text">Discover</string>
+    <string name="fragment_favorite_toolbar_title_text">Favorite</string>
+    <string name="fragment_about_toolbar_title_text">About</string>
+    <string name="fragment_detail_toolbar_title_text">Detail</string>
+    <string name="discover_tab_title_position_0">Movie</string>
+    <string name="discover_tab_title_position_1">TV</string>
+    <string name="fragment_search_toolbar_title_text">Search</string>
+
+    <string name="pref_theme_label_dark_mode">Dark Mode</string>
+    <string name="pref_theme_label_day_mode">Day Mode</string>
+    <string name="pref_theme_label_auto">Auto</string>
+    <string name="pref_theme_dark_mode_value">dark</string>
+    <string name="pref_theme_day_mode_value">day</string>
+    <string name="pref_theme_auto_value">auto</string>
 
 </resources>

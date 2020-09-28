@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main_root"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/main_fragment_host_container"
+        android:id="@+id/main_activity_nav_host"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/main_activity_bottom_navigation"
@@ -14,17 +15,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <include layout="@layout/fake_shadow"
+        android:id="@+id/main_activity_fake_shadow"
+        android:layout_height="3dp"
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toTopOf="@id/main_activity_bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_activity_bottom_navigation"
+        style="@style/Movieverse.BottomNavStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:menu="@menu/bottom_nav_menu"
-        app:elevation="4dp"
-        app:labelVisibilityMode="labeled"
-        android:background="@android:color/white"
-        android:outlineProvider="bounds"/>
+        android:background="?android:attr/windowBackground" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

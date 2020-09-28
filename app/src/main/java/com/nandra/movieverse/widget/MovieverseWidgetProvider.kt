@@ -1,16 +1,6 @@
 package com.nandra.movieverse.widget
 
-import android.app.PendingIntent
-import android.appwidget.AppWidgetManager
-import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.widget.RemoteViews
-import android.widget.Toast
-import androidx.core.net.toUri
-import com.nandra.movieverse.R
-
+/*
 class MovieverseWidgetProvider : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
@@ -65,4 +55,4 @@ class MovieverseWidgetProvider : AppWidgetProvider() {
             appWidgetManager.updateAppWidget(appWidgetId, remoteView)
         }
     }
-}
+}*/

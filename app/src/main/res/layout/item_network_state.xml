@@ -19,7 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintDimensionRatio="W,3:2"
-        android:src="#FFFFFF"
         android:scaleType="centerCrop"
         app:riv_corner_radius="@dimen/discover_round_radius"/>
 
@@ -43,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="visible"
         android:src="@drawable/ic_refresh"
-        android:tint="@color/colorAccent"
+        app:tint="@color/pinkFuchsia"
         android:contentDescription="@string/cd_retry" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,22 +1,6 @@
 package com.nandra.movieverse.viewmodel
 
-import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import androidx.lifecycle.*
-import com.nandra.movieverse.data.Listing
-import com.nandra.movieverse.database.FavoriteMovie
-import com.nandra.movieverse.database.FavoriteTV
-import com.nandra.movieverse.network.Film
-import com.nandra.movieverse.network.response.DetailResponse
-import com.nandra.movieverse.repository.MyRepository
-import com.nandra.movieverse.util.Constant
-import com.nandra.movieverse.util.NetworkState
-import com.nandra.movieverse.util.getStringGenre
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-
+/*
 class SharedViewModel(val app: Application) : AndroidViewModel(app) {
 
     var isHomeDataHasLoaded: Boolean = false
@@ -28,9 +12,6 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     private var currentSearchKeyword = ""
     private var currentSearchType = ""
     private val repository = MyRepository(app)
-    val isOnDetailFragment = MutableLiveData<Boolean>().apply {
-        this.value = false
-    }
     val detailState = MutableLiveData<Int>()
     val searchState = MutableLiveData<NetworkState>()
     val detailFilm: LiveData<DetailResponse>
@@ -175,8 +156,10 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     suspend fun requestDetail(id: String, filmType: String) {
         if (isConnectedToInternet())
             fetchDetail(id, filmType)
-        else
-            detailState.value = Constant.STATE_NO_CONNECTION
+        */
+/*else
+            detailState.value = Constant.STATE_NO_CONNECTION*//*
+
     }
 
     fun deleteFavoriteMovie(movie: FavoriteMovie) {
@@ -263,4 +246,4 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
         object Success : RoomState()
         object Failure : RoomState()
     }
-}
+}*/

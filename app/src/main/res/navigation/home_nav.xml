@@ -4,27 +4,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home"
-    app:startDestination="@id/homeFragment"
-    tools:ignore="UnusedNavigation">
+    tools:ignore="UnusedNavigation"
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.nandra.movieverse.ui.HomeFragment"
+        android:name="com.nandra.movieverse.ui.home.HomeFragment"
         android:label="HomeFragment" >
         <action
-            android:id="@+id/action_homeFragment_to_detailFragmentHome"
-            app:destination="@id/detailFragmentHome" />
+            android:id="@+id/action_homeFragment_to_detailFragmentInHome"
+            app:destination="@id/detailFragmentInHome" />
     </fragment>
     <fragment
-        android:id="@+id/detailFragmentHome"
-        android:name="com.nandra.movieverse.ui.DetailFragment"
-        android:label="DetailFragmentHome" >
+        android:id="@+id/detailFragmentInHome"
+        android:name="com.nandra.movieverse.ui.detail.DetailFragment"
+        android:label="DetailFragmentInHome" >
+        <argument
+            android:name="mediaType"
+            app:argType="string" />
         <argument
             android:name="id"
-            app:argType="string"
-            android:defaultValue="0" />
-        <argument
-            android:name="filmType"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
 </navigation>

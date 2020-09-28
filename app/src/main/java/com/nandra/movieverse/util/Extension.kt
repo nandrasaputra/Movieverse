@@ -1,17 +1,15 @@
 package com.nandra.movieverse.util
 
-import com.nandra.movieverse.network.Genre
+import android.view.View
 
-fun List<Genre>.getStringGenre() : String {
-    val stringBuilder = StringBuilder()
-    return if (this.isEmpty()) {
-        "No Genre Information"
-    } else {
-        this.forEach {
-            stringBuilder.append(it.name)
-            stringBuilder.append(", ")
-        }
-        val result = stringBuilder.delete(stringBuilder.length - 2, stringBuilder.length)
-        result.toString()
+fun View.setVisibilityVisible() {
+    if (this.visibility != View.VISIBLE) {
+        this.visibility = View.VISIBLE
+    }
+}
+
+fun View.setVisibilityGone() {
+    if (this.visibility != View.GONE) {
+        this.visibility = View.GONE
     }
 }

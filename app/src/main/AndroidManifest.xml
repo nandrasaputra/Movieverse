@@ -3,10 +3,9 @@
     package="com.nandra.movieverse">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.SET_ALARM" />
 
     <application
+        android:name=".MovieverseApplication"
         android:icon="@mipmap/ic_movieverse"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_movieverse_round"
@@ -15,7 +14,6 @@
 
         <activity
             android:name=".ui.MainActivity"
-            android:launchMode="singleTop"
             android:theme="@style/SplashScreenTheme"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -23,28 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.YoutubePlayerActivity" />
-
-        <provider
-            android:authorities="com.nandra.movieverse.provider"
-            android:name=".contentprovider.MovieverseContentProvider"
-            android:enabled="true"
-            android:exported="true"/>
-
-        <receiver android:name=".broadcastreceiver.ReminderAlarmReceiver" />
-        <receiver android:name=".broadcastreceiver.TodayReleaseAlarmReceiver" />
-        <receiver android:name=".widget.MovieverseWidgetProvider">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/movieverse_widget_info" />
-        </receiver>
-
-        <service android:name=".widget.StackWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
-
 </manifest>

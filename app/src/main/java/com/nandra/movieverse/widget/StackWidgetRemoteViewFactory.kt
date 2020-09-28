@@ -1,24 +1,6 @@
 package com.nandra.movieverse.widget
 
-import android.content.Context
-import android.content.Intent
-import android.database.Cursor
-import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Binder
-import android.widget.RemoteViews
-import android.widget.RemoteViewsService
-import androidx.core.database.getStringOrNull
-import androidx.core.os.bundleOf
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
-import com.nandra.movieverse.R
-import com.nandra.movieverse.network.Film
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-
+/*
 class StackWidgetRemoteViewFactory(private val mContext: Context) : RemoteViewsService.RemoteViewsFactory {
 
     private var cursor: Cursor? = null
@@ -118,4 +100,4 @@ class StackWidgetRemoteViewFactory(private val mContext: Context) : RemoteViewsS
         }
         return filmList
     }
-}
+}*/

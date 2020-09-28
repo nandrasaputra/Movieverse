@@ -13,7 +13,7 @@
         app:layout_constraintDimensionRatio="H, 2:1"
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
-        android:src="@drawable/img_backdrop"
+        android:src="@drawable/space_lite"
         android:scaleType="centerCrop"
         app:riv_corner_radius="16dp"
         android:contentDescription="@string/cd_trending_poster"/>
@@ -23,7 +23,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintDimensionRatio="H, 5:1"
+        app:layout_constraintDimensionRatio="W, 1:4"
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
         android:src="@drawable/gradient_16"
@@ -44,5 +44,5 @@
         android:lines="1"
         android:ellipsize="end"
         android:textColor="@color/colorPureWhite"
-        android:text="@string/main_title_mock"/>
+        android:text="@string/main_title_sample"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
