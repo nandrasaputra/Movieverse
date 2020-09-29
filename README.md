@@ -4,10 +4,8 @@
 Movieverse is a movie catalogue Android app where you can find what's trending, what's currently playing on cinema, save favorite movie, and find any Movie or TV information. This app is written in Kotlin with <a href='https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html'>Clean Architecture</a>, Using Android <a href='https://developer.android.com/jetpack'>Jetpack</a> Library such as Navigation, Room, ViewModel, Paging, LiveData and Hilt. This app also using Kotlin <a href='https://github.com/Kotlin/kotlinx.coroutines'>Coroutine</a> to perform asyncronous operation, Coroutine Flow to handle asyncronous data stream and <a href='https://square.github.io/retrofit/'>Retrofit</a> to communicate with REST API. Movie and TV data is provided by <a href='https://www.themoviedb.org/'>TMDB</a>. Dark Mode is also available inside the app where you switch to darker theme scheme. This app was developed to complete <a href='https://www.dicoding.com/academies/14'>Belajar Fundamental Aplikasi Android</a> final project and got 5/5 score.
 
 ## Preview
-<p float="left">
-  <img src="docs/movieverse_home.jpg" height="550" />
-  <img src="docs/movieverse_discover.jpg" height="550" />
-  <img src="docs/movieverse_gif_demo.gif" height="550" />
+<p float="center">
+  <img src="docs/Movieverse%20App%20Presentation%20V1.png" height="600" />
 </p>
 
 ## Prerequisites
