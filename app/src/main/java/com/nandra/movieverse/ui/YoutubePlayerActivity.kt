@@ -13,11 +13,13 @@ class YoutubePlayerActivity : YouTubeBaseActivity() {
 
     private lateinit var youTubePlayerView: YouTubePlayerView
     lateinit var youTubePlayer: YouTubePlayer
-    private val apiKey = getString(R.string.GOOGLE_YOUTUBE_API)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_youtube_player)
+
+        val apiKey = getString(R.string.GOOGLE_YOUTUBE_API)
 
         val videoKey = intent.getStringExtra(Constant.EXTRA_YOUTUBE_KEY)
 
