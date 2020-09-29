@@ -8,6 +8,9 @@ Movieverse is a movie catalogue Android app where you can find what's trending, 
   <img src="docs/Movieverse%20App%20Presentation%20V2.png" height="600" />
 </p>
 
+## Demo
+You can view the app demo on youtube: https://youtu.be/Ra3qChwb8hE
+
 ## Prerequisites
 
 In order to make app works, you need <a href='https://developers.google.com/youtube/v3/getting-started'>Youtube API</a> and <a href='https://www.themoviedb.org/documentation/api'>TheMovieDatabase API</a> Key. Then make a new file and name it to api.properties on the root folder and put your api key like this:
