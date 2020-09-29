@@ -5,7 +5,7 @@ Movieverse is a movie catalogue Android app where you can find what's trending, 
 
 ## Preview
 <p float="center">
-  <img src="docs/Movieverse%20App%20Presentation%20V1.png" height="600" />
+  <img src="docs/Movieverse%20App%20Presentation%20V2.png" height="600" />
 </p>
 
 ## Prerequisites
