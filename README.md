@@ -1,7 +1,7 @@
 <img height='200' src="app/src/main/res/mipmap-xxxhdpi/ic_movieverse.png" align="left">
 
 # Movieverse
-Movieverse is a movie catalogue Android app where you can find what's trending, what's currently playing on cinema, save favorite movie, and find any Movie or TV information. This app is written in Kotlin with <a href='https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html'>Clean Architecture</a>, Using Android <a href='https://developer.android.com/jetpack'>Jetpack</a> Library such as Navigation, Room, ViewModel, Paging, LiveData and Hilt. This app also using Kotlin <a href='https://github.com/Kotlin/kotlinx.coroutines'>Coroutine</a> to perform asyncronous operation, Coroutine Flow to handle asyncronous data stream and <a href='https://square.github.io/retrofit/'>Retrofit</a> to communicate with REST API. Movie and TV data is provided by <a href='https://www.themoviedb.org/'>TMDB</a>. Dark Mode is also available inside the app where you switch to darker theme scheme. This app was developed to complete <a href='https://www.dicoding.com/academies/14'>Belajar Fundamental Aplikasi Android</a> final project and got 5/5 score.
+Movieverse is a movie catalogue Android app where you can find what's trending, what's currently playing on cinema, save favorite movie, and find any Movie or TV information. This app is written in Kotlin with <a href='https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html'>Clean Architecture</a> and MVVM (Model-View-ViewModel) Architecture, Using Android <a href='https://developer.android.com/jetpack'>Jetpack</a> Library such as Navigation, Room, ViewModel, Paging, LiveData and Hilt. This app also using Kotlin <a href='https://github.com/Kotlin/kotlinx.coroutines'>Coroutine</a> to perform asyncronous operation, Coroutine Flow to handle asyncronous data stream and <a href='https://square.github.io/retrofit/'>Retrofit</a> to communicate with REST API. Movie and TV data is provided by <a href='https://www.themoviedb.org/'>TMDB</a>. Dark Mode is also available inside the app where you switch to darker theme scheme. This app was developed to complete <a href='https://www.dicoding.com/academies/14'>Belajar Fundamental Aplikasi Android</a> final project and got 5/5 score.
 
 ## Preview
 <p float="center">
@@ -18,12 +18,8 @@ You need <a href='https://developers.google.com/youtube/v3/getting-started'>Yout
 In your api.properties (Movieverse/api.properties) :
 
 ```xml
-...
-
 TMDB_API_KEY = "YOUR_API_KEY"
 GOOGLE_YOUTUBE_API = "YOUR_API_KEY"
-
-...
 ```
 
 ## Built With
