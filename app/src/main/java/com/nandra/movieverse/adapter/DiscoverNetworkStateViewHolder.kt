@@ -35,6 +35,7 @@ class DiscoverNetworkStateViewHolder(
                     item_retry.visibility = View.VISIBLE
                     item_network_progress_bar.visibility = View.GONE
                 }
+                null -> Unit
             }
         }
     }

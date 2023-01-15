@@ -65,6 +65,7 @@ class MovieverseRepository @Inject constructor(
             is ApiResponse.Error -> {
                 emit(Resource.Error<FilmDetail>(apiResponse.errorMessage))
             }
+            ApiResponse.Empty -> Unit
         }
     }
 
@@ -78,6 +79,7 @@ class MovieverseRepository @Inject constructor(
             is ApiResponse.Error -> {
                 emit(Resource.Error<FilmDetail>(apiResponse.errorMessage))
             }
+            ApiResponse.Empty -> Unit
         }
     }
 

@@ -155,7 +155,7 @@ private fun BottomNavigationView.setupItemReselected(
                 as NavHostFragment
         val navController = selectedFragment.navController
         navController.popBackStack(
-            navController.graph.startDestination, false
+            navController.graph.startDestinationId, false
         )
     }
 }

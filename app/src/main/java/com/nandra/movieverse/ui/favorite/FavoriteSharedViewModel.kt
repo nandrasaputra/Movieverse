@@ -1,13 +1,15 @@
 package com.nandra.movieverse.ui.favorite
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.endiar.movieverse.core.domain.model.FilmFavoriteMovie
 import com.endiar.movieverse.core.domain.model.FilmFavoriteTV
 import com.endiar.movieverse.core.domain.usecase.LocalUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FavoriteSharedViewModel @ViewModelInject constructor(
+@HiltViewModel
+class FavoriteSharedViewModel @Inject constructor(
     private val localUseCase: LocalUseCase
 ) : ViewModel() {
 

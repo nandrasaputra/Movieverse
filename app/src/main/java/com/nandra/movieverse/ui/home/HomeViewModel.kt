@@ -1,6 +1,5 @@
 package com.nandra.movieverse.ui.home
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
@@ -8,8 +7,11 @@ import androidx.lifecycle.asLiveData
 import com.endiar.movieverse.core.data.Resource
 import com.endiar.movieverse.core.domain.model.FilmGist
 import com.endiar.movieverse.core.domain.usecase.RemoteUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel @ViewModelInject constructor(private val remoteUseCase: RemoteUseCase) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val remoteUseCase: RemoteUseCase) : ViewModel() {
 
     private var currentTrendingSource: LiveData<Resource<List<FilmGist>>> =
         remoteUseCase.getTrendingFilm().asLiveData()

@@ -1,6 +1,5 @@
 package com.nandra.movieverse.ui.search
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
@@ -9,8 +8,10 @@ import com.endiar.movieverse.core.data.Resource
 import com.endiar.movieverse.core.domain.model.FilmSearch
 import com.endiar.movieverse.core.domain.usecase.RemoteUseCase
 import com.endiar.movieverse.core.utils.Constant
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SearchViewModel @ViewModelInject constructor(
+@HiltViewModel class SearchViewModel @Inject constructor(
     private val remoteUseCase: RemoteUseCase
 ) : ViewModel() {
 

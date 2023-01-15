@@ -1,6 +1,5 @@
 package com.nandra.movieverse.ui.detail
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.endiar.movieverse.core.data.Resource
 import com.endiar.movieverse.core.domain.model.FilmDetail
@@ -8,9 +7,12 @@ import com.endiar.movieverse.core.domain.usecase.LocalUseCase
 import com.endiar.movieverse.core.domain.usecase.RemoteUseCase
 import com.endiar.movieverse.core.utils.Constant
 import com.nandra.movieverse.util.FilmType
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailViewModel @ViewModelInject constructor(
+@HiltViewModel
+class DetailViewModel @Inject constructor(
     private val localUseCase: LocalUseCase,
     private val remoteUseCase: RemoteUseCase
 ) : ViewModel() {

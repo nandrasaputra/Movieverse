@@ -1,10 +1,11 @@
 package com.nandra.movieverse.ui.discover
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.endiar.movieverse.core.domain.usecase.RemoteUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class DiscoverSharedViewModel @ViewModelInject constructor(
+@HiltViewModel class DiscoverSharedViewModel @Inject constructor(
     remoteUseCase: RemoteUseCase
 ) : ViewModel() {
 
